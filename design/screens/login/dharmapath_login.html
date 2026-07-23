@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DharmaPath — Sign In</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #0c0b0d;
+    --coral: #c1584b;
+    --coral-deep: #a8473c;
+    --cream: #f7f2ea;
+    --dot: rgba(193,88,75,0.35);
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  html, body{
+    height:100%;
+    background: var(--ink);
+    overflow: hidden;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .app{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    max-width: 480px;
+    margin: 0 auto;
+    overflow: hidden;
+    background: var(--ink);
+  }
+
+  /* ---------- Scrolling photo grid ---------- */
+  .grid-bg{
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    padding: 6px;
+    filter: saturate(0.9);
+  }
+
+  .col{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    will-change: transform;
+  }
+
+  .col img{
+    width: 100%;
+    display: block;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border-radius: 10px;
+    background: #222;
+  }
+
+  /* each column is doubled content, scrolled by exactly -50% for a seamless loop */
+  .col-up{ animation: scrollUp linear infinite; }
+  .col-down{ animation: scrollDown linear infinite; }
+
+  @keyframes scrollUp{
+    from{ transform: translateY(0); }
+    to{ transform: translateY(-50%); }
+  }
+  @keyframes scrollDown{
+    from{ transform: translateY(-50%); }
+    to{ transform: translateY(0); }
+  }
+
+  .col:nth-child(1){ animation-duration: 34s; }
+  .col:nth-child(2){ animation-duration: 46s; }
+  .col:nth-child(3){ animation-duration: 40s; }
+
+  /* ---------- Dark overlay so text/UI stay readable ---------- */
+  .overlay{
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(12,11,13,0.55) 0%, rgba(12,11,13,0.35) 30%, rgba(12,11,13,0.65) 62%, rgba(12,11,13,0.95) 100%);
+    pointer-events: none;
+  }
+
+  /* ---------- Logo / hero content ---------- */
+  .content{
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 24px;
+    padding-bottom: 210px; /* keep clear of bottom sheet */
+  }
+
+  .logo{
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 4.2rem;
+    line-height: 1;
+    color: #E8500A;
+    text-shadow: 0 3px 18px rgba(0,0,0,0.55);
+    transform: rotate(-2deg);
+  }
+
+  .tagline{
+    margin-top: 10px;
+    font-family: 'Caveat', cursive;
+    font-weight: 600;
+    font-size: 1.35rem;
+    color: #f2ece3;
+    opacity: 0.95;
+  }
+
+  /* ---------- Bottom sheet ---------- */
+  .sheet{
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    background: var(--cream);
+    border-radius: 28px 28px 0 0;
+    padding: 18px 22px 30px;
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.35);
+    background-image: radial-gradient(var(--dot) 1.5px, transparent 1.5px);
+    background-size: 14px 14px;
+    background-position: -4px -4px;
+  }
+
+  .grabber{
+    width: 42px;
+    height: 5px;
+    border-radius: 4px;
+    background: #d8cfc2;
+    margin: 0 auto 18px;
+  }
+
+  .sheet p{
+    text-align: center;
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    font-size: 0.85rem;
+    color: #6b6560;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .google-btn{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: linear-gradient(180deg, var(--coral), var(--coral-deep));
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 16px 18px;
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    font-size: 1.02rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(161,68,55,0.45);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .google-btn:active{ transform: scale(0.98); }
+
+  .google-btn svg{ width: 22px; height: 22px; flex-shrink: 0; }
+
+  @media (prefers-reduced-motion: reduce){
+    .col-up, .col-down{ animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <div class="grid-bg" id="gridBg"></div>
+  <div class="overlay"></div>
+
+  <div class="content">
+    <div class="logo">DharmaPath</div>
+    <div class="tagline">All in one Hinduism app</div>
+  </div>
+
+  <div class="sheet">
+    <div class="grabber"></div>
+    <p>Sign in to begin your journey</p>
+    <button class="google-btn">
+      <svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.9 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.7-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 16 19 13 24 13c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.5 0 10.4-1.9 14.3-5.1l-6.6-5.6C29.6 34.9 26.9 36 24 36c-5.3 0-9.7-3.1-11.3-7.6l-6.5 5C9.6 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.2-4.3 5.6l6.6 5.6C41.4 36 44 30.5 44 24c0-1.3-.1-2.7-.4-3.5z"/></svg>
+      Sign in with Google
+    </button>
+  </div>
+
+</div>
+
+<script>
+  // Optimized image lists referencing the 9 processed WebP photos
+  const columnImages = [
+    [ // column 1
+      "assets/images/photo1.webp",
+      "assets/images/photo2.webp",
+      "assets/images/photo3.webp",
+    ],
+    [ // column 2
+      "assets/images/photo4.webp",
+      "assets/images/photo5.webp",
+      "assets/images/photo6.webp",
+    ],
+    [ // column 3
+      "assets/images/photo7.webp",
+      "assets/images/photo8.webp",
+      "assets/images/photo9.webp",
+    ],
+  ];
+
+  // Fallback placeholder loader if an optimized image fails to load
+  const FALLBACK = (seed) => `https://picsum.photos/seed/dharmapath-${seed}/300/400`;
+
+  const grid = document.getElementById('gridBg');
+  const directions = ['col-up', 'col-down', 'col-up'];
+
+  columnImages.forEach((images, c) => {
+    const col = document.createElement('div');
+    col.className = 'col ' + directions[c];
+
+    // Repeat the 3 images 8 times total (4 times repeated, doubled) to get 24 images per column
+    for (let repeat = 0; repeat < 8; repeat++) {
+      images.forEach((src, i) => {
+        const img = document.createElement('img');
+        
+        // Explicit width/height attributes to prevent layout shift
+        img.width = 300;
+        img.height = 400;
+        img.src = src;
+        img.loading = 'eager';
+        img.alt = '';
+        
+        img.onerror = function() { 
+          this.onerror = null; 
+          this.src = FALLBACK(c * 100 + i); 
+        };
+
+        col.appendChild(img);
+      });
+    }
+    grid.appendChild(col);
+  });
+</script>
+
+</body>
+</html>

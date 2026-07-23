@@ -1,0 +1,29 @@
+# OS Files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDEs
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Package managers
+node_modules/
+package-lock.json
+
+# Flutter built files
+app/build/
+app/.dart_tool/
+app/.packages
+app/.flutter-plugins
+app/.flutter-plugins-dependencies
+app/.pub-cache/
+app/.pub/
+
+# Secrets
+app/android/local.properties
+app/android/key.properties

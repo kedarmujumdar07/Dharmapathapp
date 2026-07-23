@@ -1,0 +1,16 @@
+# OS Files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Node modules
+node_modules/
+package-lock.json
+
+# Local user configs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln

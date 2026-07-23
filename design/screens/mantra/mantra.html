@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DharmaPath — Mantra Practice</title>
+    <!-- Outfit Font & Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0C0E12;
+            --bg-dark-2: #14171D;
+            --card-dark: #151A22;
+            --card-dark-border: rgba(255, 255, 255, 0.08);
+            --text-light: #F3EFE6;
+            --text-muted: #7C8492;
+            --accent: #E8500A; /* Vibrant Orange */
+            --accent-red: #D23C2C; /* Red Accent */
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Outfit', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        body {
+            background: #242933;
+            font-family: var(--font-body);
+            color: var(--text-light);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Phone mockup styling */
+        .phone {
+            position: relative;
+            width: 412px;
+            height: 866px;
+            background: #1C2028;
+            border-radius: 48px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.8),
+                        inset 0 0 0 2px rgba(255,255,255,0.1),
+                        inset 0 0 15px rgba(0,0,0,0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .phone::before {
+            content: '';
+            position: absolute;
+            top: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 110px;
+            height: 30px;
+            background: #000000;
+            border-radius: 20px;
+            z-index: 1000;
+        }
+
+        .island {
+            position: absolute;
+            top: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 110px;
+            height: 30px;
+            background: #000000;
+            border-radius: 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 15px;
+            box-sizing: border-box;
+        }
+
+        .island-cam {
+            width: 8px;
+            height: 8px;
+            background: #111122;
+            border-radius: 50%;
+            margin-right: 5px;
+            box-shadow: inset 0 1px 2px rgba(255,255,255,0.2);
+        }
+
+        .island-mic {
+            width: 4px;
+            height: 4px;
+            background: #0a0a14;
+            border-radius: 50%;
+        }
+
+        .phone-inner {
+            position: relative;
+            width: 390px;
+            height: 844px;
+            background: var(--bg-dark);
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0,0,0,0.9);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blueprint {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 390px;
+            height: 844px;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.15;
+        }
+
+        .viewport {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 28px 4px;
+            font-size: 11px;
+            font-weight: 700;
+            font-family: var(--font-body);
+            color: rgba(255, 255, 255, 0.7);
+            z-index: 100;
+            background: var(--bg-dark);
+        }
+
+        .status-time {
+            letter-spacing: -0.2px;
+        }
+
+        .status-icons {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-icons svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        /* Header Bar */
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            background: var(--bg-dark);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            z-index: 10;
+        }
+
+        .app-title {
+            font-family: 'Space Grotesk', var(--font-body);
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-light);
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+
+        .header-badges {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge {
+            background: rgba(21, 26, 34, 0.85);
+            border: 1px solid var(--card-dark-border);
+            border-radius: 99px;
+            padding: 4px 10px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            backdrop-filter: blur(4px);
+        }
+
+        .badge.streak {
+            border-color: rgba(232, 80, 10, 0.35);
+            box-shadow: 0 0 10px rgba(232, 80, 10, 0.05);
+        }
+
+        .badge.hearts {
+            border-color: rgba(226, 71, 47, 0.35);
+            box-shadow: 0 0 10px rgba(226, 71, 47, 0.05);
+        }
+
+        /* Scrollable Content */
+        .content-scroll {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            padding: 15px 20px 100px;
+            box-sizing: border-box;
+            gap: 16px;
+        }
+
+        .content-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        .content-scroll {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Technical Chip Panel card style */
+        .tech-panel {
+            width: 100%;
+            padding: 16px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-sizing: border-box;
+            clip-path: polygon(0 20px, 20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+        }
+
+        .featured-card {
+            background: #EFEBE4;
+            color: #14171D;
+            height: 200px;
+        }
+
+        .japa-counter-card {
+            background: var(--card-dark);
+            border: 1px solid var(--card-dark-border);
+            color: var(--text-light);
+            height: 180px;
+        }
+
+        .card-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        .card-left-col {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .card-tech-label {
+            font-family: var(--font-mono);
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+        .featured-card .card-tech-label { color: #7C8492; }
+        .japa-counter-card .card-tech-label { color: var(--accent); }
+
+        .tech-pill {
+            border-radius: 8px;
+            padding: 6px 12px;
+            display: inline-flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-top: 8px;
+            align-self: flex-start;
+        }
+        .featured-card .tech-pill {
+            background: #14171D;
+            color: #FFFFFF;
+        }
+
+        .pill-label {
+            font-family: var(--font-mono);
+            font-size: 7px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            opacity: 0.75;
+        }
+
+        .pill-value {
+            font-family: var(--font-display);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .featured-mantra-text {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin: 12px 0 6px;
+            line-height: 1.2;
+            text-align: left;
+        }
+
+        .mantra-translation {
+            font-family: var(--font-body);
+            font-size: 12px;
+            color: #5C6470;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .card-bottom-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(0,0,0,0.06);
+            padding-top: 8px;
+        }
+        .japa-counter-card .card-bottom-row {
+            border-top-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .event-btn {
+            background: var(--accent-red);
+            color: #FFFFFF;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 12px;
+            font-size: 9px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .event-btn:hover {
+            background: #B62B1D;
+            transform: translateY(-1px);
+        }
+
+        /* Japa Counter Styling */
+        .counter-layout {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 100%;
+        }
+
+        .counter-display-box {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .counter-number {
+            font-family: var(--font-mono);
+            font-size: 54px;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+            letter-spacing: -2px;
+        }
+
+        .counter-label {
+            font-family: var(--font-mono);
+            font-size: 8px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        .tap-target-btn {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(232, 80, 10, 0.1);
+            border: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.1s ease-in-out;
+            box-shadow: 0 0 15px rgba(232, 80, 10, 0.15);
+        }
+
+        .tap-target-btn:active {
+            transform: scale(0.9);
+            background: rgba(232, 80, 10, 0.35);
+        }
+
+        .tap-text {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+
+        .reset-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 8px;
+            padding: 4px 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            border-radius: 3px;
+        }
+
+        .reset-btn:hover {
+            border-color: var(--text-muted);
+            color: var(--text-light);
+        }
+
+        /* Mantra List items */
+        .list-section-title {
+            font-family: var(--font-display);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin: 8px 0 0;
+        }
+
+        .mantra-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .grid-card {
+            height: 110px;
+            background: var(--card-dark);
+            border: 1px solid var(--card-dark-border);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-sizing: border-box;
+            clip-path: polygon(0 15px, 15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+            transition: transform 0.2s;
+        }
+
+        .grid-card:hover {
+            transform: translateY(-1px);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .grid-card-title {
+            font-family: var(--font-display);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        .grid-card-meta {
+            font-family: var(--font-mono);
+            font-size: 8px;
+            color: var(--text-muted);
+        }
+
+        .mini-progress-bar {
+            height: 3px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 2px;
+            width: 100%;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+
+        .mini-progress-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        /* Footer Nav */
+        .footer-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 390px;
+            height: 75px;
+            z-index: 100;
+        }
+
+        .nav-bg-svg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 75px;
+            pointer-events: none;
+        }
+
+        .nav-active-bubble {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            width: 44px;
+            height: 44px;
+            background: var(--accent);
+            border-radius: 50%;
+            z-index: 105;
+            transform: translateX(195px); /* Default active offset for Mantra tab */
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(232, 80, 10, 0.4);
+            pointer-events: none;
+        }
+
+        .nav-items-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 110;
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            width: 60px;
+            height: 100%;
+            color: var(--text-muted);
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .nav-item svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            margin-bottom: 2px;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), fill 0.2s;
+        }
+
+        .nav-item span {
+            font-size: 9px;
+            font-weight: 500;
+            font-family: var(--font-body);
+        }
+
+        .nav-item.active {
+            color: var(--text-light);
+        }
+
+        .nav-item.active svg {
+            fill: #FFFFFF;
+            transform: translateY(-16px);
+        }
+    </style>
+</head>
+<body>
+    <div class="phone">
+        <div class="island">
+            <div class="island-cam"></div>
+            <div class="island-mic"></div>
+        </div>
+
+        <div class="phone-inner">
+            <svg class="blueprint" viewBox="0 0 390 844" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g opacity="0.3">
+                    <line x1="0" y1="100" x2="390" y2="100" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                    <line x1="0" y1="200" x2="390" y2="200" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                    <line x1="0" y1="300" x2="390" y2="300" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                    <line x1="0" y1="400" x2="390" y2="400" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                    <line x1="0" y1="500" x2="390" y2="500" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                    <line x1="0" y1="600" x2="390" y2="600" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                    <line x1="0" y1="700" x2="390" y2="700" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                    <line x1="0" y1="800" x2="390" y2="800" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                    <line x1="97" y1="0" x2="97" y2="844" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                    <line x1="195" y1="0" x2="195" y2="844" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                    <line x1="292" y1="0" x2="292" y2="844" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                </g>
+            </svg>
+
+            <div class="viewport">
+                <!-- Status Bar -->
+                <div class="status-bar">
+                    <span class="status-time">9:41</span>
+                    <div class="status-icons">
+                        <svg viewBox="0 0 24 24"><path d="M17 5H7a2 2 0 0 0-2 2v14l7-3 7 3V7a2 2 0 0 0-2-2z" fill="currentColor"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" fill="currentColor"/></svg>
+                    </div>
+                </div>
+
+                <!-- Header Bar -->
+                <div class="header-bar">
+                    <h2 class="app-title">Mantra</h2>
+                    <div class="header-badges">
+                        <div class="badge streak">🔥 5</div>
+                        <div class="badge hearts">❤️ 3</div>
+                    </div>
+                </div>
+
+                <!-- Content Scroll -->
+                <div class="content-scroll">
+                    <!-- Featured Mantra -->
+                    <div class="tech-panel featured-card">
+                        <div class="card-top-row">
+                            <div class="card-left-col">
+                                <span class="card-tech-label">SYS::FEATURED_DAILY</span>
+                                <div class="tech-pill">
+                                    <span class="pill-label">DEITY / RIGVEDA</span>
+                                    <span class="pill-value">SHIVA</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="featured-mantra-text">ॐ नमः शिवाय</div>
+                        <div class="mantra-translation">"Om Namah Shivaya" — Adorations to the Sacred Presence.</div>
+                        <div class="card-bottom-row">
+                            <span class="card-meta" style="color: #7C8492;">JAPA · v1.2</span>
+                            <button class="event-btn" onclick="alert('Chanting Audio Loaded!')">Chant Now →</button>
+                        </div>
+                    </div>
+
+                    <!-- Simple Japa Counter Card -->
+                    <div class="tech-panel japa-counter-card">
+                        <div class="card-top-row">
+                            <span class="card-tech-label">JAPA::COUNTER_ACTIVE</span>
+                            <button class="reset-btn" onclick="resetCounter()">Reset</button>
+                        </div>
+                        <div class="counter-layout">
+                            <div class="counter-display-box">
+                                <span class="counter-number" id="japaCount">0</span>
+                                <span class="counter-label">Total Chants Completed</span>
+                            </div>
+                            <div class="tap-target-btn" onclick="incrementCounter()">
+                                <span class="tap-text">Tap</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="list-section-title">Your Japa Library</h3>
+
+                    <div class="mantra-grid">
+                        <div class="grid-card">
+                            <span class="grid-card-meta">108X · JAPA</span>
+                            <h4 class="grid-card-title">Gayatri Mantra</h4>
+                            <div>
+                                <span class="grid-card-meta">Progress 45%</span>
+                                <div class="mini-progress-bar">
+                                    <div class="mini-progress-fill" style="width: 45%;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid-card">
+                            <span class="grid-card-meta">108X · JAPA</span>
+                            <h4 class="grid-card-title">Mahamrityunjaya</h4>
+                            <div>
+                                <span class="grid-card-meta">Progress 12%</span>
+                                <div class="mini-progress-bar">
+                                    <div class="mini-progress-fill" style="width: 12%;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid-card">
+                            <span class="grid-card-meta">54X · JAPA</span>
+                            <h4 class="grid-card-title">Ganesha Mantra</h4>
+                            <div>
+                                <span class="grid-card-meta">Progress 80%</span>
+                                <div class="mini-progress-bar">
+                                    <div class="mini-progress-fill" style="width: 80%;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid-card">
+                            <span class="grid-card-meta">21X · JAPA</span>
+                            <h4 class="grid-card-title">Hare Krishna</h4>
+                            <div>
+                                <span class="grid-card-meta">Progress 95%</span>
+                                <div class="mini-progress-bar">
+                                    <div class="mini-progress-fill" style="width: 95%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Navigation Bar -->
+                <div class="footer-nav">
+                    <svg class="nav-bg-svg" width="390" height="75" viewBox="0 0 390 75" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M 0 20 L 14 20 C 22 20, 24 52, 39 52 C 54 52, 56 20, 64 20 L 390 20 L 390 75 L 0 75 Z" fill="#151A22"/>
+                    </svg>
+
+                    <div class="nav-active-bubble"></div>
+
+                    <div class="nav-items-container">
+                        <a href="app_home (2).html" class="nav-item">
+                            <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                            <span>Home</span>
+                        </a>
+                        <a href="paths.html" class="nav-item">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                            <span>Paths</span>
+                        </a>
+                        <a href="mantra.html" class="nav-item active">
+                            <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                            <span>Mantra</span>
+                        </a>
+                        <a href="leagues.html" class="nav-item">
+                            <svg viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v3c0 2.44 1.72 4.48 4 4.92v2.08H7c-1.1 0-2 .9-2 2v1h14v-1c0-1.1-.9-2-2-2h-2v-2.08c2.28-.44 4-2.48 4-4.92V7c0-1.1-.9-2-2-2zM5 7h2v3H5V7zm14 3h-2V7h2v3z"/></svg>
+                            <span>Leagues</span>
+                        </a>
+                        <a href="#" class="nav-item" onclick="alert('Profile tab clicked')">
+                            <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                            <span>Profile</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let counterState = 0;
+
+        function incrementCounter() {
+            counterState++;
+            document.getElementById('japaCount').innerText = counterState;
+        }
+
+        function resetCounter() {
+            counterState = 0;
+            document.getElementById('japaCount').innerText = counterState;
+        }
+
+        function setActiveTab(index) {
+            const items = document.querySelectorAll('.nav-item');
+            items.forEach((item, idx) => {
+                if (idx === index) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+
+            const bubble = document.querySelector('.nav-active-bubble');
+            const offset = 78 * index;
+            bubble.style.transform = `translateX(${offset + 39}px)`;
+
+            const centerX = 39 + offset;
+            const path = document.querySelector('.nav-bg-svg path');
+            const pathD = `M 0 20 L ${centerX - 25} 20 C ${centerX - 17} 20, ${centerX - 15} 52, ${centerX} 52 C ${centerX + 15} 52, ${centerX + 17} 20, ${centerX + 25} 20 L 390 20 L 390 75 L 0 75 Z`;
+            path.setAttribute('d', pathD);
+        }
+
+        window.onload = function() {
+            setActiveTab(2); // Mantra tab active on load
+        }
+    </script>
+</body>
+</html>
