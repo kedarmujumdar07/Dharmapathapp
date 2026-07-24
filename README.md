@@ -1,82 +1,167 @@
-# DharmaPath — Mobile App & Prototypes
+# DharmaPath
 
-Welcome to the main project repository for **DharmaPath** — a structured, gamified Hindu dharma-learning application built for the next generation.
+[![Build Status](https://img.shields.io/github/actions/workflow/status/<USER>/<REPO>/build.yml?branch=main&style=flat-square)](https://github.com/<USER>/<REPO>/actions)
+[![License](https://img.shields.io/github/license/<USER>/<REPO>?style=flat-square)](./LICENSE)
+[![Release Version](https://img.shields.io/github/v/release/<USER>/<REPO>?style=flat-square&color=blue)](https://github.com/<USER>/<REPO>/releases)
+[![Stars](https://img.shields.io/github/stars/<USER>/<REPO>?style=flat-square&color=gold)](https://github.com/<USER>/<REPO>/stargazers)
 
----
-
-## 📖 About DharmaPath
-
-DharmaPath makes Hindu mythology, philosophy, and spiritual wisdom accessible, engaging, and habitual for young Indians and the diaspora (target age group: 12–21). 
-
-Accustomed to visual media like anime and gaming, the younger generation often finds traditional text-heavy spiritual resources inaccessible or scattered. DharmaPath resolves this by combining:
-1. **Comic-style Visual Storytelling** (5–7 panel episodes with interactive MCQs/fill-in-the-blanks).
-2. **Habit-Forming Gamification** (XP systems, daily streaks, hearts, and weekly competitive leagues).
-3. **Panchang Integration** (Surfacing calendar-aware daily lessons, matching deity stories to specific holy days).
+DharmaPath is a gamified, interactive portal for modern learners to explore Hindu dharma, philosophy, and historical epics through structured learning paths.
 
 ---
 
-## 👥 The Team
-- **Kedar Mujumdar** — Co-Founder & Product Lead
-- **Vishwajeet Patil** — Co-Founder & Technology Lead
-- **Pavan Fouzdar** — Co-Founder & Operations Lead
+## 📖 Why DharmaPath Exists
+
+For younger generations (ages 12–21) and the diaspora, traditional texts and spiritual resources are often scattered, text-heavy, or culturally disconnected. Accustomed to visual mediums like anime and immersive gaming, readers struggle to engage with traditional mediums. 
+
+DharmaPath bridges this gap. It reframes centuries-old history and philosophy into bite-sized, interactive visual paths—connecting ancient wisdom with daily digital routines.
 
 ---
 
-## 🛠️ Project Structure
+## 🚀 Core Features
 
-This repository holds both design prototypes and the production application code side-by-side:
-
-```text
-Dharmapathapp/
-├── app/               # Production React Native / Expo application code
-│   ├── assets/        # Media assets (images, videos, and fonts)
-│   ├── src/           # TypeScript & Expo Router source code
-│   │   ├── app/       # Routing and navigation structure
-│   │   ├── components # Reusable UI components
-│   │   ├── screens/   # Main screens (login, onboarding, preferences)
-│   │   └── context/   # React contexts (preferences, theme)
-│   └── package.json   # Expo application dependencies and scripts
-├── design/            # UI/UX static prototypes and raw web mockups
-│   ├── screens/       # HTML/CSS/JS mockups for all views
-│   └── shared-assets/ # Shared fonts, colors, and SVGs
-├── scripts/           # Maintenance and asset optimization scripts
-│   └── optimize-images.js
-├── LICENSE            # Project license
-└── README.md          # Monorepo documentation
-```
+- **Structured Learning Maps** — Navigate progress-tracked trees for *Itihasa* (Ramayana & Mahabharata), *Leela* (Divine Play), *Utsav* (Festivals), and *Tirtha* (Pilgrimage) instead of parsing unorganized articles.
+- **Micro-Learning & Visual Panels** — Absorb complex lessons via 5–7 panel comic stories and interactive multiple-choice checkpoints.
+- **Panchang (Calendar-Aware) Surfacing** — Study relevant historical events and deity narratives mapped automatically to active solar-lunar dates.
+- **Habit-Building Gamification** — Stay consistent through experience points (XP), daily streaks, heart/health levels, and weekly competitive leagues.
+- **Modern Blueprint Aesthetic** — Engage with a premium, light-themed blueprint interface featuring dynamic SVG layouts and floating mascot micro-animations.
 
 ---
 
-## 🚀 Running the Components
+## ⚡ Quick Start
 
-### 1. View Design Prototypes (`/design`)
-To preview the design prototype layouts, open the HTML files directly from `/design/screens/` in any modern web browser:
-- **Login Mockup**: `/design/screens/login/dharmapath_login.html`
-- **Dashboard**: `/design/screens/home/app_home.html`
-- **Paths**: `/design/screens/paths/paths.html`
-- **Mantra Practice**: `/design/screens/mantra/mantra.html`
-- **Leagues**: `/design/screens/leagues/leagues.html`
+Get the app running locally on your web browser in under 60 seconds:
 
-### 2. Run React Native (Expo) App (`/app`)
-To run the React Native app:
 ```bash
-# Navigate to the React Native app directory
-cd app
+# Clone the repository
+git clone https://github.com/<USER>/Dharmapathapp.git
+cd Dharmapathapp/app
 
 # Install dependencies
 npm install
 
-# Launch the app on your connected Android Emulator, iOS Simulator, or Web browser
-npm run android # or npm run ios / npm run web
+# Run the Expo development server (Web default)
+npm run web
 ```
 
 ---
 
-## 📈 Roadmap & Business Model
+## 🛠️ Installation & Setup
 
-- **Product Paths**: Itihasa (Ramayana & Mahabharata), Leela (Gods & Avatars), Utsava (Festivals), and Tirtha (Sacred Places).
-- **Stage**: Prototype built on React Native (Expo) + Supabase. Closed beta testing in progress. Public launch targeted for **September 2026**.
-- **Monetization**: Freemium subscription model with monthly (₹99) and annual (₹799) tiers, StoreKit 2/Google Play Billing, and secondary non-intrusive ads on the free tier.
+### Prerequisites
+- [Node.js](https://nodejs.org/) (v18 or higher recommended)
+- [npm](https://www.npmjs.com/) or [Yarn](https://yarnpkg.com/)
+- Optional: Android Studio (for Android Emulator) or Xcode (for iOS Simulator)
+
+### Full Setup
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/<USER>/Dharmapathapp.git
+   cd Dharmapathapp
+   ```
+2. **Install application dependencies:**
+   ```bash
+   cd app
+   npm install
+   ```
+3. **Launch the development server:**
+   ```bash
+   # Run with Expo CLI
+   npm run dev
+   ```
+4. **Target Platform Selection:**
+   - Press **`w`** in the terminal to run the web interface.
+   - Press **`a`** to load the Android emulator.
+   - Press **`i`** to load the iOS simulator.
 
 ---
-*Developed by [Kedar Mujumdar](https://github.com/kedarmujumdar07) in collaboration with the Vande Bharatam accelerator initiative.*
+
+## 💻 Developer Usage Examples
+
+### 1. Consuming Global Preferences Context
+DharmaPath manages user onboarding and customization states globally. Developers can easily read or write state variables (e.g., current daily learning goals or user cohorts):
+
+```tsx
+import { usePreferences } from '@/context/preferences-context';
+
+export default function ProfileWidget() {
+  const { name, learningGoal, setLearningGoal } = usePreferences();
+
+  return (
+    <View>
+      <Text>Welcome, {name}!</Text>
+      <Button 
+        title="Switch to Sacred Goal" 
+        onPress={() => setLearningGoal('Sacred')} // 15 min/day
+      />
+    </View>
+  );
+}
+```
+
+### 2. Dotted Slideshow Active-Indicator
+The custom paths slideshow leverages pill-stretching indicators based on active indices:
+
+```tsx
+<View style={styles.slideIndicators}>
+  {SLIDES.map((_, idx) => {
+    const isDotActive = idx === activeIdx;
+    return (
+      <Pressable
+        key={idx}
+        onPress={() => setActiveIdx(idx)}
+        style={[
+          styles.dot,
+          isDotActive ? styles.dotActive : styles.dotInactive,
+        ]}
+      />
+    );
+  })}
+</View>
+```
+
+---
+
+## 🏛️ System Architecture
+
+DharmaPath is structured as a monorepo holding design specifications and React Native code:
+
+```
+Dharmapathapp/
+├── app/                     # Production React Native/Expo app
+│   ├── assets/              # App assets (icons, mascot, path graphics)
+│   │   ├── images/
+│   │   └── videos/          # Local video files used for animated onboarding
+│   ├── src/                 # Application codebase
+│   │   ├── app/             # Expo router file-based paths
+│   │   ├── components/      # Common custom widgets (ChoiceCard, BlueprintBackground)
+│   │   ├── context/         # User preference contexts and persistence
+│   │   └── screens/         # High-fidelity user screens
+│   └── package.json
+├── design/                  # Raw UI/UX design mockups (HTML/CSS/JS)
+│   ├── screens/             # Step-by-step layout prototype files
+│   └── shared-assets/       # Raw fonts, styling guidelines, and SVG structures
+└── LICENSE                  # Project licensing
+```
+
+---
+
+## 🗺️ Roadmap
+
+- [x] Animated onboarding flow with `expo-video` integration
+- [x] Custom blueprint-themed onboarding survey (Preferences)
+- [x] High-fidelity continuous scrolling login grid
+- [ ] Supabase backend database integration
+- [ ] Panchang API daily lesson triggers
+- [ ] Gamified leagues and weekly leaderboard systems
+
+---
+
+## 🤝 Contributing
+
+Contributions make the open-source community an amazing place to learn and build. If you'd like to contribute, please check out our [Contributing Guidelines](./CONTRIBUTING.md) to get started.
+
+---
+
+## 📄 License
+
+Distributed under the MIT License. See [LICENSE](./LICENSE) for details.
