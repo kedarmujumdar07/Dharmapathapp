@@ -1,56 +1,89 @@
-# Welcome to your Expo app 👋
+# DharmaPath Mobile Application (React Native)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Welcome to the **DharmaPath** React Native application codebase. This folder contains the frontend mobile implementation built using Expo and React Native, tailored with premium, high-fidelity user flows, rich animations, and blueprint aesthetics.
 
-## Get started
+---
 
-1. Install dependencies
+## 🚀 Key Features Implemented
 
-   ```bash
-   npm install
-   ```
+1. **Animated Onboarding Flow:**
+   - Powered by `expo-video` playing local MP4 videos (`app/assets/videos/`).
+   - Featuring a bouncing "+10 XP" badge with floating micro-animations.
+   - Fully customizable screen slide pagination.
 
-2. Start the app
+2. **Premium Login Experience:**
+   - Multi-column scrolling photo grid layout matching high-fidelity HTML mockups.
+   - Smooth continuous list scrolling animations utilizing `react-native-reanimated`.
+   - Sleek SVG authentication actions and layout.
 
-   ```bash
-   npx expo start
-   ```
+3. **Blueprint-Themed Preferences Flow:**
+   - 5-step preference tailoring flow using a cohesive, light-themed blueprint aesthetic.
+   - Interactive, auto-cycling **Paths Slideshow** with cross-fade scale transitions showcasing:
+     - **Itihasa** (Epics)
+     - **Leela** (Mythology)
+     - **Utsav** (Festivals)
+     - **Tirtha** (Pilgrimage)
+   - Dynamic slide indicators with expanding active-pill styles.
+   - persistent user states managed globally via `PreferencesContext`.
 
-In the output, you'll find options to open the app in a
+4. **Global State & Persistence:**
+   - Unified state management using React Context.
+   - Onboarding and selection preferences persisted locally using `@react-native-async-storage/async-storage` to ensure a smooth, gated user routing experience.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## 📂 Codebase Directory Structure
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```filepath
+Dharmapathapp/app/
+├── assets/                    # Static media files
+│   ├── images/                # App icons, mascot assets, and extracted slideshow images
+│   └── videos/                # Local MP4 videos for onboarding
+├── src/                       # Application source code
+│   ├── app/                   # File-based router configurations (_layout, index, etc.)
+│   ├── components/            # Reusable UI components
+│   ├── constants/             # Theme tokens and style constants
+│   ├── context/               # PreferencesContext and persistence layers
+│   └── screens/               # High-fidelity flows (Onboarding, Login, Preferences)
+├── package.json               # Dependency manifests and scripts
+└── tsconfig.json              # TypeScript compiler configurations
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-### Other setup steps
+## 🛠️ Technology Stack
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+- **Core Framework:** React Native with [Expo SDK 51+](https://expo.dev)
+- **Routing:** Expo Router (File-based navigation)
+- **Animations:** [React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/)
+- **Graphics:** React Native Svg
+- **Media Player:** Expo Video
+- **Storage:** React Native Async Storage
+- **Typography:** Google Fonts integration:
+  - *Space Grotesk* (Headers/Sleek elements)
+  - *JetBrains Mono* (Code style/Technical subtexts)
+  - *Caveat* & *Baloo 2* (Accent copy)
 
-## Learn more
+---
 
-To learn more about developing your project with Expo, look at the following resources:
+## 🚀 Getting Started
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### 1. Install Dependencies
+Make sure you are inside the `app` directory and install the packages:
+```bash
+npm install
+```
 
-## Join the community
+### 2. Run the Development Server
+Start the Metro bundler server:
+```bash
+npm run dev
+# or
+npx expo start
+```
 
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### 3. Open the Application
+Once the Metro bundler server starts, press the respective key in your terminal output to launch the app:
+- **`w`**: Open in Web Browser (Default port `http://localhost:8081`)
+- **`a`**: Open in Android Emulator
+- **`i`**: Open in iOS Simulator
