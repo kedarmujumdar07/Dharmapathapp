@@ -2,8 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
 
-const SOURCE_DIR = path.join(__dirname, 'assets', 'images-source');
-const OUTPUT_DIR = path.join(__dirname, 'assets', 'images');
+const SOURCE_DIR = path.join(__dirname, '..', 'app', 'assets', 'images-source');
+const OUTPUT_DIR = path.join(__dirname, '..', 'app', 'assets', 'images');
 
 // Ensure output directory exists
 if (!fs.existsSync(OUTPUT_DIR)) {
