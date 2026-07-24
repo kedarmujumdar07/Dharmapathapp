@@ -1,51 +1,43 @@
-# Miscellaneous
-*.class
-*.log
-*.pyc
-*.swp
+# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+
+# dependencies
+node_modules/
+
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Native
+.kotlin/
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro
+.metro-health-check*
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
 .DS_Store
-.atom/
-.buildlog/
-.history
-.project
-.vscode/
+*.pem
 
-# IntelliJ related
-*.iml
-*.ipr
-*.iws
-.idea/
+# local env files
+.env*.local
 
-# The Dart SDK
-.dart_tool/
+# typescript
+*.tsbuildinfo
 
-# Flutter related
-.flutter-plugins
-.flutter-plugins-dependencies
-.packages
-.pub-cache/
-.pub/
-/build/
+example
 
-# Symbol databases
-app.*.symbols
-
-# Android related
-**/android/local.properties
-**/android/key.properties
-**/android/**/GeneratedPluginRegistrant.java
-
-# iOS related
-**/ios/Flutter/flutter_export_environment.sh
-**/ios/Flutter/Generated.xcconfig
-**/ios/Flutter/flutter_plugins.dependencies
-**/ios/Pods/
-**/ios/.symlinks/
-**/ios/Flash/
-
-# Web related
-.custom_chrome_profile/
-
-# Project-specific assets
-assets/images/photo*.webp
-assets/videos/*.mp4
+# generated native folders
+/ios
+/android
