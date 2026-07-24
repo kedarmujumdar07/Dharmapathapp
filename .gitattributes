@@ -1,0 +1,4 @@
+# Exclude static mockup designs and base64 HTML files from GitHub Language Statistics
+design/** linguist-documentation
+design/** linguist-detectable=false
+app/yarn.lock linguist-generated
