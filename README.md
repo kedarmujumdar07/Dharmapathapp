@@ -36,8 +36,8 @@ Dharmapathapp/
   │     │     ├── mantra/  (Interactive Japa mantra practice counter)
   │     │     └── leagues/ (Competitive user leaderboards)
   │     └── shared-assets/ (shared fonts, colors, and SVGs)
-  └── app/                 (Production Flutter application code)
-        ├── lib/           (Dart implementation of mockups)
+  └── app/                 (Production React Native / Expo application code)
+        ├── src/           (TypeScript & Expo Router source code)
         └── assets/        (images, videos, and fonts)
 ```
 
@@ -53,17 +53,17 @@ To preview the design prototype layouts, open the HTML files directly from `/des
 - **Mantra Practice**: `/design/screens/mantra/mantra.html`
 - **Leagues**: `/design/screens/leagues/leagues.html`
 
-### 2. Run Flutter App (`/app`)
-To run the Flutter production app, ensure you have the Flutter SDK installed, then navigate into the `/app` folder and run the setup commands:
+### 2. Run React Native (Expo) App (`/app`)
+To run the React Native app on an Android emulator or device:
 ```bash
-# Navigate to the Flutter app directory
+# Navigate to the React Native app directory
 cd app
 
-# Fetch all production dependencies
-flutter pub get
+# Install dependencies if not done already
+npm install
 
-# Launch the app on your connected device/simulator
-flutter run
+# Launch the app on your connected Android Emulator / Device
+npx expo start --android
 ```
 
 ---
@@ -71,7 +71,7 @@ flutter run
 ## 📈 Roadmap & Business Model
 
 - **Product Paths**: Itihasa (Ramayana & Mahabharata), Leela (Gods & Avatars), Utsava (Festivals), and Tirtha (Sacred Places).
-- **Stage**: Prototype built on Flutter + Supabase. Closed beta testing in progress. Public launch targeted for **September 2026**.
+- **Stage**: Prototype built on React Native (Expo) + Supabase. Closed beta testing in progress. Public launch targeted for **September 2026**.
 - **Monetization**: Freemium subscription model with monthly (₹99) and annual (₹799) tiers, StoreKit 2/Google Play Billing, and secondary non-intrusive ads on the free tier.
 - **Future Vision**: Scaling to regional languages (Marathi, Tamil, Telugu), introducing advanced Vidya paths (Vedanta & Upanishads), and expanding diaspora outreach.
 

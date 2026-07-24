@@ -19,19 +19,107 @@
 
   html, body{
     height:100%;
-    background: var(--ink);
+    background: #242933;
     overflow: hidden;
     font-family: 'Nunito', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Phone mockup styling */
+  .phone {
+    position: relative;
+    width: 412px;
+    height: 866px;
+    background: #1C2028;
+    border-radius: 48px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.8),
+                inset 0 0 0 2px rgba(255,255,255,0.1),
+                inset 0 0 15px rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Dynamic Island camera notch */
+  .island {
+    position: absolute;
+    top: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 110px;
+    height: 30px;
+    background: #000000;
+    border-radius: 20px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 15px;
+    box-sizing: border-box;
+  }
+
+  .island-cam {
+    width: 8px;
+    height: 8px;
+    background: #111122;
+    border-radius: 50%;
+    margin-right: 5px;
+    box-shadow: inset 0 1px 2px rgba(255,255,255,0.2);
+  }
+
+  .island-mic {
+    width: 4px;
+    height: 4px;
+    background: #0a0a14;
+    border-radius: 50%;
+  }
+
+  /* Top Mobile Status Bar (9:41, icons) */
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 28px 4px;
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.75);
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+  }
+
+  .status-time {
+    letter-spacing: -0.2px;
+  }
+
+  .status-icons {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .status-icons svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
   }
 
   .app{
     position: relative;
-    width: 100%;
-    height: 100vh;
-    max-width: 480px;
-    margin: 0 auto;
+    width: 390px;
+    height: 844px;
     overflow: hidden;
     background: var(--ink);
+    border-radius: 40px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.9);
   }
 
   /* ---------- Scrolling photo grid ---------- */
@@ -182,25 +270,44 @@
 </head>
 <body>
 
-<div class="app">
-
-  <div class="grid-bg" id="gridBg"></div>
-  <div class="overlay"></div>
-
-  <div class="content">
-    <div class="logo">DharmaPath</div>
-    <div class="tagline">All in one Hinduism app</div>
+<div class="phone">
+  <div class="island">
+    <div class="island-cam"></div>
+    <div class="island-mic"></div>
   </div>
 
-  <div class="sheet">
-    <div class="grabber"></div>
-    <p>Sign in to begin your journey</p>
-    <button class="google-btn">
-      <svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.9 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.7-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 16 19 13 24 13c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.5 0 10.4-1.9 14.3-5.1l-6.6-5.6C29.6 34.9 26.9 36 24 36c-5.3 0-9.7-3.1-11.3-7.6l-6.5 5C9.6 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.2-4.3 5.6l6.6 5.6C41.4 36 44 30.5 44 24c0-1.3-.1-2.7-.4-3.5z"/></svg>
-      Sign in with Google
-    </button>
-  </div>
+  <div class="app">
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <div class="status-time">9:41</div>
+      <div class="status-icons">
+        <!-- Signal -->
+        <svg viewBox="0 0 24 24"><path d="M2 22h20V2z"/></svg>
+        <!-- Wifi -->
+        <svg viewBox="0 0 24 24"><path d="M12 21l-12-18h24z"/></svg>
+        <!-- Battery -->
+        <svg viewBox="0 0 24 24"><path d="M17 5H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zM23 9v6"/></svg>
+      </div>
+    </div>
 
+    <div class="grid-bg" id="gridBg"></div>
+    <div class="overlay"></div>
+
+    <div class="content">
+      <div class="logo">DharmaPath</div>
+      <div class="tagline">All in one Hinduism app</div>
+    </div>
+
+    <div class="sheet">
+      <div class="grabber"></div>
+      <p>Sign in to begin your journey</p>
+      <button class="google-btn">
+        <svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.9 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.7-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 16 19 13 24 13c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.6 6.1 29.6 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.5 0 10.4-1.9 14.3-5.1l-6.6-5.6C29.6 34.9 26.9 36 24 36c-5.3 0-9.7-3.1-11.3-7.6l-6.5 5C9.6 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.2-4.3 5.6l6.6 5.6C41.4 36 44 30.5 44 24c0-1.3-.1-2.7-.4-3.5z"/></svg>
+        Sign in with Google
+      </button>
+    </div>
+
+  </div>
 </div>
 
 <script>
