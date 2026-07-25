@@ -1,26 +1,45 @@
 /**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
+ * Colors and typography tokens for DharmaPath
  */
 
 import '@/global.css';
-
 import { Platform } from 'react-native';
 
 export const Colors = {
+  // DharmaPath Palette Tokens
+  saffron: '#E07B39',
+  saffronDark: '#D84B16',
+  accentRed: '#E2472F',
+  accentRedDark: '#BF3A24',
+  gold: '#C8960C',
+  goldBright: '#FFE066',
+  navyDark: '#1C2536',
+  bgCream: '#FFF8F2',
+  cardCream: '#EDE7DA',
+  creamInk: '#14171D',
+  bgDark: '#F4F6F8',
+  bgDark2: '#E2E8F0',
+  cardDark: '#FFFFFF',
+  cardDarkBorder: '#E2E8F0',
+  textLight: '#1E293B',
+  textMuted: '#64748B',
+  textMutedCream: '#8A8172',
+
   light: {
-    text: '#000000',
-    background: '#ffffff',
-    backgroundElement: '#F0F0F3',
-    backgroundSelected: '#E0E1E6',
-    textSecondary: '#60646C',
+    text: '#1E293B',
+    background: '#FFF8F2',
+    backgroundElement: '#EDE7DA',
+    backgroundSelected: '#E2472F',
+    textSecondary: '#64748B',
+    border: '#E2E8F0',
   },
   dark: {
-    text: '#ffffff',
-    background: '#000000',
-    backgroundElement: '#212225',
-    backgroundSelected: '#2E3135',
-    textSecondary: '#B0B4BA',
+    text: '#FFFFFF',
+    background: '#0A0C0F',
+    backgroundElement: '#1C2536',
+    backgroundSelected: '#E2472F',
+    textSecondary: '#64748B',
+    border: '#24211D',
   },
 } as const;
 
@@ -28,26 +47,22 @@ export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
 
 export const Fonts = Platform.select({
   ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
-    sans: 'system-ui',
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
-    serif: 'ui-serif',
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
-    rounded: 'ui-rounded',
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
-    mono: 'ui-monospace',
+    sans: 'SpaceGrotesk-Regular',
+    serif: 'PlayfairDisplay-Regular',
+    mono: 'JetBrainsMono-Regular',
+    display: 'SpaceGrotesk-Bold',
+  },
+  android: {
+    sans: 'SpaceGrotesk_400Regular',
+    serif: 'PlayfairDisplay_700Bold',
+    mono: 'JetBrainsMono_400Regular',
+    display: 'SpaceGrotesk_700Bold',
   },
   default: {
-    sans: 'normal',
+    sans: 'sans-serif',
     serif: 'serif',
-    rounded: 'normal',
     mono: 'monospace',
-  },
-  web: {
-    sans: 'var(--font-display)',
-    serif: 'var(--font-serif)',
-    rounded: 'var(--font-rounded)',
-    mono: 'var(--font-mono)',
+    display: 'sans-serif',
   },
 });
 
@@ -63,3 +78,4 @@ export const Spacing = {
 
 export const BottomTabInset = Platform.select({ ios: 50, android: 80 }) ?? 0;
 export const MaxContentWidth = 800;
+
