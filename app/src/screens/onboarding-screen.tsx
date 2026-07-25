@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -9,7 +9,6 @@ import {
   Platform,
 } from 'react-native';
 import Animated, {
-  useSharedValue,
   useAnimatedStyle,
   useDerivedValue,
   withTiming,
@@ -20,11 +19,24 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useVideoPlayer, VideoView } from 'expo-video';
 import { SymbolView } from 'expo-symbols';
 import { LoginScreen } from './login-screen';
+import { Colors } from '@/constants/theme';
+import { DotIndicators } from '@/components/ui/dot-indicators';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-const slidesData = [
+export interface OnboardingSlideData {
+  id: string;
+  title: string;
+  subtitle: string;
+  video: any;
+  videoWidth: number;
+  videoHeight: number;
+  showXp: boolean;
+}
+
+const slidesData: OnboardingSlideData[] = [
   {
+    id: 'epics',
     title: 'Epics\nCome\nAlive.',
     subtitle: 'Ramayana, Mahabharata and more —\ntold through stunning comic stories.',
     video: require('@/assets/videos/onboarding_epics_come_alive.mp4'),
@@ -33,6 +45,7 @@ const slidesData = [
     showXp: false,
   },
   {
+    id: 'wisdom',
     title: 'Ancient\nWisdom,\nDaily.',
     subtitle: 'Mantras, Panchang and festival stories —\nevery single day.',
     video: require('@/assets/videos/onboarding_ancient_wisdom_daily.mp4'),
@@ -41,6 +54,7 @@ const slidesData = [
     showXp: false,
   },
   {
+    id: 'growth',
     title: 'Play.\nLearn.\nGrow.',
     subtitle: 'Earn XP, build streaks and climb the\nleagues — learning feels like a game.',
     video: require('@/assets/videos/onboarding_play_learn_grow.mp4'),
@@ -58,6 +72,9 @@ interface OnboardingVideoProps {
 }
 
 function OnboardingVideo({ source, isActive, width, height }: OnboardingVideoProps) {
+  const [hasError, setHasError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
   const player = useVideoPlayer(source, (p) => {
     p.loop = true;
     p.muted = true;
@@ -67,27 +84,56 @@ function OnboardingVideo({ source, isActive, width, height }: OnboardingVideoPro
   });
 
   useEffect(() => {
-    if (isActive) {
-      player.play();
-    } else {
-      player.pause();
+    if (!player) return;
+    try {
+      if (isActive) {
+        player.play();
+      } else {
+        player.pause();
+      }
+      setIsLoading(false);
+    } catch (err) {
+      console.warn('Video playback error:', err);
+      setHasError(true);
+      setIsLoading(false);
     }
   }, [isActive, player]);
 
+  if (hasError) {
+    return (
+      <View
+        style={[
+          styles.videoFallback,
+          { width, height, borderRadius: 16 },
+        ]}
+      >
+        <Text style={styles.videoFallbackText}>DharmaPath Media</Text>
+      </View>
+    );
+  }
+
   return (
-    <VideoView
-      player={player}
-      style={{ width, height, borderRadius: 16 }}
-      nativeControls={false}
-      contentFit="cover"
-    />
+    <View style={{ width, height, justifyContent: 'center', alignItems: 'center' }}>
+      {isLoading && (
+        <ActivityIndicator
+          size="small"
+          color={Colors.saffron}
+          style={StyleSheet.absoluteFillObject}
+        />
+      )}
+      <VideoView
+        player={player}
+        style={{ width, height, borderRadius: 16 }}
+        nativeControls={false}
+        contentFit="cover"
+      />
+    </View>
   );
 }
 
 export function OnboardingScreen() {
   const [currentPage, setCurrentPage] = useState(0);
 
-  // Background color animation interpolation using Reanimated
   const progress = useDerivedValue(() => {
     return withTiming(currentPage, { duration: 460 });
   });
@@ -101,7 +147,6 @@ export function OnboardingScreen() {
     return { backgroundColor };
   });
 
-  // Scale animation for +10 XP badge
   const badgeScale = useDerivedValue(() => {
     return currentPage === 2
       ? withSpring(1, { damping: 10, stiffness: 100 })
@@ -114,25 +159,25 @@ export function OnboardingScreen() {
     };
   });
 
-  // Auto skip timer
   useEffect(() => {
     if (currentPage >= 3) return;
 
     const timer = setTimeout(() => {
-      setCurrentPage((prev) => {
-        if (prev < 3) return prev + 1;
-        return prev;
-      });
+      setCurrentPage((prev) => (prev < 3 ? prev + 1 : prev));
     }, 7000);
 
     return () => clearTimeout(timer);
   }, [currentPage]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (currentPage < 3) {
       setCurrentPage((prev) => prev + 1);
     }
-  };
+  }, [currentPage]);
+
+  const handleDotSelect = useCallback((index: number) => {
+    setCurrentPage(index);
+  }, []);
 
   if (currentPage === 3) {
     return <LoginScreen />;
@@ -144,7 +189,7 @@ export function OnboardingScreen() {
     <Animated.View style={[styles.container, animatedBgStyle]}>
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.contentContainer}>
-          {/* Video / Illustration Container */}
+          {/* Video Container */}
           <View style={styles.videoWrapper}>
             <View style={styles.videoInner}>
               <OnboardingVideo
@@ -159,7 +204,11 @@ export function OnboardingScreen() {
             {slide.showXp && (
               <Animated.View style={[styles.xpBadge, animatedBadgeStyle]}>
                 <View style={styles.xpBadgeContent}>
-                  <SymbolView name="star.fill" tintColor="#D84B16" size={14} />
+                  {Platform.OS === 'ios' ? (
+                    <SymbolView name="star.fill" tintColor="#D84B16" size={14} />
+                  ) : (
+                    <Text style={styles.starText}>★</Text>
+                  )}
                   <Text style={styles.xpText}>+10 XP Earned!</Text>
                 </View>
               </Animated.View>
@@ -173,36 +222,24 @@ export function OnboardingScreen() {
           </View>
         </View>
 
-        {/* Bottom Navigation Controls */}
+        {/* Footer Navigation */}
         <View style={styles.bottomControls}>
-          {/* Pagination Dots */}
-          <View style={styles.dotsContainer}>
-            {slidesData.map((_, index) => {
-              const active = currentPage === index;
-              return (
-                <View
-                  key={index}
-                  style={[
-                    styles.dot,
-                    active && styles.activeDot,
-                    {
-                      backgroundColor: active
-                        ? '#ffffff'
-                        : 'rgba(255, 255, 255, 0.35)',
-                    },
-                  ]}
-                />
-              );
-            })}
-          </View>
+          <DotIndicators
+            total={slidesData.length}
+            active={currentPage}
+            onSelect={handleDotSelect}
+            activeColor="#FFFFFF"
+            inactiveColor="rgba(255, 255, 255, 0.35)"
+          />
 
-          {/* Next Button */}
           <Pressable
             onPress={handleNext}
             style={({ pressed }) => [
               styles.nextBtn,
               pressed && styles.pressed,
             ]}
+            accessibilityRole="button"
+            accessibilityLabel={currentPage === 2 ? "Let's Begin" : 'Next slide'}
           >
             {currentPage === 2 ? (
               <Text style={[styles.nextBtnText, { color: '#151627' }]}>
@@ -218,11 +255,23 @@ export function OnboardingScreen() {
                 >
                   Next
                 </Text>
-                <SymbolView
-                  name="arrow.right"
-                  tintColor={currentPage === 0 ? '#EE9B48' : '#550303'}
-                  size={16}
-                />
+                {Platform.OS === 'ios' ? (
+                  <SymbolView
+                    name="arrow.right"
+                    tintColor={currentPage === 0 ? '#EE9B48' : '#550303'}
+                    size={16}
+                  />
+                ) : (
+                  <Text
+                    style={{
+                      color: currentPage === 0 ? '#EE9B48' : '#550303',
+                      fontSize: 16,
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    →
+                  </Text>
+                )}
               </View>
             )}
           </Pressable>
@@ -267,11 +316,21 @@ const styles = StyleSheet.create({
       },
     }),
   },
+  videoFallback: {
+    backgroundColor: Colors.cardCream,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  videoFallbackText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: Colors.saffronDark,
+  },
   xpBadge: {
     position: 'absolute',
     top: 40,
     right: 10,
-    backgroundColor: '#FFE066',
+    backgroundColor: Colors.goldBright,
     borderRadius: 20,
     paddingHorizontal: 12,
     paddingVertical: 6,
@@ -292,9 +351,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 4,
   },
+  starText: {
+    color: Colors.saffronDark,
+    fontSize: 14,
+    fontWeight: '700',
+  },
   xpText: {
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'sans-serif',
-    color: '#D84B16',
+    color: Colors.saffronDark,
     fontWeight: '700',
     fontSize: 12,
   },
@@ -303,14 +366,12 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   title: {
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'sans-serif',
-    color: '#ffffff',
+    color: '#FFFFFF',
     fontSize: 36,
     fontWeight: '800',
     lineHeight: 40,
   },
   subtitle: {
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'sans-serif',
     color: 'rgba(255, 255, 255, 0.9)',
     fontSize: 15,
     fontWeight: '400',
@@ -322,20 +383,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 24,
   },
-  dotsContainer: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-  dot: {
-    height: 6,
-    borderRadius: 3,
-    width: 6,
-  },
-  activeDot: {
-    width: 16,
-  },
   nextBtn: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#FFFFFF',
     borderRadius: 26,
     paddingVertical: 12,
     paddingHorizontal: 20,
@@ -346,7 +395,6 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   nextBtnText: {
-    fontFamily: Platform.OS === 'ios' ? 'System' : 'sans-serif',
     fontWeight: '600',
     fontSize: 16,
   },
@@ -355,3 +403,4 @@ const styles = StyleSheet.create({
     transform: [{ scale: 0.97 }],
   },
 });
+

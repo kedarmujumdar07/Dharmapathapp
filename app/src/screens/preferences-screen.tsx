@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import {
   View,
   Text,
@@ -6,105 +6,83 @@ import {
   Pressable,
   TextInput,
   Image,
-  Dimensions,
-  Platform,
-  ScrollView,
+  FlatList,
   KeyboardAvoidingView,
-  ActivityIndicator,
+  Platform,
 } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
-  useDerivedValue,
-  withTiming,
   withRepeat,
+  withTiming,
   Easing,
 } from 'react-native-reanimated';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { SymbolView } from 'expo-symbols';
-import Svg, { G, Path, Circle } from 'react-native-svg';
-import { LinearGradient } from 'expo-linear-gradient';
-import {
-  useFonts,
-  SpaceGrotesk_400Regular,
-  SpaceGrotesk_500Medium,
-  SpaceGrotesk_600SemiBold,
-  SpaceGrotesk_700Bold,
-} from '@expo-google-fonts/space-grotesk';
-import {
-  JetBrainsMono_400Regular,
-  JetBrainsMono_500Medium,
-  JetBrainsMono_700Bold,
-} from '@expo-google-fonts/jetbrains-mono';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { usePreferences } from '@/context/preferences-context';
+import { Colors } from '@/constants/theme';
+import { ChoiceCard } from '@/components/ui/choice-card';
+import { PathSlideshow } from '@/components/ui/path-slideshow';
+import { BlueprintBackground } from '@/components/ui/blueprint-background';
 
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
-
-// Mascot assets
 const mascot1 = require('@/assets/images/mascot.png');
 const mascot2 = require('@/assets/images/mascot2.png');
 
-// Path slideshow assets
-const pathItihasa = require('@/assets/images/path_itihasa.jpg');
-const pathLeela = require('@/assets/images/path_leela.jpg');
-const pathUtsav = require('@/assets/images/path_utsav.png');
-const pathTirtha = require('@/assets/images/path_tirtha.png');
-
-const SLIDES = [
-  {
-    key: 'itihasa',
-    title: 'ITIHASA',
-    sub: 'इतिहास',
-    desc: 'The Great Epics, Ramayana and Mahabharata. Walk with Ram, stand with the Pandavas, hear the dharma of the battlefield.',
-    tag: 'EPICS',
-    image: pathItihasa,
-  },
-  {
-    key: 'leela',
-    title: 'LEELA',
-    sub: 'लीला',
-    desc: 'Divine Play, the stories of Krishna, Shiva, Devi and the Gods. Every story is a window into the infinite.',
-    tag: 'MYTHOLOGY',
-    image: pathLeela,
-  },
-  {
-    key: 'utsav',
-    title: 'UTSAV',
-    sub: 'उत्सव',
-    desc: 'Sacred Festivals, understand the cosmic significance of every celebration. Live by the rhythm of the sacred calendar.',
-    tag: 'FESTIVALS',
-    image: pathUtsav,
-  },
-  {
-    key: 'tirtha',
-    title: 'TIRTHA',
-    sub: 'तीर्थ',
-    desc: 'Sacred Pilgrimage, every temple, every river, every mountain has a story. Know the land that birthed civilization.',
-    tag: 'PILGRIMAGE',
-    image: pathTirtha,
-  },
-];
-
-interface ChoiceCardProps {
+interface ChoiceItem {
+  id: string;
   indexStr: string;
   label: string;
   subtitle?: string;
   badge?: string;
-  isSelected: boolean;
-  onTap: () => void;
 }
 
-function ChoiceCard({ indexStr, label, subtitle, badge, isSelected, onTap }: ChoiceCardProps) {
+const AGE_OPTIONS: ChoiceItem[] = [
+  { id: '12-18', indexStr: '01', label: '12-18', subtitle: 'Category: Youth / Junior' },
+  { id: '18-24', indexStr: '02', label: '18-24', subtitle: 'Category: Young Adult' },
+  { id: '24+', indexStr: '03', label: '24+', subtitle: 'Category: General Cohort' },
+];
+
+const REFERRAL_OPTIONS: ChoiceItem[] = [
+  { id: 'Friends / Family', indexStr: '01', label: 'Friends / Family', subtitle: 'Word of Mouth Referral' },
+  { id: 'Instagram / YouTube', indexStr: '02', label: 'Instagram / YouTube', subtitle: 'Social Media Channels' },
+  { id: 'Web Search', indexStr: '03', label: 'Web Search', subtitle: 'Organic Search Results' },
+  { id: 'App Store / Play Store', indexStr: '04', label: 'App Store / Play Store', subtitle: 'Direct Store Discovery' },
+];
+
+const KNOWLEDGE_OPTIONS: ChoiceItem[] = [
+  { id: 'Beginner / Curious', indexStr: '01', label: 'Beginner / Curious', subtitle: 'New to Epics & Vedic Wisdom', badge: 'LEVEL 1' },
+  { id: 'Intermediate', indexStr: '02', label: 'Intermediate', subtitle: 'Familiar with Ramayana & Gita', badge: 'LEVEL 2' },
+  { id: 'Advanced', indexStr: '03', label: 'Advanced', subtitle: 'Deep Explorer of Texts', badge: 'LEVEL 3' },
+  { id: 'Scholar / Practitioner', indexStr: '04', label: 'Scholar / Practitioner', subtitle: 'Academic or Spiritual Guide', badge: 'PRO' },
+];
+
+const GOAL_OPTIONS: ChoiceItem[] = [
+  { id: 'Stories & Epics', indexStr: '01', label: 'Stories & Epics', subtitle: 'Read comic-style epics' },
+  { id: 'Daily Practice', indexStr: '02', label: 'Daily Practice', subtitle: 'Mantras, Panchang & Rituals' },
+  { id: 'Cultural Connection', indexStr: '03', label: 'Cultural Connection', subtitle: 'Festivals & Heritage' },
+  { id: 'Academic Study', indexStr: '04', label: 'Academic Study', subtitle: 'Scriptures & Philosophy' },
+  { id: 'Family & Heritage', indexStr: '05', label: 'Family & Heritage', subtitle: 'Pass down wisdom' },
+];
+
+function MascotFrame({ imageSource, zoom = false }: { imageSource: any; zoom?: boolean }) {
+  const translateY = useSharedValue(0);
+
+  useEffect(() => {
+    translateY.value = withRepeat(
+      withTiming(-4, { duration: 1500, easing: Easing.inOut(Easing.ease) }),
+      -1,
+      true
+    );
+  }, [translateY]);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+  }));
+
   return (
-    <Pressable
-      onPress={onTap}
-      style={({ pressed }) => [
-        styles.choiceCard,
-        isSelected ? styles.cardSelected : styles.cardUnselected,
-        pressed && styles.cardPressed,
-      ]}
-    >
-      <View
+    <View style={styles.mascotFrame}>
+      <Text style={styles.mascotTag}>DHARMI™</Text>
+      <Animated.Image
+        source={imageSource}
         style={[
           styles.choiceIndex,
           isSelected ? styles.indexSelected : styles.indexUnselected,

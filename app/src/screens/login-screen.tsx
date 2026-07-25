@@ -1,13 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   View,
   Text,
   StyleSheet,
   Pressable,
-  Dimensions,
   Image,
   Platform,
-  ActivityIndicator,
+  Dimensions,
 } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -16,14 +15,8 @@ import Animated, {
   withTiming,
   Easing,
 } from 'react-native-reanimated';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { LinearGradient } from 'expo-linear-gradient';
-import Svg, { Path } from 'react-native-svg';
-import { useFonts, Caveat_700Bold } from '@expo-google-fonts/caveat';
-import { Baloo2_700Bold, Baloo2_800ExtraBold } from '@expo-google-fonts/baloo-2';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { usePreferences } from '@/context/preferences-context';
-
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const CARD_HEIGHT = 180;
 const GAP = 8;
 const REPEAT_COUNT = 6;
