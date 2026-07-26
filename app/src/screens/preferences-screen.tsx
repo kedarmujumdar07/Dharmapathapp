@@ -7,22 +7,39 @@ import {
   TextInput,
   Image,
   FlatList,
+  ScrollView,
+  ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
+  useDerivedValue,
   withRepeat,
   withTiming,
   Easing,
 } from 'react-native-reanimated';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import Svg, { Path, Circle, G } from 'react-native-svg';
+import { LinearGradient } from 'expo-linear-gradient';
+import { SymbolView } from 'expo-symbols';
+import {
+  useFonts,
+  SpaceGrotesk_400Regular,
+  SpaceGrotesk_500Medium,
+  SpaceGrotesk_600SemiBold,
+  SpaceGrotesk_700Bold,
+} from '@expo-google-fonts/space-grotesk';
+import {
+  JetBrainsMono_400Regular,
+  JetBrainsMono_500Medium,
+  JetBrainsMono_700Bold,
+} from '@expo-google-fonts/jetbrains-mono';
 import { usePreferences } from '@/context/preferences-context';
 import { Colors } from '@/constants/theme';
 import { ChoiceCard } from '@/components/ui/choice-card';
 import { PathSlideshow } from '@/components/ui/path-slideshow';
-import { BlueprintBackground } from '@/components/ui/blueprint-background';
 
 const mascot1 = require('@/assets/images/mascot.png');
 const mascot2 = require('@/assets/images/mascot2.png');
@@ -83,161 +100,16 @@ function MascotFrame({ imageSource, zoom = false }: { imageSource: any; zoom?: b
       <Text style={styles.mascotTag}>DHARMI™</Text>
       <Animated.Image
         source={imageSource}
-        style={[
-          styles.choiceIndex,
-          isSelected ? styles.indexSelected : styles.indexUnselected,
-        ]}
-      >
-        <Text
-          style={[
-            styles.indexText,
-            { color: isSelected ? '#FFFFFF' : '#64748B' },
-          ]}
-        >
-          {indexStr}
-        </Text>
-      </View>
-
-      <View style={styles.cardTextContainer}>
-        <Text
-          style={[
-            styles.cardLabel,
-            { color: isSelected ? '#FFFFFF' : '#1E293B' },
-          ]}
-        >
-          {label}
-        </Text>
-        {subtitle && (
-          <Text
-            style={[
-              styles.cardSubtitle,
-              { color: isSelected ? 'rgba(255,255,255,0.75)' : '#64748B' },
-            ]}
-          >
-            {subtitle}
-          </Text>
-        )}
-      </View>
-
-      {badge && (
-        <View
-          style={[
-            styles.badge,
-            isSelected ? styles.badgeSelected : styles.badgeUnselected,
-          ]}
-        >
-          <Text
-            style={[
-              styles.badgeText,
-              { color: isSelected ? '#FFFFFF' : '#64748B' },
-            ]}
-          >
-            {badge}
-          </Text>
-        </View>
-      )}
-    </Pressable>
-  );
-}
-
-interface PathSlideProps {
-  title: string;
-  sub: string;
-  desc: string;
-  tag: string;
-  image: any;
-  isActive: boolean;
-}
-
-function PathSlide({ title, sub, desc, tag, image, isActive }: PathSlideProps) {
-  const opacity = useSharedValue(isActive ? 1 : 0);
-  const scale = useSharedValue(isActive ? 1 : 0.98);
-
-  useEffect(() => {
-    opacity.value = withTiming(isActive ? 1 : 0, { duration: 500 });
-    scale.value = withTiming(isActive ? 1 : 0.98, { duration: 500 });
-  }, [isActive]);
-
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      opacity: opacity.value,
-      transform: [{ scale: scale.value }],
-      zIndex: isActive ? 2 : 1,
-    };
-  });
-
-  return (
-    <Animated.View
-      style={[
-        StyleSheet.absoluteFill,
-        animatedStyle,
-        { pointerEvents: isActive ? 'auto' : 'none' },
-      ]}
-    >
-      <View style={styles.pathCard}>
-        <Image source={image} style={StyleSheet.absoluteFill} resizeMode="cover" />
-        <LinearGradient
-          colors={['transparent', 'rgba(20, 12, 8, 0.28)', 'rgba(20, 12, 8, 0.92)']}
-          locations={[0, 0.58, 1]}
-          style={StyleSheet.absoluteFill}
-        />
-        <View style={styles.cardContent}>
-          <View style={styles.cardHeaderContainer}>
-            <Text style={styles.cardTitle}>{title}</Text>
-            <Text style={styles.cardSub}>{sub}</Text>
-          </View>
-          <Text style={styles.cardDesc}>{desc}</Text>
-          <View style={styles.tagWrapper}>
-            <Text style={styles.tagText}>{tag}</Text>
-          </View>
-        </View>
-      </View>
-    </Animated.View>
-  );
-}
-
-function PathsSlideshow() {
-  const [activeIdx, setActiveIdx] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveIdx((prev) => (prev + 1) % SLIDES.length);
-    }, 2200);
-    return () => clearInterval(timer);
-  }, []);
-
-  return (
-    <View style={styles.slideshowContainer}>
-      {SLIDES.map((slide, idx) => (
-        <PathSlide
-          key={slide.key}
-          title={slide.title}
-          sub={slide.sub}
-          desc={slide.desc}
-          tag={slide.tag}
-          image={slide.image}
-          isActive={idx === activeIdx}
-        />
-      ))}
-
-      <View style={styles.slideIndicators}>
-        {SLIDES.map((_, idx) => {
-          const isDotActive = idx === activeIdx;
-          return (
-            <Pressable
-              key={idx}
-              onPress={() => setActiveIdx(idx)}
-              style={[
-                styles.dot,
-                isDotActive ? styles.dotActive : styles.dotInactive,
-              ]}
-            />
-          );
-        })}
-      </View>
+        style={[styles.mascotImage, animatedStyle]}
+        resizeMode="contain"
+      />
     </View>
   );
 }
+
+
+
+
 
 // Blueprint circuit-line background SVG
 function BlueprintBackground() {
@@ -420,7 +292,7 @@ export function PreferencesScreen() {
               <Text style={styles.slideshowHeader}>YOUR JOURNEY</Text>
             </View>
 
-            <PathsSlideshow />
+            <PathSlideshow />
 
             <View style={[styles.inputGroup, isFocused && styles.inputGroupFocused]}>
               <TextInput

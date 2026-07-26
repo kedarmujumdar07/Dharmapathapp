@@ -118,12 +118,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.navyDark,
   },
   image: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     width: '100%',
     height: '100%',
   },
   overlay: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     backgroundColor: 'rgba(20, 12, 8, 0.55)',
   },
   content: {

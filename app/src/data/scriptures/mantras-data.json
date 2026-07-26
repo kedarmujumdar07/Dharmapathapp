@@ -1,0 +1,78 @@
+[
+  {
+    "id": "gayatri_mantra",
+    "category": "mantra",
+    "veda": "rig",
+    "title": {
+      "sanskrit": "गायत्री मन्त्र (ऋग्वेद ३.६२.१०)",
+      "iast": "Gāyatrī Mantra (Rigveda 3.62.10)",
+      "english": "Gayatri Mantra (Rigveda 3.62.10)"
+    },
+    "sanskrit_text": "ॐ भूर्भुवः स्वः।\nतत्सवितुर्वरेण्यं\nभर्गो देवस्य धीमहि।\nधियो यो नः प्रचोदयात्॥",
+    "iast_transliteration": "oṁ bhūrbhuvaḥ svaḥ |\ntatsaviturvareṇyaṁ\nbhargo devasya dhīmahi |\ndhiyo yo naḥ pracodayāt ||",
+    "translations": [
+      {
+        "author": "Traditional Public Domain / Sir William Jones",
+        "language": "en",
+        "text": "Om. We meditate on the supreme glory of the Divine Sun, the Creator of the universe. May He inspire and illumine our intellect and spiritual consciousness."
+      },
+      {
+        "author": "Traditional Public Domain",
+        "language": "hi",
+        "text": "उस प्राणस्वरूप, दुःखनाशक, सुखस्वरूप, श्रेष्ठ, तेजस्वी, पापनाशक, देवस्वरूप परमात्मा को हम अपनी अंतरात्मा में धारण करें। वह परमात्मा हमारी बुद्धि को सन्मार्ग में प्रेरित करे।"
+      }
+    ],
+    "source": "Rigveda Mandala 3, Sukta 62, Mantra 10"
+  },
+  {
+    "id": "mahamrityunjaya_mantra",
+    "category": "mantra",
+    "veda": "rig",
+    "deity": "shiva",
+    "title": {
+      "sanskrit": "महामृत्युञ्जय मन्त्र (ऋग्वेद ७.५९.१२)",
+      "iast": "Mahāmṛtyuñjaya Mantra (Rigveda 7.59.12)",
+      "english": "Mahamrityunjaya Mantra (Rigveda 7.59.12)"
+    },
+    "sanskrit_text": "ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम्।\nउर्वारुकमिव बन्धनान्मृत्यॉर्मुक्षीय माऽमृतात्॥",
+    "iast_transliteration": "oṁ tryambakaṁ yajāmahe sugandhiṁ puṣṭivardhanam |\nurvārukamiva bandhanānmṛtyōrmukṣīya mā'mṛtāt ||",
+    "translations": [
+      {
+        "author": "Traditional Public Domain",
+        "language": "en",
+        "text": "We worship the Three-Eyed Lord Shiva, who is fragrant and who nourishes all beings. As a ripe cucumber is freed from its vine, may we be liberated from death and ignorance, for the sake of immortality."
+      },
+      {
+        "author": "Traditional Public Domain",
+        "language": "hi",
+        "text": "हम त्रिनेत्रधारी भगवान शिव की पूजा करते हैं, जो सुगन्धित हैं और हमारा पोषण करते हैं। जिस प्रकार पका हुआ खरबूजा अपनी बेल से मुक्त हो जाता है, उसी प्रकार हम मृत्यु के भय से मुक्त होकर अमरता प्राप्त करें।"
+      }
+    ],
+    "source": "Rigveda Mandala 7, Sukta 59, Mantra 12"
+  },
+  {
+    "id": "shanti_mantra_1",
+    "category": "mantra",
+    "veda": "yajur",
+    "title": {
+      "sanskrit": "शान्ति मन्त्र (सह नाववतु)",
+      "iast": "Śānti Mantra (Saha Nāvavatu)",
+      "english": "Peace Invocation (Saha Nāvavatu)"
+    },
+    "sanskrit_text": "ॐ सह नाववतु। सह नौ भुनक्तु।\nसह वीर्यं करवावहै।\nतेजस्वि नावधीतमस्तु मा विद्विषावहै।\nॐ शान्तिः शान्तिः शान्तिः॥",
+    "iast_transliteration": "oṁ saha nāvavatu | saha nau bhunaktu |\nsaha vīryaṁ karavāvahai |\ntejasvi nāvadhītamastu mā vidviṣāvahai |\noṁ śāntiḥ śāntiḥ śāntiḥ ||",
+    "translations": [
+      {
+        "author": "Traditional Public Domain",
+        "language": "en",
+        "text": "Om. May the Divine protect us both (teacher and student). May He nourish us both. May we work together with great energy. May our study be brilliant and effective. May there be no animosity between us. Om Peace, Peace, Peace."
+      },
+      {
+        "author": "Traditional Public Domain",
+        "language": "hi",
+        "text": "ॐ। ईश्वर हम दोनों (गुरु और शिष्य) की साथ-साथ रक्षा करे, हमारा साथ-साथ पालन करे। हम साथ मिलकर महान सामर्थ्य अर्जित करें। हमारा अध्ययन तेजस्वी हो और हम आपस में कभी द्वेष न करें। ॐ शान्ति, शान्ति, शान्ति।"
+      }
+    ],
+    "source": "Taittiriya Upanishad / Krishna Yajurveda"
+  }
+]

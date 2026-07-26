@@ -118,7 +118,7 @@ function OnboardingVideo({ source, isActive, width, height }: OnboardingVideoPro
         <ActivityIndicator
           size="small"
           color={Colors.saffron}
-          style={StyleSheet.absoluteFillObject}
+          style={StyleSheet.absoluteFill}
         />
       )}
       <VideoView
