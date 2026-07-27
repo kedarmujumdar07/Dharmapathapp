@@ -1,0 +1,102 @@
+[
+  {
+    "id": "shiva_tandava_1",
+    "category": "stotra",
+    "deity": "shiva",
+    "title": {
+      "sanskrit": "शिवताण्डवस्तोत्रम् (श्लोक १)",
+      "iast": "Śiva Tāṇḍava Stotram (Verse 1)",
+      "english": "Shiva Tandava Stotram - Verse 1"
+    },
+    "sanskrit_text": "जटाटवीगलज्जलप्रवाहपावितस्थले\nगलेऽवलम्ब्य लम्बितां भुजङ्गतुङ्गमालिकाम्।\nडमड्डमड्डमड्डमन्निनादवड्डमर्वयं\nचकार चण्डताण्डवं तनोतु नः शिवः शिवम्॥",
+    "iast_transliteration": "jaṭāṭavīgalajjalapravāhapāvitasthale\ngale'valambya lambitāṁ bhujaṅgatuṅgamālikām |\nḍamaḍḍamaḍḍamaḍḍamanninādavaḍḍamarvayaṁ\ncakāra caṇḍatāṇḍavaṁ tanotu naḥ śivaḥ śivam ||",
+    "translations": [
+      {
+        "author": "Traditional Public Domain",
+        "language": "en",
+        "text": "With His matted hair sanctified by the flow of water dripping from the forest of locks, and His neck adorned by the lofty garland of serpents, Lord Shiva performs His cosmic cosmic dance to the resounding sound of Damaru. May He bestow prosperity upon us."
+      },
+      {
+        "author": "Traditional Public Domain",
+        "language": "hi",
+        "text": "जिनकी जटाओं के सघन वन से बहती हुई गंगा की धाराएं गले को पवित्र करती हैं, जिनके गले में विशाल सर्पों की माला लटकी है, और जो डमरू की डम-डम ध्वनि के साथ भयानक तांडव नृत्य करते हैं, वे भगवान शिव हमारा कल्याण करें।"
+      }
+    ],
+    "source": "Ravanakrita Shiva Tandava Stotram"
+  },
+  {
+    "id": "ganesha_pancharatnam_1",
+    "category": "stotra",
+    "deity": "ganesha",
+    "title": {
+      "sanskrit": "गणेशपञ्चरत्नम् (श्लोक १)",
+      "iast": "Gaṇeśa Pañcaratnam (Verse 1)",
+      "english": "Ganesha Pancharatnam - Verse 1"
+    },
+    "sanskrit_text": "मुदाकरात्तमोदकं सदा विमुक्तिसाधकं\nकलाधरावतंसकं विलासिलोकरक्षकम्।\nअनायकैकनायकं विनाशितेभदैत्यकं\nनताशुभाशुनाशकं नमामि तं विनायकम्॥",
+    "iast_transliteration": "mudākarāttamodakaṁ sadā vimuktisādhakaṁ\nkalādharāvataṁsakaṁ vilāsilokarakṣakam |\nanāyakaikanāyakaṁ vināśitebhadaityakaṁ\nnatāśubhāśunāśakaṁ namāmi taṁ vināyakam ||",
+    "translations": [
+      {
+        "author": "Traditional Public Domain",
+        "language": "en",
+        "text": "I bow to Vinayaka, who joyfully holds the Modaka in His hand, who bestows liberation, who wears the crescent moon as an ornament, and who protects the worlds."
+      },
+      {
+        "author": "Traditional Public Domain",
+        "language": "hi",
+        "text": "मैं उन श्री विनायक को प्रणाम करता हूँ जो प्रसन्नतापूर्वक हाथ में मोदक धारण करते हैं, जो मुक्ति प्रदान करते हैं और संपूर्ण लोकों की रक्षा करते हैं।"
+      }
+    ],
+    "source": "Adi Shankaracharya - Ganesha Pancharatnam"
+  },
+  {
+    "id": "hanuman_chalisa_1",
+    "category": "stotra",
+    "deity": "hanuman",
+    "title": {
+      "sanskrit": "हनुमान चालीसा (दोहा १ व चौपाई १)",
+      "iast": "Hanumān Cālīsā (Opening Doha & Chaupai 1)",
+      "english": "Hanuman Chalisa - Opening & Chaupai 1"
+    },
+    "sanskrit_text": "श्रीगुरु चरन सरोज रज निज मनु मुकुरु सुधारि।\nबरनउँ रघूबर बिमल जसु जो दायकु फल चारि॥\n\nजय हनुमान ज्ञान गुन सागर।\nजय कपीस तिहुँ लोक उजागर॥",
+    "iast_transliteration": "śrīguru carana saroja raja nija manu mukuru sudhāri |\nbarana'um raghubāra bimala jasu jo dāyaku phala cāri ||\n\njaya hanumāna jñāna guna sāgara |\njaya kapīsa tihuṁ loka ujāgara ||",
+    "translations": [
+      {
+        "author": "Goswami Tulsidas / Public Domain",
+        "language": "en",
+        "text": "Cleansing the mirror of my mind with the dust of my Guru's lotus feet, I sing the pure glory of Lord Rama, which bestows the four fruits of life. Victory to Hanuman, ocean of wisdom and virtue! Victory to the Lord of Monkeys who illuminates the three worlds!"
+      },
+      {
+        "author": "Goswami Tulsidas / Public Domain",
+        "language": "hi",
+        "text": "श्री गुरु महाराज के चरण कमलों की धूलि से अपने मन रूपी दर्पण को पवित्र करके मैं श्री रघुवीर के निर्मल यश का वर्णन करता हूँ, जो चारों फल प्रदान करने वाला है। ज्ञान और गुण के सागर श्री हनुमान जी की जय हो!"
+      }
+    ],
+    "source": "Goswami Tulsidas - Hanuman Chalisa"
+  },
+  {
+    "id": "mahalakshmi_ashtakam_1",
+    "category": "stotra",
+    "deity": "devi",
+    "title": {
+      "sanskrit": "महालक्ष्म्यष्टकम् (श्लोक १)",
+      "iast": "Mahālakṣmyaṣṭakam (Verse 1)",
+      "english": "Mahalakshmi Ashtakam - Verse 1"
+    },
+    "sanskrit_text": "नमस्तेऽस्तु महामाये श्रीपीठे सुरपूजिते।\nशङ्खचक्रगदाहस्ते महालक्ष्मि नमोऽस्तु ते॥",
+    "iast_transliteration": "namaste'stu mahāmāye śrīpīṭhe surapūjite |\nśaṅkhacakragadāhaste mahālakṣmi namo'stu te ||",
+    "translations": [
+      {
+        "author": "Traditional Public Domain",
+        "language": "en",
+        "text": "Salutations to You, O Mahamaya, residing in the sacred seat of Sri, worshipped by the Devas. Holding the conch, discus, and mace in Your hands, O Mahalakshmi, salutations to You!"
+      },
+      {
+        "author": "Traditional Public Domain",
+        "language": "hi",
+        "text": "देवताओं द्वारा पूजित श्रीपीठ पर विराजमान महामाया महालक्ष्मी को मेरा प्रणाम। शंख, चक्र और गदा धारण करने वाली देवी महालक्ष्मी को नमस्कार है।"
+      }
+    ],
+    "source": "Padma Purana - Mahalakshmi Ashtakam"
+  }
+]
