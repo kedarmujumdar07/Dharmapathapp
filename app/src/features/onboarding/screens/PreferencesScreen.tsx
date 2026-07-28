@@ -83,60 +83,10 @@ function MascotFrame({ imageSource, zoom = false }: { imageSource: any; zoom?: b
       <Text style={styles.mascotTag}>DHARMI™</Text>
       <Animated.Image
         source={imageSource}
-        style={[
-          styles.choiceIndex,
-          isSelected ? styles.indexSelected : styles.indexUnselected,
-        ]}
-      >
-        <Text
-          style={[
-            styles.indexText,
-            { color: isSelected ? '#FFFFFF' : '#64748B' },
-          ]}
-        >
-          {indexStr}
-        </Text>
-      </View>
-
-      <View style={styles.cardTextContainer}>
-        <Text
-          style={[
-            styles.cardLabel,
-            { color: isSelected ? '#FFFFFF' : '#1E293B' },
-          ]}
-        >
-          {label}
-        </Text>
-        {subtitle && (
-          <Text
-            style={[
-              styles.cardSubtitle,
-              { color: isSelected ? 'rgba(255,255,255,0.75)' : '#64748B' },
-            ]}
-          >
-            {subtitle}
-          </Text>
-        )}
-      </View>
-
-      {badge && (
-        <View
-          style={[
-            styles.badge,
-            isSelected ? styles.badgeSelected : styles.badgeUnselected,
-          ]}
-        >
-          <Text
-            style={[
-              styles.badgeText,
-              { color: isSelected ? '#FFFFFF' : '#64748B' },
-            ]}
-          >
-            {badge}
-          </Text>
-        </View>
-      )}
-    </Pressable>
+        style={[styles.mascotImage, animatedStyle, zoom && { width: 140, height: 140 }]}
+      />
+      <Text style={styles.mascotTagSub}>BUDDY</Text>
+    </View>
   );
 }
 
