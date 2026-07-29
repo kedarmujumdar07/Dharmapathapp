@@ -3,7 +3,7 @@
  * Computes Sunrise, Sunset, Rahu Kalam, Yamagandam, Gulika Kalam, Abhijit Muhurat, and Day/Night Choghadiya.
  */
 
-import { SolarTimes, MuhuratTimes, ChoghadiyaSlot, ChoghadiyaNature, ChoghadiyaQuality, LocationInput } from '@/types/panchang';
+import { SolarTimes, MuhuratTimes, ChoghadiyaSlot, ChoghadiyaNature, ChoghadiyaQuality, LocationInput } from '@/features/panchang/types/panchang.types';
 import { formatTimeString } from './transition-finder';
 
 // Helper for degree/radian conversion

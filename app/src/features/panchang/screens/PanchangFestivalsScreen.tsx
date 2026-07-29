@@ -23,19 +23,19 @@ import {
   Baloo2_800ExtraBold,
 } from '@expo-google-fonts/baloo-2';
 
-import { PanchangColors } from '@/constants/panchang-theme';
-import { PanchangStrings } from '@/constants/panchang-strings';
-import { ScreenHeader } from '@/components/panchang-festivals/ScreenHeader';
-import { FestivalCarousel } from '@/components/panchang-festivals/FestivalCarousel';
-import { FeaturedTimingBanner } from '@/components/panchang-festivals/FeaturedTimingBanner';
-import { PanchangBreakdownPanel } from '@/components/panchang-festivals/PanchangBreakdownPanel';
-import { FestivalSignificanceSheet } from '@/components/panchang-festivals/FestivalSignificanceSheet';
-import { useFestivalModal } from '@/hooks/useFestivalModal';
-import { useTimeFormat } from '@/hooks/useTimeFormat';
-import { getDailyPanchang } from '@/services/panchang/panchang-service';
-import { festivalCarouselData } from '@/data/festivalData';
-import type { PanchangTab, FestivalCardData, LocationOption } from '@/types/festival-screen.types';
-import type { LocationInput } from '@/types/panchang';
+import { PanchangColors } from '@/shared/constants/panchang-theme';
+import { PanchangStrings } from '@/shared/constants/panchang-strings';
+import { ScreenHeader } from '@/shared/components/ScreenHeader';
+import { FestivalCarousel } from '@/features/festivals/components/FestivalCarousel';
+import { FeaturedTimingBanner } from '@/features/festivals/components/FeaturedTimingBanner';
+import { PanchangBreakdownPanel } from '@/features/panchang/components/PanchangBreakdownPanel';
+import { FestivalSignificanceSheet } from '@/features/festivals/components/FestivalSignificanceSheet';
+import { useFestivalModal } from '@/features/festivals/hooks/useFestivalModal';
+import { useTimeFormat } from '@/features/panchang/hooks/useTimeFormat';
+import { getDailyPanchang } from '@/features/panchang/engine/panchang-service';
+import { festivalCarouselData } from '@/features/festivals/data/festivalData';
+import type { PanchangTab, FestivalCardData, LocationOption } from '@/features/panchang/types/panchang-screen.types';
+import type { LocationInput } from '@/features/panchang/types/panchang.types';
 
 const LOCATIONS = PanchangStrings.locationOptions;
 
@@ -75,7 +75,7 @@ export const PanchangFestivalsScreen: React.FC = () => {
     if (Platform.OS === 'ios') {
       ActionSheetIOS.showActionSheetWithOptions(
         {
-          options: [...LOCATIONS.map((l) => l.label), 'Cancel'],
+          options: [...LOCATIONS.map((l: LocationOption) => l.label), 'Cancel'],
           cancelButtonIndex: LOCATIONS.length,
           title: 'Select Location',
         },
@@ -86,8 +86,8 @@ export const PanchangFestivalsScreen: React.FC = () => {
         }
       );
     } else if (Platform.OS === 'web') {
-      const optionLabels = LOCATIONS.map((l) => l.label);
-      const input = window.prompt(`Select Location:\n${optionLabels.map((lbl, idx) => `${idx + 1}. ${lbl}`).join('\n')}`);
+      const optionLabels = LOCATIONS.map((l: LocationOption) => l.label);
+      const input = window.prompt(`Select Location:\n${optionLabels.map((lbl: string, idx: number) => `${idx + 1}. ${lbl}`).join('\n')}`);
       if (input !== null) {
         const idx = parseInt(input, 10) - 1;
         if (idx >= 0 && idx < LOCATIONS.length) {
@@ -194,7 +194,7 @@ export const PanchangFestivalsScreen: React.FC = () => {
             >
               <View style={styles.modalContent}>
                 <Text style={styles.modalTitle}>Select Location</Text>
-                {LOCATIONS.map((loc) => (
+                {LOCATIONS.map((loc: LocationOption) => (
                   <Pressable
                     key={loc.name}
                     style={[

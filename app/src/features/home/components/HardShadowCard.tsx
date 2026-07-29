@@ -29,7 +29,7 @@ export const HardShadowCard: React.FC<HardShadowCardProps> = ({
     {/* Solid shadow layer — positioned behind via zIndex */}
     <View
       style={[
-        StyleSheet.absoluteFillObject,
+        StyleSheet.absoluteFill,
         {
           backgroundColor: shadowColor,
           borderRadius,

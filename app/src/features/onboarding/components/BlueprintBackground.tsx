@@ -2,14 +2,14 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Svg, { G, Path, Circle } from 'react-native-svg';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Colors } from '@/constants/theme';
+import { Colors } from '@/shared/constants/theme';
 
 function BlueprintBackgroundComponent() {
   return (
-    <View style={StyleSheet.absoluteFillObject} pointerEvents="none">
+    <View style={StyleSheet.absoluteFill} pointerEvents="none">
       <LinearGradient
         colors={[Colors.bgDark, Colors.bgDark2]}
-        style={StyleSheet.absoluteFillObject}
+        style={StyleSheet.absoluteFill}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
       />
@@ -45,7 +45,7 @@ export const BlueprintBackground = React.memo(BlueprintBackgroundComponent);
 
 const styles = StyleSheet.create({
   blueprintSvg: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     opacity: 0.5,
   },
 });

@@ -10,9 +10,9 @@ import {
   PanchangSpacing,
   PanchangFonts,
   PanchangShadows,
-} from '@/constants/panchang-theme';
-import type { PanchangTab } from '@/types/festival-screen.types';
-import { PanchangStrings } from '@/constants/panchang-strings';
+} from '@/shared/constants/panchang-theme';
+import type { PanchangTab } from '@/features/panchang/types/panchang-screen.types';
+import { PanchangStrings } from '@/shared/constants/panchang-strings';
 
 interface TabSwitcherProps {
   activeTab: PanchangTab;

@@ -4,7 +4,7 @@
  */
 
 import { useState, useCallback } from 'react';
-import type { FestivalCardData } from '@/types/festival-screen.types';
+import type { FestivalCardData } from '@/features/panchang/types/panchang-screen.types';
 
 interface UseFestivalModalReturn {
   /** Whether the bottom sheet is currently visible */

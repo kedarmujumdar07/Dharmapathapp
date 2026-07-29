@@ -8,6 +8,8 @@ export interface TranslationItem {
   text: string;
 }
 
+export type Translation = TranslationItem;
+
 export interface ShlokaItem {
   id: string;
   category: ScriptureCategory;

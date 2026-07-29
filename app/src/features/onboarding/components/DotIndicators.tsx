@@ -5,7 +5,7 @@ import Animated, {
   withTiming,
   interpolateColor,
 } from 'react-native-reanimated';
-import { Colors } from '@/constants/theme';
+import { Colors } from '@/shared/constants/theme';
 
 export interface DotIndicatorsProps {
   total: number;

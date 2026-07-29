@@ -12,7 +12,7 @@ import {
   SamvatsaraInfo,
   RituInfo,
   SauMasaInfo,
-} from '@/types/panchang';
+} from '@/features/panchang/types/panchang.types';
 
 // Names Arrays
 export const TITHI_NAMES = [

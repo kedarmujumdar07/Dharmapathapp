@@ -12,11 +12,11 @@ import {
   PanchangSpacing,
   PanchangFonts,
   PanchangShadows,
-} from '@/constants/panchang-theme';
-import { PanchangStrings } from '@/constants/panchang-strings';
+} from '@/shared/constants/panchang-theme';
+import { PanchangStrings } from '@/shared/constants/panchang-strings';
 import { LocationPill } from './LocationPill';
 import { TabSwitcher } from './TabSwitcher';
-import type { PanchangTab } from '@/types/festival-screen.types';
+import type { PanchangTab } from '@/features/panchang/types/panchang-screen.types';
 
 interface ScreenHeaderProps {
   currentLocation: string;
@@ -35,7 +35,7 @@ export const ScreenHeader: React.FC<ScreenHeaderProps> = ({
 }) => {
   return (
     <LinearGradient
-      colors={[...PanchangGradients.header]}
+      colors={PanchangGradients.header}
       start={{ x: 0.5, y: 0 }}
       end={{ x: 0.5, y: 1 }}
       style={styles.gradient}

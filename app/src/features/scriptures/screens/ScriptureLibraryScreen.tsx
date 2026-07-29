@@ -9,13 +9,13 @@ import {
   SafeAreaView,
   StatusBar,
 } from 'react-native';
-import { Colors, Spacing } from '@/constants/theme';
-import { ScriptureCategory, ShlokaItem } from '@/types/scripture';
+import { Colors, Spacing } from '@/shared/constants/theme';
+import { ScriptureCategory, ShlokaItem, Translation } from '@/features/scriptures/types/scripture.types';
 import {
   getAllScriptures,
   getScripturesByCategory,
   searchScriptures,
-} from '@/services/scriptures/scripture-service';
+} from '@/features/scriptures/services/scripture-service';
 
 export const ScriptureLibraryScreen: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -159,7 +159,7 @@ export const ScriptureLibraryScreen: React.FC = () => {
       <ScrollView contentContainerStyle={styles.listContent} showsVerticalScrollIndicator={false}>
         {filteredItems.map((item) => {
           const translation =
-            item.translations.find((t) => t.language === selectedLanguage) ||
+            item.translations.find((t: Translation) => t.language === selectedLanguage) ||
             item.translations[0];
 
           return (

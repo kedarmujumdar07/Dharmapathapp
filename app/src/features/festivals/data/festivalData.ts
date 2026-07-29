@@ -4,9 +4,9 @@
  * with significance text from the mockup's JS festivalData array.
  */
 
-import type { FestivalCardData } from '@/types/festival-screen.types';
-import type { FestivalItem } from '@/types/festivals';
-import festivalsDataRaw from '@/data/festivals-data.json';
+import type { FestivalCardData } from '@/features/panchang/types/panchang-screen.types';
+import type { FestivalItem } from '@/features/festivals/types/festivals.types';
+import festivalsDataRaw from '@/features/festivals/data/festivals-data.json';
 
 const allFestivals = festivalsDataRaw as FestivalItem[];
 

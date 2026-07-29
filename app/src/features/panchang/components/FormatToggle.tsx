@@ -9,9 +9,9 @@ import {
   PanchangColors,
   PanchangFonts,
   PanchangShadows,
-} from '@/constants/panchang-theme';
-import { PanchangStrings } from '@/constants/panchang-strings';
-import type { TimeFormatMode } from '@/types/festival-screen.types';
+} from '@/shared/constants/panchang-theme';
+import { PanchangStrings } from '@/shared/constants/panchang-strings';
+import type { TimeFormatMode } from '@/features/panchang/types/panchang-screen.types';
 
 interface FormatToggleProps {
   activeFormat: TimeFormatMode;

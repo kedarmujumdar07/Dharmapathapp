@@ -9,23 +9,58 @@ import {
   FlatList,
   KeyboardAvoidingView,
   Platform,
+  ActivityIndicator,
+  ScrollView,
 } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
+  useDerivedValue,
   withRepeat,
   withTiming,
   Easing,
 } from 'react-native-reanimated';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { usePreferences } from '@/context/preferences-context';
-import { Colors } from '@/constants/theme';
-import { ChoiceCard } from '@/components/ui/choice-card';
-import { PathSlideshow } from '@/components/ui/path-slideshow';
-import { BlueprintBackground } from '@/components/ui/blueprint-background';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { LinearGradient } from 'expo-linear-gradient';
+import Svg, { G, Path, Circle } from 'react-native-svg';
+import { useFonts } from 'expo-font';
+import {
+  SpaceGrotesk_400Regular,
+  SpaceGrotesk_500Medium,
+  SpaceGrotesk_600SemiBold,
+  SpaceGrotesk_700Bold,
+} from '@expo-google-fonts/space-grotesk';
+import {
+  JetBrainsMono_400Regular,
+  JetBrainsMono_500Medium,
+  JetBrainsMono_700Bold,
+} from '@expo-google-fonts/jetbrains-mono';
+import { SymbolView } from 'expo-symbols';
+import { usePreferences } from '@/features/onboarding/context/PreferencesContext';
+import { Colors } from '@/shared/constants/theme';
+import { ChoiceCard } from '../components/ChoiceCard';
 
 const mascot1 = require('@/assets/images/mascot.png');
 const mascot2 = require('@/assets/images/mascot2.png');
+
+const SLIDES = [
+  {
+    key: 'gita',
+    title: 'Bhagavad Gita',
+    sub: '700 Verses of Timeless Wisdom',
+    desc: 'Explore Karma Yoga, Jnana Yoga, and Bhakti Yoga with word-by-word Sanskrit translations.',
+    tag: 'CORE PATH',
+    image: mascot1,
+  },
+  {
+    key: 'epics',
+    title: 'Ramayana & Mahabharata',
+    sub: 'The Great Epics',
+    desc: 'Immerse in story arcs, character studies, and moral dilemmas across ancient India.',
+    tag: 'FEATURED',
+    image: mascot2,
+  },
+];
 
 interface ChoiceItem {
   id: string;

@@ -6,7 +6,7 @@
 
 import React from 'react';
 import { Pressable, Text, StyleSheet } from 'react-native';
-import { PanchangColors, PanchangSpacing, PanchangFonts } from '@/constants/panchang-theme';
+import { PanchangColors, PanchangSpacing, PanchangFonts } from '@/shared/constants/panchang-theme';
 
 interface LocationPillProps {
   currentLocation: string;

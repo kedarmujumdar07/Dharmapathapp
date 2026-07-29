@@ -3,7 +3,7 @@
  * Aggregates Ephemeris, Transitions, Solar position, and Muhurats into a unified DailyPanchang object.
  */
 
-import { DailyPanchang, LocationInput } from '@/types/panchang';
+import { DailyPanchang, LocationInput } from '@/features/panchang/types/panchang.types';
 import {
   computeTithi,
   computeNakshatra,

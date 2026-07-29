@@ -13,9 +13,9 @@ import {
   PanchangSpacing,
   PanchangFonts,
   PanchangShadows,
-} from '@/constants/panchang-theme';
-import { PanchangStrings } from '@/constants/panchang-strings';
-import type { FestivalCardData } from '@/types/festival-screen.types';
+} from '@/shared/constants/panchang-theme';
+import { PanchangStrings } from '@/shared/constants/panchang-strings';
+import type { FestivalCardData } from '@/features/panchang/types/panchang-screen.types';
 
 interface FestivalCardMiniProps {
   festival: FestivalCardData;
@@ -32,7 +32,7 @@ export const FestivalCardMini: React.FC<FestivalCardMiniProps> = ({ festival, on
     >
       {/* Card header */}
       <LinearGradient
-        colors={[...PanchangGradients.cardHead]}
+        colors={PanchangGradients.cardHead}
         start={{ x: 0, y: 0.5 }}
         end={{ x: 1, y: 0.5 }}
         style={styles.head}
@@ -45,7 +45,7 @@ export const FestivalCardMini: React.FC<FestivalCardMiniProps> = ({ festival, on
       <View style={styles.body}>
         {/* Date badge */}
         <LinearGradient
-          colors={[...PanchangGradients.dateBadge]}
+          colors={PanchangGradients.dateBadge}
           start={{ x: 0.15, y: 0 }}
           end={{ x: 0.85, y: 1 }}
           style={styles.dateBadge}
@@ -67,7 +67,7 @@ export const FestivalCardMini: React.FC<FestivalCardMiniProps> = ({ festival, on
 
           {/* Lesson status pill */}
           <LinearGradient
-            colors={[...PanchangGradients.lessonPill]}
+            colors={PanchangGradients.lessonPill}
             start={{ x: 0.5, y: 0 }}
             end={{ x: 0.5, y: 1 }}
             style={styles.lessonPill}
