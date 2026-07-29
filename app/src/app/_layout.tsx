@@ -1,4 +1,4 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
+import { DarkTheme, DefaultTheme, ThemeProvider, Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useColorScheme, View, ActivityIndicator } from 'react-native';
 import {
@@ -13,36 +13,32 @@ import {
   JetBrainsMono_500Medium,
   JetBrainsMono_700Bold,
 } from '@expo-google-fonts/jetbrains-mono';
+import {
+  Nunito_400Regular,
+  Nunito_600SemiBold,
+  Nunito_700Bold,
+  Nunito_800ExtraBold,
+} from '@expo-google-fonts/nunito';
+import { Caveat_700Bold } from '@expo-google-fonts/caveat';
+import {
+  Baloo2_500Medium,
+  Baloo2_600SemiBold,
+  Baloo2_700Bold,
+  Baloo2_800ExtraBold,
+} from '@expo-google-fonts/baloo-2';
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
-import { PreferencesProvider, usePreferences } from '@/context/preferences-context';
-import { OnboardingScreen } from '@/screens/onboarding-screen';
-import { PreferencesScreen } from '@/screens/preferences-screen';
-import { Colors } from '@/constants/theme';
+import { AnimatedSplashOverlay } from '@/shared/components/AnimatedIcon';
+import AppTabs from '@/shared/components/AppTabs';
+import { PreferencesProvider, usePreferences } from '@/features/onboarding/context/PreferencesContext';
+import { OnboardingScreen } from '@/features/onboarding/screens/OnboardingScreen';
+import { PreferencesScreen } from '@/features/onboarding/screens/PreferencesScreen';
+import { PanchangFestivalsScreen } from '@/features/panchang/screens/PanchangFestivalsScreen';
+import { Colors } from '@/shared/constants/theme';
 
 SplashScreen.preventAutoHideAsync();
 
 function AppContent() {
-  const { isOnboarded, hasCompletedPreferences, isLoading } = usePreferences();
-
-  if (isLoading) {
-    return (
-      <View style={{ flex: 1, backgroundColor: Colors.bgCream, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" color={Colors.saffron} />
-      </View>
-    );
-  }
-
-  if (!isOnboarded) {
-    return <OnboardingScreen />;
-  }
-
-  if (!hasCompletedPreferences) {
-    return <PreferencesScreen />;
-  }
-
-  return <AppTabs />;
+  return <Slot />;
 }
 
 export default function TabLayout() {
@@ -55,6 +51,15 @@ export default function TabLayout() {
     JetBrainsMono_400Regular,
     JetBrainsMono_500Medium,
     JetBrainsMono_700Bold,
+    Nunito_400Regular,
+    Nunito_600SemiBold,
+    Nunito_700Bold,
+    Nunito_800ExtraBold,
+    Caveat_700Bold,
+    Baloo2_500Medium,
+    Baloo2_600SemiBold,
+    Baloo2_700Bold,
+    Baloo2_800ExtraBold,
   });
 
   if (!fontsLoaded) {
