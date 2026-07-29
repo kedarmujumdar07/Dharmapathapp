@@ -16,12 +16,12 @@ import {
   PanchangSpacing,
   PanchangFonts,
   PanchangShadows,
-} from '@/constants/panchang-theme';
-import { PanchangStrings } from '@/constants/panchang-strings';
+} from '@/shared/constants/panchang-theme';
+import { PanchangStrings } from '@/shared/constants/panchang-strings';
 import { PanchangAttrRow } from './PanchangAttrRow';
 import { FormatToggle } from './FormatToggle';
-import type { DailyPanchang } from '@/types/panchang';
-import type { PanchangAttribute, TimeFormatMode } from '@/types/festival-screen.types';
+import type { DailyPanchang } from '@/features/panchang/types/panchang.types';
+import type { PanchangAttribute, TimeFormatMode } from '@/features/panchang/types/panchang-screen.types';
 
 interface PanchangBreakdownPanelProps {
   panchang: DailyPanchang;
@@ -179,7 +179,7 @@ export const PanchangBreakdownPanel: React.FC<PanchangBreakdownPanelProps> = ({
     <View style={styles.panel}>
       {/* Panel header */}
       <LinearGradient
-        colors={[...PanchangGradients.panchangPanelHead]}
+        colors={PanchangGradients.panchangPanelHead}
         start={{ x: 0, y: 0.5 }}
         end={{ x: 1, y: 0.5 }}
         style={styles.panelHead}

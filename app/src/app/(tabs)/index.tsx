@@ -11,7 +11,7 @@ export default function HomeRoute() {
       if (screen === 'learning' || screen === 'profile') {
         router.push(`/(tabs)/${screen}`);
       } else {
-        router.push({ pathname: screen as any, params });
+        router.push({ pathname: screen as any, params: params as any });
       }
     },
   };

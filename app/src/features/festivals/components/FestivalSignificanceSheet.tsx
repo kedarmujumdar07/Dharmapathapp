@@ -15,9 +15,9 @@ import {
   PanchangSpacing,
   PanchangFonts,
   PanchangShadows,
-} from '@/constants/panchang-theme';
-import { PanchangStrings } from '@/constants/panchang-strings';
-import type { FestivalCardData } from '@/types/festival-screen.types';
+} from '@/shared/constants/panchang-theme';
+import { PanchangStrings } from '@/shared/constants/panchang-strings';
+import type { FestivalCardData } from '@/features/panchang/types/panchang-screen.types';
 
 interface FestivalSignificanceSheetProps {
   isOpen: boolean;
@@ -114,7 +114,7 @@ export const FestivalSignificanceSheet: React.FC<FestivalSignificanceSheetProps>
             accessibilityRole="button"
           >
             <LinearGradient
-              colors={[...PanchangGradients.lessonAction]}
+              colors={PanchangGradients.lessonAction}
               start={{ x: 0.5, y: 0 }}
               end={{ x: 0.5, y: 1 }}
               style={styles.lessonBtn}

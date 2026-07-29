@@ -5,8 +5,8 @@
 
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { PanchangColors, PanchangSpacing, PanchangFonts } from '@/constants/panchang-theme';
-import type { PanchangAttribute } from '@/types/festival-screen.types';
+import { PanchangColors, PanchangSpacing, PanchangFonts } from '@/shared/constants/panchang-theme';
+import type { PanchangAttribute } from '@/features/panchang/types/panchang-screen.types';
 
 interface PanchangAttrRowProps {
   attribute: PanchangAttribute;

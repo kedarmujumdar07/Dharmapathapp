@@ -5,7 +5,7 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
-import { Colors } from '@/constants/theme';
+import { Colors } from '@/shared/constants/theme';
 
 export interface ChoiceCardProps {
   indexStr: string;

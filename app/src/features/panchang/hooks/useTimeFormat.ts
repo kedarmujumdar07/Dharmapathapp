@@ -5,7 +5,7 @@
  */
 
 import { useState, useCallback, useMemo } from 'react';
-import type { TimeFormatMode } from '@/types/festival-screen.types';
+import type { TimeFormatMode } from '@/features/panchang/types/panchang-screen.types';
 
 interface UseTimeFormatReturn {
   /** Current format mode */

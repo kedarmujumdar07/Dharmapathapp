@@ -13,12 +13,6 @@ import {
   JetBrainsMono_500Medium,
   JetBrainsMono_700Bold,
 } from '@expo-google-fonts/jetbrains-mono';
-import {
-  Nunito_400Regular,
-  Nunito_600SemiBold,
-  Nunito_700Bold,
-  Nunito_800ExtraBold,
-} from '@expo-google-fonts/nunito';
 import { Caveat_700Bold } from '@expo-google-fonts/caveat';
 import {
   Baloo2_500Medium,
@@ -34,6 +28,8 @@ import { OnboardingScreen } from '@/features/onboarding/screens/OnboardingScreen
 import { PreferencesScreen } from '@/features/onboarding/screens/PreferencesScreen';
 import { PanchangFestivalsScreen } from '@/features/panchang/screens/PanchangFestivalsScreen';
 import { Colors } from '@/shared/constants/theme';
+
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -51,10 +47,6 @@ export default function TabLayout() {
     JetBrainsMono_400Regular,
     JetBrainsMono_500Medium,
     JetBrainsMono_700Bold,
-    Nunito_400Regular,
-    Nunito_600SemiBold,
-    Nunito_700Bold,
-    Nunito_800ExtraBold,
     Caveat_700Bold,
     Baloo2_500Medium,
     Baloo2_600SemiBold,
@@ -71,12 +63,14 @@ export default function TabLayout() {
   }
 
   return (
-    <PreferencesProvider>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <AnimatedSplashOverlay />
-        <AppContent />
-      </ThemeProvider>
-    </PreferencesProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <PreferencesProvider>
+        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+          <AnimatedSplashOverlay />
+          <AppContent />
+        </ThemeProvider>
+      </PreferencesProvider>
+    </GestureHandlerRootView>
   );
 }
 

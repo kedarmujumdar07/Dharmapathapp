@@ -4,7 +4,7 @@
  * with screen-specific display-ready shapes.
  */
 
-import type { FestivalItem } from '@/types/festivals';
+import type { FestivalItem } from '@/features/festivals/types/festivals.types';
 
 /** A festival card in the carousel — adds display-formatted fields on top of FestivalItem. */
 export interface FestivalCardData {

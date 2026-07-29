@@ -5,7 +5,7 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import { Colors } from '@/constants/theme';
+import { Colors } from '@/shared/constants/theme';
 
 const pathItihasa = require('@/assets/images/path_itihasa.jpg');
 const pathLeela = require('@/assets/images/path_leela.jpg');
@@ -118,12 +118,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.navyDark,
   },
   image: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     width: '100%',
     height: '100%',
   },
   overlay: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     backgroundColor: 'rgba(20, 12, 8, 0.55)',
   },
   content: {

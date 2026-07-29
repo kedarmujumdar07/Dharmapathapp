@@ -12,8 +12,8 @@ import {
   PanchangSpacing,
   PanchangFonts,
   PanchangShadows,
-} from '@/constants/panchang-theme';
-import { PanchangStrings } from '@/constants/panchang-strings';
+} from '@/shared/constants/panchang-theme';
+import { PanchangStrings } from '@/shared/constants/panchang-strings';
 
 interface FeaturedTimingBannerProps {
   /** Override defaults with custom timing data if needed */
@@ -41,7 +41,7 @@ export const FeaturedTimingBanner: React.FC<FeaturedTimingBannerProps> = ({
     <View style={styles.banner}>
       {/* Floating badge label */}
       <LinearGradient
-        colors={[...PanchangGradients.featuredBadge]}
+        colors={PanchangGradients.featuredBadge}
         start={{ x: 0.15, y: 0 }}
         end={{ x: 0.85, y: 1 }}
         style={styles.badgeLabel}

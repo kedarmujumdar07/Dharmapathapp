@@ -18,9 +18,9 @@ import Animated, {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useVideoPlayer, VideoView } from 'expo-video';
 import { SymbolView } from 'expo-symbols';
-import { LoginScreen } from './login-screen';
-import { Colors } from '@/constants/theme';
-import { DotIndicators } from '@/components/ui/dot-indicators';
+import { LoginScreen } from './LoginScreen';
+import { Colors } from '@/shared/constants/theme';
+import { DotIndicators } from '../components/DotIndicators';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -118,7 +118,7 @@ function OnboardingVideo({ source, isActive, width, height }: OnboardingVideoPro
         <ActivityIndicator
           size="small"
           color={Colors.saffron}
-          style={StyleSheet.absoluteFillObject}
+          style={StyleSheet.absoluteFill}
         />
       )}
       <VideoView

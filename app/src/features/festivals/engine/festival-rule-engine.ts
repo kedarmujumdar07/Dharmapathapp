@@ -4,9 +4,9 @@
  * and matches fixed/lunar festival calendar items to daily Panchang output.
  */
 
-import { FestivalItem } from '@/types/festivals';
-import { DailyPanchang } from '@/types/panchang';
-import festivalsDataRaw from '@/data/festivals-data.json';
+import { FestivalItem } from '@/features/festivals/types/festivals.types';
+import { DailyPanchang } from '@/features/panchang/types/panchang.types';
+import festivalsDataRaw from '@/features/festivals/data/festivals-data.json';
 
 const festivalsDatabase = festivalsDataRaw as FestivalItem[];
 

@@ -3,10 +3,10 @@
  * Provides filtering, searching, and category-indexed retrieval across Bhagavad Gita, Stotras, and Veda Mantras.
  */
 
-import { ShlokaItem, ScriptureCategory, ScriptureDeity } from '@/types/scripture';
-import gitaDataRaw from '@/data/scriptures/gita-data.json';
-import stotrasDataRaw from '@/data/scriptures/stotras-data.json';
-import mantrasDataRaw from '@/data/scriptures/mantras-data.json';
+import { ShlokaItem, ScriptureCategory, ScriptureDeity, Translation } from '@/features/scriptures/types/scripture.types';
+import gitaDataRaw from '@/features/scriptures/data/gita-data.json';
+import stotrasDataRaw from '@/features/scriptures/data/stotras-data.json';
+import mantrasDataRaw from '@/features/scriptures/data/mantras-data.json';
 
 const gitaItems = gitaDataRaw as ShlokaItem[];
 const stotraItems = stotrasDataRaw as ShlokaItem[];
@@ -52,7 +52,7 @@ export function searchScriptures(query: string): ShlokaItem[] {
       item.sanskrit_text.includes(q) ||
       item.iast_transliteration.toLowerCase().includes(q);
 
-    const transMatch = item.translations.some((t) => t.text.toLowerCase().includes(q));
+    const transMatch = item.translations.some((t: Translation) => t.text.toLowerCase().includes(q));
 
     return titleMatch || textMatch || transMatch;
   });

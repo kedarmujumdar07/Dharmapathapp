@@ -6,10 +6,10 @@
 import React, { useCallback } from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import type { ListRenderItemInfo } from 'react-native';
-import { PanchangColors, PanchangSpacing, PanchangFonts } from '@/constants/panchang-theme';
-import { PanchangStrings } from '@/constants/panchang-strings';
+import { PanchangColors, PanchangSpacing, PanchangFonts } from '@/shared/constants/panchang-theme';
+import { PanchangStrings } from '@/shared/constants/panchang-strings';
 import { FestivalCardMini } from './FestivalCardMini';
-import type { FestivalCardData } from '@/types/festival-screen.types';
+import type { FestivalCardData } from '@/features/panchang/types/panchang-screen.types';
 
 interface FestivalCarouselProps {
   festivals: FestivalCardData[];

@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   banner: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
   },
   categoryChip: {
     position: 'absolute',
