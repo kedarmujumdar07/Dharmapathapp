@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DharmaPath — Splash Screen Preview</title>
+    
+    <!-- Google Fonts: Cinzel (Display), Outfit (Body/Taglines) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Link External Stylesheet -->
+    <link rel="stylesheet" href="splash.css">
+</head>
+<body>
+
+    <!-- Presentation Layer (Desktop Canvas) -->
+    <main class="presentation-canvas">
+        
+        <!-- Interactive Control Console (Sidebar) -->
+        <aside class="control-panel">
+            <div class="brand-info">
+                <span class="badge">UI/UX Mockup</span>
+                <h1 class="logo-title">DharmaPath</h1>
+                <p class="description">Premium spiritual mobile application. A blending of Apple's Human Interface guidelines with Indian sacred geometric aesthetics.</p>
+            </div>
+            
+            <hr class="divider">
+            
+            <div class="control-group">
+                <h3>Preview Controls</h3>
+                <button id="btn-replay" class="btn btn-primary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                    Replay Animation
+                </button>
+                
+                <button id="btn-toggle-screen" class="btn btn-secondary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                    Hold on Splash
+                </button>
+            </div>
+            
+            <hr class="divider">
+            
+            <div class="spec-details">
+                <h3>Design Specs</h3>
+                <ul class="spec-list">
+                    <li><span class="dot saffron"></span> Saffron (#E58A00)</li>
+                    <li><span class="dot crimson"></span> Crimson (#8B1E3F)</li>
+                    <li><span class="dot gold"></span> Antique Gold (#D4AF37)</li>
+                    <li><span class="dot sandalwood"></span> Sandalwood (#F5E6C8)</li>
+                    <li><strong>Font:</strong> Cinzel &amp; Outfit</li>
+                    <li><strong>Viewport:</strong> 390px × 844px (iPhone 12/13/14 Pro)</li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Centered Mobile Preview Container -->
+        <section class="preview-area">
+            
+            <!-- iOS Phone Frame Mockup -->
+            <div class="phone-frame">
+                <!-- Dynamic Island / Top Notch -->
+                <div class="dynamic-island">
+                    <div class="camera"></div>
+                    <div class="speaker"></div>
+                </div>
+                
+                <!-- Phone Inner Screen -->
+                <div class="phone-screen" id="phone-screen">
+                    
+                    <!-- iOS Status Bar -->
+                    <header class="status-bar">
+                        <span class="time" id="status-time">09:41</span>
+                        <div class="status-icons">
+                            <!-- Cellular Signal -->
+                            <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                                <rect x="2" y="16" width="3" height="5" rx="0.5"/>
+                                <rect x="7" y="12" width="3" height="9" rx="0.5"/>
+                                <rect x="12" y="8" width="3" height="13" rx="0.5"/>
+                                <rect x="17" y="4" width="3" height="17" rx="0.5"/>
+                            </svg>
+                            <!-- Wifi -->
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                                <path d="M12 20h.01M8.5 16.5a5 5 0 0 1 7 0M5.5 13.5a9 9 0 0 1 13 0M2.5 10.5a13 13 0 0 1 19 0"/>
+                            </svg>
+                            <!-- Battery -->
+                            <div class="battery">
+                                <div class="battery-level"></div>
+                            </div>
+                        </div>
+                    </header>
+                    
+                    <!-- ========================================== -->
+                    <!-- SCREEN 1: SPLASH SCREEN (Overlay Layer)   -->
+                    <!-- ========================================== -->
+                    <div class="splash-layer" id="splash-layer">
+                        <!-- Soft golden pulse background glow -->
+                        <div class="pulse-glow"></div>
+                        
+                        <!-- Main vertical centering container -->
+                        <div class="splash-content">
+                            <!-- Premium App Icon wrapper -->
+                            <div class="app-icon-wrapper">
+                                <div class="app-icon">
+                                    <!-- Sacred Shatkona Mandala in vector SVG -->
+                                    <svg class="shatkona" viewBox="0 0 120 120" width="100%" height="100%">
+                                        <defs>
+                                            <!-- Saffron to Crimson Gradient for Shiva triangle -->
+                                            <linearGradient id="grad-saffron-crimson" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" stop-color="#E58A00" />
+                                                <stop offset="100%" stop-color="#8B1E3F" />
+                                            </linearGradient>
+                                            
+                                            <!-- Antique Gold Gradient for Shakti triangle -->
+                                            <linearGradient id="grad-antique-gold" x1="0%" y1="100%" x2="100%" y2="0%">
+                                                <stop offset="0%" stop-color="#B38A1D" />
+                                                <stop offset="50%" stop-color="#D4AF37" />
+                                                <stop offset="100%" stop-color="#FAE596" />
+                                            </linearGradient>
+                                            
+                                            <!-- Subtle Gold Drop Shadow -->
+                                            <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+                                                <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#8B1E3F" flood-opacity="0.15"/>
+                                            </filter>
+                                        </defs>
+                                        
+                                        <!-- Outer subtle mandala guide circles -->
+                                        <circle cx="60" cy="60" r="54" fill="none" stroke="url(#grad-antique-gold)" stroke-width="0.75" stroke-dasharray="2 3" opacity="0.4"/>
+                                        <circle cx="60" cy="60" r="48" fill="none" stroke="url(#grad-antique-gold)" stroke-width="1.25" opacity="0.65" filter="url(#shadow)"/>
+                                        
+                                        <!-- Sacred Shatkona (Interlocking Triangles) -->
+                                        <!-- Shiva (Pointing Upwards) - Saffron/Crimson -->
+                                        <polygon points="60,22 93,79 27,79" fill="none" stroke="url(#grad-saffron-crimson)" stroke-width="2.75" stroke-linejoin="round"/>
+                                        
+                                        <!-- Shakti (Pointing Downwards) - Gold -->
+                                        <polygon points="60,98 93,41 27,41" fill="none" stroke="url(#grad-antique-gold)" stroke-width="2.75" stroke-linejoin="round"/>
+                                        
+                                        <!-- Inner Lotus Ring / Concentric Ring -->
+                                        <circle cx="60" cy="60" r="16" fill="none" stroke="url(#grad-antique-gold)" stroke-width="0.75" opacity="0.5"/>
+                                        
+                                        <!-- Bindu (The Divine Center Source) -->
+                                        <circle cx="60" cy="60" r="4.5" fill="url(#grad-saffron-crimson)" />
+                                        <circle cx="60" cy="60" r="1.5" fill="#FAF6EE" />
+                                    </svg>
+                                </div>
+                            </div>
+                            
+                            <!-- App Name & Tagline -->
+                            <div class="brand-container">
+                                <h2 class="app-name">
+                                    <span class="dharma">Dharma</span><span class="path">Path</span>
+                                </h2>
+                                <p class="tagline">Discover. Learn. Practice.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- ========================================== -->
+                    <!-- SCREEN 2: APP HOME DASHBOARD (Revealed)    -->
+                    <!-- ========================================== -->
+                    <div class="dashboard-layer" id="dashboard-layer">
+                        
+                        <!-- Top Dashboard Greeting Header -->
+                        <header class="dash-header">
+                            <div class="header-left">
+                                <p class="greeting-sub">Namaste,</p>
+                                <h3 class="greeting-main">Kedar</h3>
+                            </div>
+                            <div class="header-right">
+                                <!-- Elegant Avatar Placeholder with gold ring -->
+                                <div class="avatar-ring">
+                                    <div class="avatar-inner">
+                                        <span>ॐ</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </header>
+                        
+                        <!-- Scrollable Core Dashboard Area -->
+                        <div class="dash-content">
+                            
+                            <!-- Daily Quote / Inspiration Card -->
+                            <div class="quote-card">
+                                <p class="quote-text">"Quiet the mind, and the soul will speak."</p>
+                                <span class="quote-author">— Patanjali Yoga Sutras</span>
+                            </div>
+                            
+                            <!-- Daily Sadhana Progress -->
+                            <div class="section-title">
+                                <h4>Your Sadhana Path</h4>
+                                <span class="action-text">View All</span>
+                            </div>
+                            
+                            <div class="sadhana-card">
+                                <div class="sadhana-info">
+                                    <div class="icon-circle">📿</div>
+                                    <div class="sadhana-details">
+                                        <h5>Gayatri Mantra Japa</h5>
+                                        <p>Goal: 108 Repetitions</p>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-ring-box">
+                                        <!-- Simple SVG Circle Progress -->
+                                        <svg width="40" height="40" viewBox="0 0 36 36" class="circular-chart">
+                                            <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                            <path class="circle" stroke-dasharray="70, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                        </svg>
+                                        <span class="progress-percentage">70%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Vedic Panchang Panel -->
+                            <div class="section-title">
+                                <h4>Vedic Panchang</h4>
+                                <span class="location-pill">Pune, IN</span>
+                            </div>
+                            
+                            <div class="panchang-grid">
+                                <div class="panchang-item">
+                                    <span class="p-label">TITHI</span>
+                                    <span class="p-value">Prathama</span>
+                                    <span class="p-meta">Shukla Paksha</span>
+                                </div>
+                                <div class="panchang-item">
+                                    <span class="p-label">NAKSHATRA</span>
+                                    <span class="p-value">Pushya</span>
+                                    <span class="p-meta">Until 11:42 PM</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Quick Exploration Paths -->
+                            <div class="section-title">
+                                <h4>Explore Paths</h4>
+                            </div>
+                            
+                            <div class="paths-grid">
+                                <div class="path-card saffron-accent">
+                                    <span class="path-icon">📜</span>
+                                    <h6>Scriptures</h6>
+                                    <p>Read Bhagavad Gita &amp; Upanishads</p>
+                                </div>
+                                <div class="path-card crimson-accent">
+                                    <span class="path-icon">🧘</span>
+                                    <h6>Meditation</h6>
+                                    <p>Guided calm and breathing sessions</p>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                        <!-- Premium Bottom Tab Bar Navigation -->
+                        <nav class="bottom-nav">
+                            <a href="#" class="nav-item active">
+                                <span class="nav-icon">🏡</span>
+                                <span class="nav-label">Home</span>
+                            </a>
+                            <a href="#" class="nav-item">
+                                <span class="nav-icon">📿</span>
+                                <span class="nav-label">Sadhana</span>
+                            </a>
+                            <a href="#" class="nav-item">
+                                <span class="nav-icon">📚</span>
+                                <span class="nav-label">Library</span>
+                            </a>
+                            <a href="#" class="nav-item">
+                                <span class="nav-icon">⚙️</span>
+                                <span class="nav-label">Settings</span>
+                            </a>
+                        </nav>
+                        
+                    </div>
+                    
+                    <!-- Home Indicator Bar (iOS) -->
+                    <div class="home-indicator"></div>
+                    
+                </div>
+            </div>
+        </section>
+        
+    </main>
+
+    <!-- Link External Script -->
+    <script src="splash.js"></script>
+</body>
+</html>

@@ -1,0 +1,907 @@
+/* ==========================================================================
+   DHARMAPATH SPLASH SCREEN - STYLESHEET
+   A combination of Apple's minimal UI and Indian spiritual sacred geometry.
+   ========================================================================== */
+
+/* 1. Design Tokens & CSS Variables */
+:root {
+    /* Color Palette */
+    --color-sandalwood: #F5E6C8;        /* Warm Sandalwood Base */
+    --color-sandalwood-light: #FAF6EE;  /* Light Sandalwood for cards */
+    --color-sandalwood-dark: #E2CFAB;   /* Darker Sandalwood for borders/depth */
+    --color-saffron: #E58A00;           /* Vibrant Saffron */
+    --color-saffron-light: rgba(229, 138, 0, 0.1);
+    --color-crimson: #8B1E3F;           /* Premium Deep Crimson */
+    --color-crimson-light: rgba(139, 30, 63, 0.08);
+    --color-antique-gold: #D4AF37;      /* Classic Gold Accent */
+    --color-gold-glow: rgba(212, 175, 55, 0.3);
+    
+    /* Neutral & Text Colors */
+    --color-charcoal: #2B1F1D;          /* Sandalwood-infused dark charcoal */
+    --color-charcoal-muted: #6B5D5B;    /* Muted version for text */
+    --color-border: rgba(139, 30, 63, 0.08);
+    
+    /* Typography */
+    --font-display: 'Cinzel', serif;
+    --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    
+    /* Canvas presentation colors */
+    --canvas-bg: #EAE8E2;
+    --canvas-text: #3D3534;
+    --canvas-card-bg: #FAF9F6;
+    --canvas-border: rgba(61, 53, 52, 0.08);
+}
+
+/* Reset and Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--canvas-bg);
+    color: var(--canvas-text);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    display: flex;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   2. Presentation Layout (Desktop preview container)
+   ========================================================================== */
+
+.presentation-canvas {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+/* Control Panel (Sidebar) */
+.control-panel {
+    width: 320px;
+    height: 100%;
+    background-color: var(--canvas-card-bg);
+    border-right: 1px solid var(--canvas-border);
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.02);
+}
+
+.brand-info {
+    margin-bottom: 20px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background-color: var(--color-crimson-light);
+    color: var(--color-crimson);
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.logo-title {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--color-crimson);
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+}
+
+.description {
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--color-charcoal-muted);
+}
+
+.divider {
+    border: 0;
+    height: 1px;
+    background-color: var(--canvas-border);
+    margin: 25px 0;
+}
+
+.control-group h3,
+.spec-details h3 {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-charcoal-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px 18px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.25s ease;
+    margin-bottom: 12px;
+}
+
+.btn-primary {
+    background-color: var(--color-crimson);
+    color: #FFF;
+    box-shadow: 0 4px 12px rgba(139, 30, 63, 0.2);
+}
+
+.btn-primary:hover {
+    background-color: #721832;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(139, 30, 63, 0.3);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--color-charcoal);
+    border: 1px solid var(--color-sandalwood-dark);
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-sandalwood-light);
+}
+
+.btn-secondary.active {
+    background-color: var(--color-sandalwood-dark);
+    border-color: var(--color-sandalwood-dark);
+    color: var(--color-charcoal);
+}
+
+.spec-list {
+    list-style: none;
+}
+
+.spec-list li {
+    font-size: 13px;
+    color: var(--color-charcoal);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot.saffron { background-color: var(--color-saffron); }
+.dot.crimson { background-color: var(--color-crimson); }
+.dot.gold { background-color: var(--color-antique-gold); }
+.dot.sandalwood { background-color: var(--color-sandalwood); border: 1px solid #D4AF37; }
+
+/* Preview Workspace Area */
+.preview-area {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 20px;
+    position: relative;
+}
+
+/* ==========================================================================
+   3. Phone Simulator Frame
+   ========================================================================== */
+
+.phone-frame {
+    position: relative;
+    width: 412px;
+    height: 866px;
+    background: #1C1A1A; /* Premium matte metal bezel */
+    border-radius: 48px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15),
+                inset 0 0 0 2px rgba(255, 255, 255, 0.12),
+                inset 0 0 15px rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+/* Screen Size: 390px x 844px */
+.phone-screen {
+    position: relative;
+    width: 390px;
+    height: 844px;
+    background-color: var(--color-sandalwood);
+    border-radius: 40px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
+    display: flex;
+    flex-direction: column;
+}
+
+/* iOS Dynamic Island Notch */
+.dynamic-island {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 110px;
+    height: 30px;
+    background-color: #000000;
+    border-radius: 20px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+.dynamic-island .camera {
+    width: 10px;
+    height: 10px;
+    background: #111122;
+    border-radius: 50%;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.dynamic-island .speaker {
+    width: 45px;
+    height: 4px;
+    background: #0a0a14;
+    border-radius: 50%;
+}
+
+/* iOS Status Bar */
+.status-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 28px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-charcoal-muted);
+    z-index: 999;
+    pointer-events: none;
+    transition: color 0.5s ease;
+}
+
+/* When the app dashboard opens, status bar text becomes slightly dark charcoal */
+.phone-screen.app-loaded .status-bar {
+    color: var(--color-charcoal);
+}
+
+.status-bar .time {
+    letter-spacing: -0.2px;
+}
+
+.status-bar .status-icons {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.status-bar .icon {
+    width: 15px;
+    height: 15px;
+}
+
+.status-bar .battery {
+    width: 22px;
+    height: 11.5px;
+    border: 1px solid currentColor;
+    border-radius: 3px;
+    padding: 1px;
+    position: relative;
+}
+
+.status-bar .battery::after {
+    content: '';
+    position: absolute;
+    right: -3px;
+    top: 3px;
+    width: 2px;
+    height: 4px;
+    background-color: currentColor;
+    border-radius: 0 1px 1px 0;
+}
+
+.status-bar .battery-level {
+    width: 80%;
+    height: 100%;
+    background-color: currentColor;
+    border-radius: 1px;
+}
+
+/* iOS Home Indicator */
+.home-indicator {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 5px;
+    background-color: var(--color-charcoal);
+    border-radius: 10px;
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0.3;
+}
+
+
+/* ==========================================================================
+   4. Screen 1: Splash Screen Layer (Intro Animation)
+   ========================================================================== */
+
+.splash-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background: radial-gradient(circle at center, #FDF9F0 0%, var(--color-sandalwood) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Soft glowing gold pulse behind the logo */
+.pulse-glow {
+    position: absolute;
+    width: 240px;
+    height: 240px;
+    background: radial-gradient(circle, var(--color-gold-glow) 0%, rgba(212, 175, 55, 0) 70%);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+    pointer-events: none;
+    /* Soft breathing loop starting after logo fades in */
+    animation: glow-pulse-anim 3.5s ease-in-out 1.2s infinite;
+}
+
+@keyframes glow-pulse-anim {
+    0% {
+        opacity: 0.15;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+    50% {
+        opacity: 0.5;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+    100% {
+        opacity: 0.15;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+}
+
+.splash-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 0 40px;
+    z-index: 2;
+    text-align: center;
+}
+
+/* Logo container & App Icon Card */
+.app-icon-wrapper {
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: scale(0.9);
+    /* Fades in immediately and scales to 1.0 */
+    animation: logo-fade-scale 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes logo-fade-scale {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+        filter: blur(4px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+    }
+}
+
+.app-icon {
+    width: 110px;
+    height: 110px;
+    background: #FAF6EE;
+    border-radius: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    box-shadow: 0 10px 30px rgba(139, 30, 63, 0.06), 
+                0 1px 3px rgba(0, 0, 0, 0.02),
+                inset 0 0 0 1px rgba(139, 30, 63, 0.04);
+}
+
+.shatkona {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Brand styling */
+.brand-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* App name */
+.app-name {
+    font-family: var(--font-display);
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    opacity: 0;
+    /* Fades in slightly after logo */
+    animation: fade-in-up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+}
+
+.app-name .dharma {
+    color: var(--color-saffron);
+}
+
+.app-name .path {
+    color: var(--color-crimson);
+}
+
+/* Small Tagline */
+.tagline {
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--color-charcoal-muted);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0;
+    /* Fades in after App Name */
+    animation: fade-in-up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+}
+
+@keyframes fade-in-up {
+    0% {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Exit transitions for Splash screen overlay */
+.splash-layer.fade-out {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.03);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+                transform 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+                visibility 0.8s;
+}
+
+
+/* ==========================================================================
+   5. Screen 2: App Home Dashboard Preview (Post-Splash)
+   ========================================================================== */
+
+.dashboard-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 60px 24px 85px 24px; /* Dynamic layouts around notch & safe tab bar */
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+    opacity: 0;
+    transform: scale(0.96);
+    pointer-events: none;
+    background-color: var(--color-sandalwood-light);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+                transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Active State */
+.phone-screen.app-loaded .dashboard-layer {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+}
+
+/* Header */
+.dash-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.greeting-sub {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-charcoal-muted);
+}
+
+.greeting-main {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-crimson);
+}
+
+.avatar-ring {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    padding: 2px;
+    background: linear-gradient(135deg, var(--color-saffron), var(--color-antique-gold));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.avatar-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: var(--color-sandalwood-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-crimson);
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Dashboard content body (scrollable) */
+.dash-content {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    scrollbar-width: none; /* Hide scrollbar for clean UI */
+}
+
+.dash-content::-webkit-scrollbar {
+    display: none;
+}
+
+/* Section Title */
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.section-title h4 {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-charcoal);
+}
+
+.action-text {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-saffron);
+    cursor: pointer;
+}
+
+.location-pill {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    background-color: var(--color-saffron-light);
+    color: var(--color-saffron);
+    border-radius: 20px;
+    letter-spacing: 0.02em;
+}
+
+/* Cards styling */
+.quote-card {
+    background: linear-gradient(135deg, var(--color-sandalwood), #FAF6EE);
+    border: 1px solid var(--color-sandalwood-dark);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(139, 30, 63, 0.02);
+    text-align: center;
+}
+
+.quote-text {
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    font-style: italic;
+    color: var(--color-charcoal);
+    line-height: 1.5;
+    margin-bottom: 8px;
+}
+
+.quote-author {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-charcoal-muted);
+}
+
+.sadhana-card {
+    background-color: var(--color-sandalwood-light);
+    border: 1px solid var(--color-border);
+    padding: 16px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.01);
+}
+
+.sadhana-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.icon-circle {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background-color: var(--color-saffron-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
+
+.sadhana-details h5 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-charcoal);
+    margin-bottom: 2px;
+}
+
+.sadhana-details p {
+    font-size: 12px;
+    color: var(--color-charcoal-muted);
+}
+
+/* Progress ring graphic */
+.progress-ring-box {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circular-chart {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.circle-bg {
+    fill: none;
+    stroke: var(--color-border);
+    stroke-width: 2.8;
+}
+
+.circle {
+    fill: none;
+    stroke-width: 2.8;
+    stroke-linecap: round;
+    stroke: var(--color-saffron);
+}
+
+.progress-percentage {
+    position: absolute;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--color-charcoal);
+}
+
+/* Panchang grid styling */
+.panchang-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.panchang-item {
+    background-color: #FAF6EE;
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.p-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--color-charcoal-muted);
+    margin-bottom: 6px;
+}
+
+.p-value {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-crimson);
+    margin-bottom: 2px;
+}
+
+.p-meta {
+    font-size: 11px;
+    color: var(--color-charcoal-muted);
+}
+
+/* Explorer grids */
+.paths-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.path-card {
+    border-radius: 20px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    cursor: pointer;
+    border: 1px solid var(--color-border);
+    transition: transform 0.2s ease;
+}
+
+.path-card:hover {
+    transform: translateY(-2px);
+}
+
+.path-card.saffron-accent {
+    background-color: rgba(229, 138, 0, 0.03);
+}
+
+.path-card.crimson-accent {
+    background-color: rgba(139, 30, 63, 0.02);
+}
+
+.path-icon {
+    font-size: 22px;
+}
+
+.path-card h6 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-charcoal);
+}
+
+.path-card p {
+    font-size: 11px;
+    color: var(--color-charcoal-muted);
+    line-height: 1.4;
+}
+
+/* Bottom Tab Navigation Bar */
+.bottom-nav {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 75px;
+    background-color: #FAF6EE;
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5px 10px 20px 10px; /* Safe padding for home indicator */
+    z-index: 100;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    gap: 3px;
+    transition: transform 0.2s ease;
+}
+
+.nav-item:active {
+    transform: scale(0.95);
+}
+
+.nav-icon {
+    font-size: 20px;
+    filter: grayscale(1);
+    opacity: 0.6;
+}
+
+.nav-label {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--color-charcoal-muted);
+}
+
+.nav-item.active .nav-icon {
+    filter: none;
+    opacity: 1;
+}
+
+.nav-item.active .nav-label {
+    color: var(--color-crimson);
+    font-weight: 700;
+}
+
+
+/* ==========================================================================
+   6. Media Queries & Responsive Layouts
+   ========================================================================== */
+
+@media (max-width: 900px) {
+    body {
+        flex-direction: column;
+    }
+    
+    .presentation-canvas {
+        flex-direction: column;
+        height: auto;
+        overflow-y: auto;
+    }
+    
+    .control-panel {
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--canvas-border);
+        padding: 30px 20px;
+    }
+    
+    .preview-area {
+        padding: 40px 10px;
+        min-height: 900px;
+    }
+}
