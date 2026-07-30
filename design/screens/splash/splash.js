@@ -1,14 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Select essential DOM elements
-    const phoneScreen = document.getElementById('phone-screen');
-    const splashLayer = document.getElementById('splash-layer');
+    // DOM Selection
     const statusTime = document.getElementById('status-time');
-    const btnReplay = document.getElementById('btn-replay');
-    const btnToggleScreen = document.getElementById('btn-toggle-screen');
-
-    // State Variables
-    let transitionTimer = null;
-    let holdOnSplash = false;
+    
+    // View Selectors
+    const btnShowStatic = document.getElementById('btn-show-static');
+    const btnShowLoader = document.getElementById('btn-show-loader');
+    
+    // Action Containers
+    const loaderActions = document.getElementById('loader-actions');
+    const btnReplayLoader = document.getElementById('btn-replay-loader');
+    
+    // Screen Elements
+    const staticSplash = document.getElementById('static-splash');
+    const inAppLoader = document.getElementById('in-app-loader');
 
     // 1. Dynamic Time Updater for iOS Status Bar
     function updateStatusBarTime() {
@@ -16,95 +20,62 @@ document.addEventListener('DOMContentLoaded', () => {
         let hours = now.getHours();
         let minutes = now.getMinutes();
         
-        // Format with leading zeroes
         hours = hours < 10 ? '0' + hours : hours;
         minutes = minutes < 10 ? '0' + minutes : minutes;
         
         statusTime.textContent = `${hours}:${minutes}`;
     }
     
-    // Initial update and periodic interval update
     updateStatusBarTime();
     setInterval(updateStatusBarTime, 10000);
 
-    // 2. Splash Transition Manager
-    function startSplashTimer() {
-        // Clear any active timer first
-        if (transitionTimer) {
-            clearTimeout(transitionTimer);
-        }
-
-        // The splash transitions after 2.5 seconds (1.5 seconds visible + 1s of animation setup)
-        transitionTimer = setTimeout(() => {
-            if (!holdOnSplash) {
-                transitionToDashboard();
-            }
-        }, 2500);
-    }
-
-    function transitionToDashboard() {
-        splashLayer.classList.add('fade-out');
-        phoneScreen.classList.add('app-loaded');
-    }
-
-    function resetToSplash() {
-        // Clear active timer
-        if (transitionTimer) {
-            clearTimeout(transitionTimer);
-        }
-
-        // Reset classes
-        splashLayer.classList.remove('fade-out');
-        phoneScreen.classList.remove('app-loaded');
-
-        // Force a DOM reflow to re-trigger CSS animations
-        // This is a common and reliable technique for resetting keyframe animations
-        void splashLayer.offsetWidth;
-
-        // Restart timer unless hold is active
-        startSplashTimer();
-    }
-
-    // 3. Button Click Listeners
+    // 2. View Switcher Logic
     
-    // Replay Button
-    btnReplay.addEventListener('click', () => {
-        resetToSplash();
-    });
-
-    // Hold / Pause Transition Button
-    btnToggleScreen.addEventListener('click', () => {
-        holdOnSplash = !holdOnSplash;
+    function showStaticSplashView() {
+        // Toggle Buttons
+        btnShowStatic.classList.add('active');
+        btnShowLoader.classList.remove('active');
         
-        if (holdOnSplash) {
-            // Cancel transition if it's currently scheduled
-            if (transitionTimer) {
-                clearTimeout(transitionTimer);
-            }
-            
-            // Bring splash screen back if it has already transitioned
-            splashLayer.classList.remove('fade-out');
-            phoneScreen.classList.remove('app-loaded');
-            
-            // Update button styles/text for visual feedback
-            btnToggleScreen.innerHTML = `
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                Resume Autoplay
-            `;
-            btnToggleScreen.classList.add('active');
-        } else {
-            // Re-enable autoplay and transition
-            btnToggleScreen.innerHTML = `
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-                Hold on Splash
-            `;
-            btnToggleScreen.classList.remove('active');
-            
-            // Trigger transition immediately
-            transitionToDashboard();
-        }
+        // Toggle Screens
+        staticSplash.classList.add('active');
+        inAppLoader.classList.remove('active');
+        
+        // Hide Loader Actions
+        loaderActions.style.display = 'none';
+    }
+
+    function showInAppLoaderView() {
+        // Toggle Buttons
+        btnShowLoader.classList.add('active');
+        btnShowStatic.classList.remove('active');
+        
+        // Toggle Screens
+        inAppLoader.classList.add('active');
+        staticSplash.classList.remove('active');
+        
+        // Show Loader Actions
+        loaderActions.style.display = 'block';
+
+        // Re-trigger animations
+        triggerLoaderAnimations();
+    }
+
+    function triggerLoaderAnimations() {
+        // Force a DOM reflow to restart CSS animations on the loader screen
+        inAppLoader.classList.remove('active');
+        void inAppLoader.offsetWidth; // Reflow trigger
+        inAppLoader.classList.add('active');
+    }
+
+    // Event Listeners for switching views
+    btnShowStatic.addEventListener('click', showStaticSplashView);
+    btnShowLoader.addEventListener('click', showInAppLoaderView);
+
+    // Replay Loader Animation
+    btnReplayLoader.addEventListener('click', () => {
+        triggerLoaderAnimations();
     });
 
-    // 4. Initial Start
-    startSplashTimer();
+    // Default Initialization (Start on Static Splash)
+    showStaticSplashView();
 });

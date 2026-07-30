@@ -1,6 +1,6 @@
 /* ==========================================================================
-   DHARMAPATH SPLASH SCREEN - STYLESHEET
-   A combination of Apple's minimal UI and Indian spiritual sacred geometry.
+   DHARMAPATH SPLASH SCREEN & LOADER - STYLESHEET
+   Apple Human Interface aesthetic mixed with Indian Sacred Geometry.
    ========================================================================== */
 
 /* 1. Design Tokens & CSS Variables */
@@ -14,12 +14,11 @@
     --color-crimson: #8B1E3F;           /* Premium Deep Crimson */
     --color-crimson-light: rgba(139, 30, 63, 0.08);
     --color-antique-gold: #D4AF37;      /* Classic Gold Accent */
-    --color-gold-glow: rgba(212, 175, 55, 0.3);
+    --color-gold-glow: rgba(212, 175, 55, 0.25);
     
     /* Neutral & Text Colors */
     --color-charcoal: #2B1F1D;          /* Sandalwood-infused dark charcoal */
     --color-charcoal-muted: #6B5D5B;    /* Muted version for text */
-    --color-border: rgba(139, 30, 63, 0.08);
     
     /* Typography */
     --font-display: 'Cinzel', serif;
@@ -163,9 +162,9 @@ body {
 }
 
 .btn-secondary.active {
-    background-color: var(--color-sandalwood-dark);
-    border-color: var(--color-sandalwood-dark);
-    color: var(--color-charcoal);
+    background-color: var(--color-crimson);
+    border-color: var(--color-crimson);
+    color: #FFFFFF;
 }
 
 .spec-list {
@@ -285,12 +284,6 @@ body {
     color: var(--color-charcoal-muted);
     z-index: 999;
     pointer-events: none;
-    transition: color 0.5s ease;
-}
-
-/* When the app dashboard opens, status bar text becomes slightly dark charcoal */
-.phone-screen.app-loaded .status-bar {
-    color: var(--color-charcoal);
 }
 
 .status-bar .time {
@@ -347,15 +340,14 @@ body {
     border-radius: 10px;
     z-index: 1000;
     pointer-events: none;
-    opacity: 0.3;
+    opacity: 0.2;
 }
 
-
 /* ==========================================================================
-   4. Screen 1: Splash Screen Layer (Intro Animation)
+   4. Screen States (Static vs loader)
    ========================================================================== */
 
-.splash-layer {
+.screen-state {
     position: absolute;
     top: 0;
     left: 0;
@@ -367,39 +359,19 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
+    /* Initially Hidden */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+                visibility 0.5s;
+}
+
+.screen-state.active {
     opacity: 1;
     visibility: visible;
-}
-
-/* Soft glowing gold pulse behind the logo */
-.pulse-glow {
-    position: absolute;
-    width: 240px;
-    height: 240px;
-    background: radial-gradient(circle, var(--color-gold-glow) 0%, rgba(212, 175, 55, 0) 70%);
-    border-radius: 50%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0;
-    pointer-events: none;
-    /* Soft breathing loop starting after logo fades in */
-    animation: glow-pulse-anim 3.5s ease-in-out 1.2s infinite;
-}
-
-@keyframes glow-pulse-anim {
-    0% {
-        opacity: 0.15;
-        transform: translate(-50%, -50%) scale(0.9);
-    }
-    50% {
-        opacity: 0.5;
-        transform: translate(-50%, -50%) scale(1.1);
-    }
-    100% {
-        opacity: 0.15;
-        transform: translate(-50%, -50%) scale(0.9);
-    }
+    pointer-events: auto;
 }
 
 .splash-content {
@@ -417,37 +389,20 @@ body {
 /* Logo container & App Icon Card */
 .app-icon-wrapper {
     margin-bottom: 24px;
-    opacity: 0;
-    transform: scale(0.9);
-    /* Fades in immediately and scales to 1.0 */
-    animation: logo-fade-scale 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes logo-fade-scale {
-    0% {
-        opacity: 0;
-        transform: scale(0.9);
-        filter: blur(4px);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-        filter: blur(0);
-    }
 }
 
 .app-icon {
-    width: 110px;
-    height: 110px;
+    width: 112px;
+    height: 112px;
     background: #FAF6EE;
-    border-radius: 26px;
+    border-radius: 28px;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px;
-    box-shadow: 0 10px 30px rgba(139, 30, 63, 0.06), 
+    padding: 11px;
+    box-shadow: 0 10px 30px rgba(139, 30, 63, 0.05), 
                 0 1px 3px rgba(0, 0, 0, 0.02),
-                inset 0 0 0 1px rgba(139, 30, 63, 0.04);
+                inset 0 0 0 1px rgba(139, 30, 63, 0.03);
 }
 
 .shatkona {
@@ -456,7 +411,7 @@ body {
     display: block;
 }
 
-/* Brand styling */
+/* Brand Name Container */
 .brand-container {
     display: flex;
     flex-direction: column;
@@ -470,9 +425,6 @@ body {
     font-weight: 700;
     letter-spacing: 1px;
     margin-bottom: 12px;
-    opacity: 0;
-    /* Fades in slightly after logo */
-    animation: fade-in-up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
 }
 
 .app-name .dharma {
@@ -491,9 +443,91 @@ body {
     color: var(--color-charcoal-muted);
     letter-spacing: 0.18em;
     text-transform: uppercase;
+}
+
+/* ==========================================================================
+   5. Static State Rules (No animations)
+   ========================================================================== */
+
+.static-view.app-icon-wrapper {
+    opacity: 1;
+    transform: none;
+}
+
+.static-view.brand-container {
+    opacity: 1;
+}
+
+/* ==========================================================================
+   6. Loader State Rules (Intro Animation + Fetching Bar)
+   ========================================================================== */
+
+/* Background glow breathe for loader screen */
+.in-app-loader-state .pulse-glow {
+    position: absolute;
+    width: 240px;
+    height: 240px;
+    background: radial-gradient(circle, var(--color-gold-glow) 0%, rgba(212, 175, 55, 0) 70%);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
     opacity: 0;
-    /* Fades in after App Name */
+    pointer-events: none;
+    animation: glow-pulse-anim 3s ease-in-out 1.2s infinite;
+}
+
+@keyframes glow-pulse-anim {
+    0% {
+        opacity: 0.15;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+    50% {
+        opacity: 0.55;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+    100% {
+        opacity: 0.15;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+}
+
+/* Intro Animations */
+.animated-view.app-icon-wrapper {
+    opacity: 0;
+    transform: scale(0.9);
+    animation: logo-fade-scale 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animated-view.brand-container {
+    opacity: 0;
+}
+
+.in-app-loader-state.active .animated-view.brand-container {
+    opacity: 1;
+}
+
+.in-app-loader-state.active .animated-view .app-name {
+    opacity: 0;
+    animation: fade-in-up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+}
+
+.in-app-loader-state.active .animated-view .tagline {
+    opacity: 0;
     animation: fade-in-up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+}
+
+@keyframes logo-fade-scale {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+        filter: blur(4px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+    }
 }
 
 @keyframes fade-in-up {
@@ -507,378 +541,62 @@ body {
     }
 }
 
-/* Exit transitions for Splash screen overlay */
-.splash-layer.fade-out {
-    opacity: 0;
-    visibility: hidden;
-    transform: scale(1.03);
-    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1),
-                transform 0.8s cubic-bezier(0.25, 1, 0.5, 1),
-                visibility 0.8s;
-}
-
-
-/* ==========================================================================
-   5. Screen 2: App Home Dashboard Preview (Post-Splash)
-   ========================================================================== */
-
-.dashboard-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    padding: 60px 24px 85px 24px; /* Dynamic layouts around notch & safe tab bar */
+/* Loading Feedback Indicator */
+.loader-feedback-container {
+    margin-top: 60px;
     display: flex;
     flex-direction: column;
-    z-index: 10;
-    opacity: 0;
-    transform: scale(0.96);
-    pointer-events: none;
-    background-color: var(--color-sandalwood-light);
-    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1),
-                transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-/* Active State */
-.phone-screen.app-loaded .dashboard-layer {
-    opacity: 1;
-    transform: scale(1);
-    pointer-events: auto;
-}
-
-/* Header */
-.dash-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-}
-
-.greeting-sub {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--color-charcoal-muted);
-}
-
-.greeting-main {
-    font-family: var(--font-display);
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--color-crimson);
-}
-
-.avatar-ring {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    padding: 2px;
-    background: linear-gradient(135deg, var(--color-saffron), var(--color-antique-gold));
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.avatar-inner {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background-color: var(--color-sandalwood-light);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--color-crimson);
-    font-size: 16px;
-    font-weight: bold;
-}
-
-/* Dashboard content body (scrollable) */
-.dash-content {
-    flex: 1;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    scrollbar-width: none; /* Hide scrollbar for clean UI */
-}
-
-.dash-content::-webkit-scrollbar {
-    display: none;
-}
-
-/* Section Title */
-.section-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 5px;
-}
-
-.section-title h4 {
-    font-size: 14px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-charcoal);
-}
-
-.action-text {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--color-saffron);
-    cursor: pointer;
-}
-
-.location-pill {
-    font-size: 11px;
-    font-weight: 600;
-    padding: 3px 8px;
-    background-color: var(--color-saffron-light);
-    color: var(--color-saffron);
-    border-radius: 20px;
-    letter-spacing: 0.02em;
-}
-
-/* Cards styling */
-.quote-card {
-    background: linear-gradient(135deg, var(--color-sandalwood), #FAF6EE);
-    border: 1px solid var(--color-sandalwood-dark);
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 4px 15px rgba(139, 30, 63, 0.02);
-    text-align: center;
-}
-
-.quote-text {
-    font-family: var(--font-body);
-    font-size: 14.5px;
-    font-style: italic;
-    color: var(--color-charcoal);
-    line-height: 1.5;
-    margin-bottom: 8px;
-}
-
-.quote-author {
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-charcoal-muted);
-}
-
-.sadhana-card {
-    background-color: var(--color-sandalwood-light);
-    border: 1px solid var(--color-border);
-    padding: 16px;
-    border-radius: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.01);
-}
-
-.sadhana-info {
-    display: flex;
     align-items: center;
     gap: 12px;
+    width: 100%;
+    opacity: 0;
 }
 
-.icon-circle {
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
-    background-color: var(--color-saffron-light);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 18px;
+.in-app-loader-state.active .loader-feedback-container {
+    animation: fade-in-up 1s cubic-bezier(0.16, 1, 0.3, 1) 1.2s forwards;
 }
 
-.sadhana-details h5 {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--color-charcoal);
-    margin-bottom: 2px;
-}
-
-.sadhana-details p {
-    font-size: 12px;
-    color: var(--color-charcoal-muted);
-}
-
-/* Progress ring graphic */
-.progress-ring-box {
+/* Shimmering Progress Bar */
+.premium-progress-bar {
+    width: 160px;
+    height: 3px;
+    background-color: var(--color-sandalwood-dark);
+    border-radius: 10px;
+    overflow: hidden;
     position: relative;
+    opacity: 0.8;
+}
+
+.premium-progress-fill {
+    height: 100%;
     width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.circular-chart {
-    display: block;
-    max-width: 100%;
-    max-height: 100%;
-}
-
-.circle-bg {
-    fill: none;
-    stroke: var(--color-border);
-    stroke-width: 2.8;
-}
-
-.circle {
-    fill: none;
-    stroke-width: 2.8;
-    stroke-linecap: round;
-    stroke: var(--color-saffron);
-}
-
-.progress-percentage {
+    background: linear-gradient(90deg, var(--color-saffron), var(--color-antique-gold));
+    border-radius: 10px;
     position: absolute;
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--color-charcoal);
+    animation: progress-shimmer 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
-/* Panchang grid styling */
-.panchang-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+@keyframes progress-shimmer {
+    0% {
+        left: -40px;
+    }
+    100% {
+        left: 160px;
+    }
 }
 
-.panchang-item {
-    background-color: #FAF6EE;
-    border: 1px solid var(--color-border);
-    border-radius: 16px;
-    padding: 14px 16px;
-    display: flex;
-    flex-direction: column;
-}
-
-.p-label {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    color: var(--color-charcoal-muted);
-    margin-bottom: 6px;
-}
-
-.p-value {
-    font-family: var(--font-display);
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--color-crimson);
-    margin-bottom: 2px;
-}
-
-.p-meta {
+.loader-status-text {
+    font-family: var(--font-body);
     font-size: 11px;
-    color: var(--color-charcoal-muted);
-}
-
-/* Explorer grids */
-.paths-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-}
-
-.path-card {
-    border-radius: 20px;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    cursor: pointer;
-    border: 1px solid var(--color-border);
-    transition: transform 0.2s ease;
-}
-
-.path-card:hover {
-    transform: translateY(-2px);
-}
-
-.path-card.saffron-accent {
-    background-color: rgba(229, 138, 0, 0.03);
-}
-
-.path-card.crimson-accent {
-    background-color: rgba(139, 30, 63, 0.02);
-}
-
-.path-icon {
-    font-size: 22px;
-}
-
-.path-card h6 {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--color-charcoal);
-}
-
-.path-card p {
-    font-size: 11px;
-    color: var(--color-charcoal-muted);
-    line-height: 1.4;
-}
-
-/* Bottom Tab Navigation Bar */
-.bottom-nav {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 75px;
-    background-color: #FAF6EE;
-    border-top: 1px solid var(--color-border);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 5px 10px 20px 10px; /* Safe padding for home indicator */
-    z-index: 100;
-}
-
-.nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    gap: 3px;
-    transition: transform 0.2s ease;
-}
-
-.nav-item:active {
-    transform: scale(0.95);
-}
-
-.nav-icon {
-    font-size: 20px;
-    filter: grayscale(1);
-    opacity: 0.6;
-}
-
-.nav-label {
-    font-size: 10px;
     font-weight: 500;
     color: var(--color-charcoal-muted);
-}
-
-.nav-item.active .nav-icon {
-    filter: none;
-    opacity: 1;
-}
-
-.nav-item.active .nav-label {
-    color: var(--color-crimson);
-    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
 
 /* ==========================================================================
-   6. Media Queries & Responsive Layouts
+   7. Media Queries & Responsive Layouts
    ========================================================================== */
 
 @media (max-width: 900px) {
