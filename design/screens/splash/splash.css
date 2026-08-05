@@ -1,34 +1,32 @@
 /* ==========================================================================
-   DHARMAPATH SPLASH SCREEN & LOADER - STYLESHEET
-   Apple Human Interface aesthetic mixed with Indian Sacred Geometry.
+   DHARMAPATH SPLASH SCREEN & LOADER - MOBILE VIEW STYLESHEET
+   Phone-width (390px) centered view, no frame.
    ========================================================================== */
 
 /* 1. Design Tokens & CSS Variables */
 :root {
     /* Color Palette */
-    --color-sandalwood: #F5E6C8;        /* Warm Sandalwood Base */
-    --color-sandalwood-light: #FAF6EE;  /* Light Sandalwood for cards */
-    --color-sandalwood-dark: #E2CFAB;   /* Darker Sandalwood for borders/depth */
-    --color-saffron: #E58A00;           /* Vibrant Saffron */
+    --color-sandalwood: #F5E6C8;
+    --color-sandalwood-light: #FAF6EE;
+    --color-sandalwood-dark: #E2CFAB;
+    --color-saffron: #c87904;
     --color-saffron-light: rgba(229, 138, 0, 0.1);
-    --color-crimson: #8B1E3F;           /* Premium Deep Crimson */
+    --color-crimson: #8B1E3F;
     --color-crimson-light: rgba(139, 30, 63, 0.08);
-    --color-antique-gold: #D4AF37;      /* Classic Gold Accent */
+    --color-antique-gold: #D4AF37;
     --color-gold-glow: rgba(212, 175, 55, 0.25);
-    
+
     /* Neutral & Text Colors */
-    --color-charcoal: #2B1F1D;          /* Sandalwood-infused dark charcoal */
-    --color-charcoal-muted: #6B5D5B;    /* Muted version for text */
-    
+    --color-charcoal: #2B1F1D;
+    --color-charcoal-muted: #7E6F6C;
+
     /* Typography */
     --font-display: 'Cinzel', serif;
     --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    
-    /* Canvas presentation colors */
-    --canvas-bg: #EAE8E2;
-    --canvas-text: #3D3534;
-    --canvas-card-bg: #FAF9F6;
-    --canvas-border: rgba(61, 53, 52, 0.08);
+
+    /* Phone dimensions */
+    --phone-width: 390px;
+    --phone-height: 844px;
 }
 
 /* Reset and Base Styles */
@@ -38,248 +36,100 @@
     padding: 0;
 }
 
+html,
 body {
-    background-color: var(--canvas-bg);
-    color: var(--canvas-text);
-    font-family: var(--font-body);
-    min-height: 100vh;
-    display: flex;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-}
-
-/* ==========================================================================
-   2. Presentation Layout (Desktop preview container)
-   ========================================================================== */
-
-.presentation-canvas {
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    position: relative;
-}
-
-/* Control Panel (Sidebar) */
-.control-panel {
-    width: 320px;
-    height: 100%;
-    background-color: var(--canvas-card-bg);
-    border-right: 1px solid var(--canvas-border);
-    padding: 40px 30px;
-    display: flex;
-    flex-direction: column;
-    z-index: 10;
-    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.02);
-}
-
-.brand-info {
-    margin-bottom: 20px;
-}
-
-.badge {
-    display: inline-block;
-    padding: 4px 10px;
-    background-color: var(--color-crimson-light);
-    color: var(--color-crimson);
-    font-size: 11px;
-    font-weight: 600;
-    border-radius: 20px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-}
-
-.logo-title {
-    font-family: var(--font-display);
-    font-size: 32px;
-    font-weight: 700;
-    color: var(--color-crimson);
-    letter-spacing: -0.5px;
-    margin-bottom: 12px;
-}
-
-.description {
-    font-size: 13.5px;
-    line-height: 1.5;
-    color: var(--color-charcoal-muted);
-}
-
-.divider {
-    border: 0;
-    height: 1px;
-    background-color: var(--canvas-border);
-    margin: 25px 0;
-}
-
-.control-group h3,
-.spec-details h3 {
-    font-family: var(--font-body);
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--color-charcoal-muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 15px;
-}
-
-.btn {
     width: 100%;
-    padding: 12px 18px;
-    font-family: var(--font-body);
-    font-size: 14px;
-    font-weight: 600;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: all 0.25s ease;
-    margin-bottom: 12px;
-}
-
-.btn-primary {
-    background-color: var(--color-crimson);
-    color: #FFF;
-    box-shadow: 0 4px 12px rgba(139, 30, 63, 0.2);
-}
-
-.btn-primary:hover {
-    background-color: #721832;
-    transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(139, 30, 63, 0.3);
-}
-
-.btn-secondary {
-    background-color: transparent;
-    color: var(--color-charcoal);
-    border: 1px solid var(--color-sandalwood-dark);
-}
-
-.btn-secondary:hover {
-    background-color: var(--color-sandalwood-light);
-}
-
-.btn-secondary.active {
-    background-color: var(--color-crimson);
-    border-color: var(--color-crimson);
-    color: #FFFFFF;
-}
-
-.spec-list {
-    list-style: none;
-}
-
-.spec-list li {
-    font-size: 13px;
-    color: var(--color-charcoal);
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    display: inline-block;
-}
-
-.dot.saffron { background-color: var(--color-saffron); }
-.dot.crimson { background-color: var(--color-crimson); }
-.dot.gold { background-color: var(--color-antique-gold); }
-.dot.sandalwood { background-color: var(--color-sandalwood); border: 1px solid #D4AF37; }
-
-/* Preview Workspace Area */
-.preview-area {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100%;
-    padding: 20px;
-    position: relative;
+    overflow: hidden;
+    background-color: #1a1a1a;
+}
+
+body {
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* ==========================================================================
-   3. Phone Simulator Frame
+   2. Phone View Container 
    ========================================================================== */
 
-.phone-frame {
+.phone-view {
+    width: var(--phone-width);
+    height: var(--phone-height);
+    max-height: 100vh;
     position: relative;
-    width: 412px;
-    height: 866px;
-    background: #1C1A1A; /* Premium matte metal bezel */
-    border-radius: 48px;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15),
-                inset 0 0 0 2px rgba(255, 255, 255, 0.12),
-                inset 0 0 15px rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.3s ease;
+    overflow: hidden;
+    background-color: var(--color-sandalwood);
+    /* Subtle shadow to separate from dark background */
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.3);
 }
 
-/* Screen Size: 390px x 844px */
-.phone-screen {
-    position: relative;
-    width: 390px;
-    height: 844px;
-    background-color: var(--color-sandalwood);
-    border-radius: 40px;
-    overflow: hidden;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
+/* ==========================================================================
+   3. Sacred Background Watermark
+   ========================================================================== */
+
+.sacred-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.045;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke='%238B1E3F' stroke-width='0.5'%3E%3Ccircle cx='50' cy='50' r='50'/%3E%3Ccircle cx='0' cy='50' r='50'/%3E%3Ccircle cx='100' cy='50' r='50'/%3E%3Ccircle cx='50' cy='0' r='50'/%3E%3Ccircle cx='50' cy='100' r='50'/%3E%3Ccircle cx='25' cy='25' r='25' stroke='%23D4AF37' stroke-width='0.3'/%3E%3Ccircle cx='75' cy='25' r='25' stroke='%23D4AF37' stroke-width='0.3'/%3E%3Ccircle cx='25' cy='75' r='25' stroke='%23D4AF37' stroke-width='0.3'/%3E%3Ccircle cx='75' cy='75' r='25' stroke='%23D4AF37' stroke-width='0.3'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: repeat;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ==========================================================================
+   4. Screen States
+   ========================================================================== */
+
+.screen-state {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background: radial-gradient(circle at center, #f1dfb5 0%, var(--color-sandalwood) 100%);
     display: flex;
     flex-direction: column;
-}
-
-/* iOS Dynamic Island Notch */
-.dynamic-island {
-    position: absolute;
-    top: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 110px;
-    height: 30px;
-    background-color: #000000;
-    border-radius: 20px;
-    z-index: 1000;
-    display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 15px;
-    box-sizing: border-box;
+
+    /* Initially Hidden */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+        visibility 0.6s;
 }
 
-.dynamic-island .camera {
-    width: 10px;
-    height: 10px;
-    background: #111122;
-    border-radius: 50%;
-    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2);
+.screen-state.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
-.dynamic-island .speaker {
-    width: 45px;
-    height: 4px;
-    background: #0a0a14;
-    border-radius: 50%;
-}
+/* ==========================================================================
+   5. iOS Status Bar
+   ========================================================================== */
 
-/* iOS Status Bar */
 .status-bar {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 50px;
+    height: 54px;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
     padding: 0 28px 10px;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     color: var(--color-charcoal-muted);
     z-index: 999;
@@ -340,39 +190,12 @@ body {
     border-radius: 10px;
     z-index: 1000;
     pointer-events: none;
-    opacity: 0.2;
+    opacity: 0.15;
 }
 
 /* ==========================================================================
-   4. Screen States (Static vs loader)
+   6. Splash Content
    ========================================================================== */
-
-.screen-state {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 100;
-    background: radial-gradient(circle at center, #FDF9F0 0%, var(--color-sandalwood) 100%);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    
-    /* Initially Hidden */
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1),
-                visibility 0.5s;
-}
-
-.screen-state.active {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-}
 
 .splash-content {
     display: flex;
@@ -388,21 +211,31 @@ body {
 
 /* Logo container & App Icon Card */
 .app-icon-wrapper {
-    margin-bottom: 24px;
+    margin-bottom: 32px;
 }
 
 .app-icon {
-    width: 112px;
-    height: 112px;
-    background: #FAF6EE;
+    width: 114px;
+    height: 114px;
     border-radius: 28px;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 11px;
-    box-shadow: 0 10px 30px rgba(139, 30, 63, 0.05), 
-                0 1px 3px rgba(0, 0, 0, 0.02),
-                inset 0 0 0 1px rgba(139, 30, 63, 0.03);
+    background: #FAF6EE;
+
+    /* Premium Gradient Outline Technique */
+    border: 1px solid transparent;
+    background-image: linear-gradient(#FAF6EE, #FAF6EE),
+        linear-gradient(135deg, var(--color-antique-gold), var(--color-saffron));
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+
+    /* Premium Drop Shadow */
+    box-shadow: 0 16px 36px rgba(139, 30, 63, 0.08),
+        0 3px 8px rgba(0, 0, 0, 0.015),
+        inset 0 2px 4px rgba(255, 255, 255, 0.8);
+    position: relative;
 }
 
 .shatkona {
@@ -421,10 +254,11 @@ body {
 /* App name */
 .app-name {
     font-family: var(--font-display);
-    font-size: 34px;
+    font-size: 36px;
     font-weight: 700;
     letter-spacing: 1px;
     margin-bottom: 12px;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
 }
 
 .app-name .dharma {
@@ -435,18 +269,10 @@ body {
     color: var(--color-crimson);
 }
 
-/* Small Tagline */
-.tagline {
-    font-family: var(--font-body);
-    font-size: 13.5px;
-    font-weight: 500;
-    color: var(--color-charcoal-muted);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-}
+
 
 /* ==========================================================================
-   5. Static State Rules (No animations)
+   7. Static State Rules (No animations)
    ========================================================================== */
 
 .static-view.app-icon-wrapper {
@@ -459,7 +285,7 @@ body {
 }
 
 /* ==========================================================================
-   6. Loader State Rules (Intro Animation + Fetching Bar)
+   8. Loader State Rules (Intro Animation + Circular Spinner)
    ========================================================================== */
 
 /* Background glow breathe for loader screen */
@@ -474,7 +300,7 @@ body {
     transform: translate(-50%, -50%) scale(1);
     opacity: 0;
     pointer-events: none;
-    animation: glow-pulse-anim 3s ease-in-out 1.2s infinite;
+    animation: glow-pulse-anim 3.5s ease-in-out 1.2s infinite;
 }
 
 @keyframes glow-pulse-anim {
@@ -482,20 +308,38 @@ body {
         opacity: 0.15;
         transform: translate(-50%, -50%) scale(0.9);
     }
+
     50% {
         opacity: 0.55;
         transform: translate(-50%, -50%) scale(1.1);
     }
+
     100% {
         opacity: 0.15;
         transform: translate(-50%, -50%) scale(0.9);
     }
 }
 
+/* Slow rotate of outer mandala guides in the SVG */
+.in-app-loader-state.active .mandala-ring {
+    transform-origin: 60px 60px;
+    animation: slow-rotate 25s linear infinite;
+}
+
+@keyframes slow-rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 /* Intro Animations */
 .animated-view.app-icon-wrapper {
     opacity: 0;
-    transform: scale(0.9);
+    transform: scale(0.92);
     animation: logo-fade-scale 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
@@ -512,17 +356,15 @@ body {
     animation: fade-in-up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
 }
 
-.in-app-loader-state.active .animated-view .tagline {
-    opacity: 0;
-    animation: fade-in-up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
-}
+
 
 @keyframes logo-fade-scale {
     0% {
         opacity: 0;
-        transform: scale(0.9);
+        transform: scale(0.92);
         filter: blur(4px);
     }
+
     100% {
         opacity: 1;
         transform: scale(1);
@@ -535,6 +377,7 @@ body {
         opacity: 0;
         transform: translateY(8px);
     }
+
     100% {
         opacity: 1;
         transform: translateY(0);
@@ -547,7 +390,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
     width: 100%;
     opacity: 0;
 }
@@ -556,70 +399,34 @@ body {
     animation: fade-in-up 1s cubic-bezier(0.16, 1, 0.3, 1) 1.2s forwards;
 }
 
-/* Shimmering Progress Bar */
-.premium-progress-bar {
-    width: 160px;
-    height: 3px;
-    background-color: var(--color-sandalwood-dark);
-    border-radius: 10px;
-    overflow: hidden;
-    position: relative;
-    opacity: 0.8;
+/* Premium Minimal Spinning Gold Ring */
+.premium-spinner {
+    width: 28px;
+    height: 28px;
+    border: 1.5px solid rgba(212, 175, 55, 0.15);
+    border-top: 1.5px solid var(--color-antique-gold);
+    border-radius: 50%;
+    animation: spinner-spin 1.2s cubic-bezier(0.5, 0.1, 0.5, 0.9) infinite;
+    box-shadow: 0 0 6px rgba(135, 106, 9, 0.08);
 }
 
-.premium-progress-fill {
-    height: 100%;
-    width: 40px;
-    background: linear-gradient(90deg, var(--color-saffron), var(--color-antique-gold));
-    border-radius: 10px;
-    position: absolute;
-    animation: progress-shimmer 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-@keyframes progress-shimmer {
+@keyframes spinner-spin {
     0% {
-        left: -40px;
+        transform: rotate(0deg);
     }
+
     100% {
-        left: 160px;
+        transform: rotate(360deg);
     }
 }
 
 .loader-status-text {
     font-family: var(--font-body);
     font-size: 11px;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--color-charcoal-muted);
-    letter-spacing: 0.08em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-}
-
-
-/* ==========================================================================
-   7. Media Queries & Responsive Layouts
-   ========================================================================== */
-
-@media (max-width: 900px) {
-    body {
-        flex-direction: column;
-    }
-    
-    .presentation-canvas {
-        flex-direction: column;
-        height: auto;
-        overflow-y: auto;
-    }
-    
-    .control-panel {
-        width: 100%;
-        height: auto;
-        border-right: none;
-        border-bottom: 1px solid var(--canvas-border);
-        padding: 30px 20px;
-    }
-    
-    .preview-area {
-        padding: 40px 10px;
-        min-height: 900px;
-    }
+    margin-top: 6px;
+    opacity: 0.85;
 }

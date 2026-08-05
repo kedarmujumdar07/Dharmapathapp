@@ -1,15 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     // DOM Selection
     const statusTime = document.getElementById('status-time');
-    
-    // View Selectors
-    const btnShowStatic = document.getElementById('btn-show-static');
-    const btnShowLoader = document.getElementById('btn-show-loader');
-    
-    // Action Containers
-    const loaderActions = document.getElementById('loader-actions');
-    const btnReplayLoader = document.getElementById('btn-replay-loader');
-    
+    const statusTimeLoader = document.getElementById('status-time-loader');
+
     // Screen Elements
     const staticSplash = document.getElementById('static-splash');
     const inAppLoader = document.getElementById('in-app-loader');
@@ -23,59 +16,30 @@ document.addEventListener('DOMContentLoaded', () => {
         hours = hours < 10 ? '0' + hours : hours;
         minutes = minutes < 10 ? '0' + minutes : minutes;
         
-        statusTime.textContent = `${hours}:${minutes}`;
+        const timeStr = `${hours}:${minutes}`;
+        if (statusTime) statusTime.textContent = timeStr;
+        if (statusTimeLoader) statusTimeLoader.textContent = timeStr;
     }
     
     updateStatusBarTime();
     setInterval(updateStatusBarTime, 10000);
 
-    // 2. View Switcher Logic
-    
+    // 2. Auto-sequence: Static Splash → Loader after 2.5 seconds
     function showStaticSplashView() {
-        // Toggle Buttons
-        btnShowStatic.classList.add('active');
-        btnShowLoader.classList.remove('active');
-        
-        // Toggle Screens
         staticSplash.classList.add('active');
         inAppLoader.classList.remove('active');
-        
-        // Hide Loader Actions
-        loaderActions.style.display = 'none';
     }
 
     function showInAppLoaderView() {
-        // Toggle Buttons
-        btnShowLoader.classList.add('active');
-        btnShowStatic.classList.remove('active');
-        
-        // Toggle Screens
         inAppLoader.classList.add('active');
         staticSplash.classList.remove('active');
-        
-        // Show Loader Actions
-        loaderActions.style.display = 'block';
-
-        // Re-trigger animations
-        triggerLoaderAnimations();
     }
 
-    function triggerLoaderAnimations() {
-        // Force a DOM reflow to restart CSS animations on the loader screen
-        inAppLoader.classList.remove('active');
-        void inAppLoader.offsetWidth; // Reflow trigger
-        inAppLoader.classList.add('active');
-    }
-
-    // Event Listeners for switching views
-    btnShowStatic.addEventListener('click', showStaticSplashView);
-    btnShowLoader.addEventListener('click', showInAppLoaderView);
-
-    // Replay Loader Animation
-    btnReplayLoader.addEventListener('click', () => {
-        triggerLoaderAnimations();
-    });
-
-    // Default Initialization (Start on Static Splash)
+    // Start on static splash
     showStaticSplashView();
+
+    // After 2.5 seconds, transition to the loader state
+    setTimeout(() => {
+        showInAppLoaderView();
+    }, 2500);
 });
