@@ -1,0 +1,432 @@
+/* ==========================================================================
+   DHARMAPATH SPLASH SCREEN & LOADER - MOBILE VIEW STYLESHEET
+   Phone-width (390px) centered view, no frame.
+   ========================================================================== */
+
+/* 1. Design Tokens & CSS Variables */
+:root {
+    /* Color Palette */
+    --color-sandalwood: #F5E6C8;
+    --color-sandalwood-light: #FAF6EE;
+    --color-sandalwood-dark: #E2CFAB;
+    --color-saffron: #c87904;
+    --color-saffron-light: rgba(229, 138, 0, 0.1);
+    --color-crimson: #8B1E3F;
+    --color-crimson-light: rgba(139, 30, 63, 0.08);
+    --color-antique-gold: #D4AF37;
+    --color-gold-glow: rgba(212, 175, 55, 0.25);
+
+    /* Neutral & Text Colors */
+    --color-charcoal: #2B1F1D;
+    --color-charcoal-muted: #7E6F6C;
+
+    /* Typography */
+    --font-display: 'Cinzel', serif;
+    --font-body: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+    /* Phone dimensions */
+    --phone-width: 390px;
+    --phone-height: 844px;
+}
+
+/* Reset and Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #1a1a1a;
+}
+
+body {
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ==========================================================================
+   2. Phone View Container 
+   ========================================================================== */
+
+.phone-view {
+    width: var(--phone-width);
+    height: var(--phone-height);
+    max-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--color-sandalwood);
+    /* Subtle shadow to separate from dark background */
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================================
+   3. Sacred Background Watermark
+   ========================================================================== */
+
+.sacred-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.045;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke='%238B1E3F' stroke-width='0.5'%3E%3Ccircle cx='50' cy='50' r='50'/%3E%3Ccircle cx='0' cy='50' r='50'/%3E%3Ccircle cx='100' cy='50' r='50'/%3E%3Ccircle cx='50' cy='0' r='50'/%3E%3Ccircle cx='50' cy='100' r='50'/%3E%3Ccircle cx='25' cy='25' r='25' stroke='%23D4AF37' stroke-width='0.3'/%3E%3Ccircle cx='75' cy='25' r='25' stroke='%23D4AF37' stroke-width='0.3'/%3E%3Ccircle cx='25' cy='75' r='25' stroke='%23D4AF37' stroke-width='0.3'/%3E%3Ccircle cx='75' cy='75' r='25' stroke='%23D4AF37' stroke-width='0.3'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: repeat;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ==========================================================================
+   4. Screen States
+   ========================================================================== */
+
+.screen-state {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background: radial-gradient(circle at center, #f1dfb5 0%, var(--color-sandalwood) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    /* Initially Hidden */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+        visibility 0.6s;
+}
+
+.screen-state.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* ==========================================================================
+   5. iOS Status Bar
+   ========================================================================== */
+
+.status-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 54px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 28px 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-charcoal-muted);
+    z-index: 999;
+    pointer-events: none;
+}
+
+.status-bar .time {
+    letter-spacing: -0.2px;
+}
+
+.status-bar .status-icons {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.status-bar .icon {
+    width: 15px;
+    height: 15px;
+}
+
+.status-bar .battery {
+    width: 22px;
+    height: 11.5px;
+    border: 1px solid currentColor;
+    border-radius: 3px;
+    padding: 1px;
+    position: relative;
+}
+
+.status-bar .battery::after {
+    content: '';
+    position: absolute;
+    right: -3px;
+    top: 3px;
+    width: 2px;
+    height: 4px;
+    background-color: currentColor;
+    border-radius: 0 1px 1px 0;
+}
+
+.status-bar .battery-level {
+    width: 80%;
+    height: 100%;
+    background-color: currentColor;
+    border-radius: 1px;
+}
+
+/* iOS Home Indicator */
+.home-indicator {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 5px;
+    background-color: var(--color-charcoal);
+    border-radius: 10px;
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0.15;
+}
+
+/* ==========================================================================
+   6. Splash Content
+   ========================================================================== */
+
+.splash-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 0 40px;
+    z-index: 2;
+    text-align: center;
+}
+
+/* Logo container & App Icon Card */
+.app-icon-wrapper {
+    margin-bottom: 32px;
+}
+
+.app-icon {
+    width: 114px;
+    height: 114px;
+    border-radius: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 11px;
+    background: #FAF6EE;
+
+    /* Premium Gradient Outline Technique */
+    border: 1px solid transparent;
+    background-image: linear-gradient(#FAF6EE, #FAF6EE),
+        linear-gradient(135deg, var(--color-antique-gold), var(--color-saffron));
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+
+    /* Premium Drop Shadow */
+    box-shadow: 0 16px 36px rgba(139, 30, 63, 0.08),
+        0 3px 8px rgba(0, 0, 0, 0.015),
+        inset 0 2px 4px rgba(255, 255, 255, 0.8);
+    position: relative;
+}
+
+.shatkona {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Brand Name Container */
+.brand-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* App name */
+.app-name {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+}
+
+.app-name .dharma {
+    color: var(--color-saffron);
+}
+
+.app-name .path {
+    color: var(--color-crimson);
+}
+
+
+
+/* ==========================================================================
+   7. Static State Rules (No animations)
+   ========================================================================== */
+
+.static-view.app-icon-wrapper {
+    opacity: 1;
+    transform: none;
+}
+
+.static-view.brand-container {
+    opacity: 1;
+}
+
+/* ==========================================================================
+   8. Loader State Rules (Intro Animation + Circular Spinner)
+   ========================================================================== */
+
+/* Background glow breathe for loader screen */
+.in-app-loader-state .pulse-glow {
+    position: absolute;
+    width: 240px;
+    height: 240px;
+    background: radial-gradient(circle, var(--color-gold-glow) 0%, rgba(212, 175, 55, 0) 70%);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+    pointer-events: none;
+    animation: glow-pulse-anim 3.5s ease-in-out 1.2s infinite;
+}
+
+@keyframes glow-pulse-anim {
+    0% {
+        opacity: 0.15;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+
+    50% {
+        opacity: 0.55;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    100% {
+        opacity: 0.15;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+}
+
+/* Slow rotate of outer mandala guides in the SVG */
+.in-app-loader-state.active .mandala-ring {
+    transform-origin: 60px 60px;
+    animation: slow-rotate 25s linear infinite;
+}
+
+@keyframes slow-rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Intro Animations */
+.animated-view.app-icon-wrapper {
+    opacity: 0;
+    transform: scale(0.92);
+    animation: logo-fade-scale 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animated-view.brand-container {
+    opacity: 0;
+}
+
+.in-app-loader-state.active .animated-view.brand-container {
+    opacity: 1;
+}
+
+.in-app-loader-state.active .animated-view .app-name {
+    opacity: 0;
+    animation: fade-in-up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+}
+
+
+
+@keyframes logo-fade-scale {
+    0% {
+        opacity: 0;
+        transform: scale(0.92);
+        filter: blur(4px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+    }
+}
+
+@keyframes fade-in-up {
+    0% {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Loading Feedback Indicator */
+.loader-feedback-container {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    opacity: 0;
+}
+
+.in-app-loader-state.active .loader-feedback-container {
+    animation: fade-in-up 1s cubic-bezier(0.16, 1, 0.3, 1) 1.2s forwards;
+}
+
+/* Premium Minimal Spinning Gold Ring */
+.premium-spinner {
+    width: 28px;
+    height: 28px;
+    border: 1.5px solid rgba(212, 175, 55, 0.15);
+    border-top: 1.5px solid var(--color-antique-gold);
+    border-radius: 50%;
+    animation: spinner-spin 1.2s cubic-bezier(0.5, 0.1, 0.5, 0.9) infinite;
+    box-shadow: 0 0 6px rgba(135, 106, 9, 0.08);
+}
+
+@keyframes spinner-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loader-status-text {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-charcoal-muted);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-top: 6px;
+    opacity: 0.85;
+}

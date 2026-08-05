@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DharmaPath — Splash</title>
+
+    <!-- Google Fonts: Cinzel (Display), Outfit (Body/Taglines) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Outfit:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Link External Stylesheet -->
+    <link rel="stylesheet" href="splash.css">
+</head>
+
+<body>
+
+    <!-- Mobile Phone View Container -->
+    <div class="phone-view">
+
+        <!-- ========================================== -->
+        <!-- STATE 1: STATIC NATIVE SPLASH (Default)    -->
+        <!-- ========================================== -->
+        <div class="screen-state static-splash-state active" id="static-splash">
+            <!-- Sacred geometric background watermark -->
+            <div class="sacred-bg"></div>
+
+            <!-- iOS Status Bar -->
+            <header class="status-bar">
+                <span class="time" id="status-time">09:41</span>
+                <div class="status-icons">
+                    <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="2" y="16" width="3" height="5" rx="0.5" />
+                        <rect x="7" y="12" width="3" height="9" rx="0.5" />
+                        <rect x="12" y="8" width="3" height="13" rx="0.5" />
+                        <rect x="17" y="4" width="3" height="17" rx="0.5" />
+                    </svg>
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round">
+                        <path
+                            d="M12 20h.01M8.5 16.5a5 5 0 0 1 7 0M5.5 13.5a9 9 0 0 1 13 0M2.5 10.5a13 13 0 0 1 19 0" />
+                    </svg>
+                    <div class="battery">
+                        <div class="battery-level"></div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="splash-content">
+                <!-- Premium App Icon wrapper -->
+                <div class="app-icon-wrapper static-view">
+                    <div class="app-icon">
+                        <!-- Sacred Shatkona Mandala - Concentric nested triangles -->
+                        <svg class="shatkona" viewBox="0 0 120 120" width="100%" height="100%">
+                            <!-- Upward-pointing triangles (Shiva - outer to inner) -->
+                            <polygon points="60,12 104,88 16,88" fill="none" stroke="#D4760A" stroke-width="1" stroke-linejoin="miter" />
+                            <polygon points="60,18 99,84 21,84" fill="none" stroke="#D4760A" stroke-width="0.8" stroke-linejoin="miter" />
+                            <polygon points="60,24 94,80 26,80" fill="none" stroke="#D4760A" stroke-width="0.8" stroke-linejoin="miter" />
+                            <polygon points="60,30 89,76 31,76" fill="none" stroke="#D4760A" stroke-width="0.8" stroke-linejoin="miter" />
+                            <polygon points="60,36 84,72 36,72" fill="none" stroke="#D4760A" stroke-width="0.7" stroke-linejoin="miter" />
+                            <polygon points="60,42 79,68 41,68" fill="none" stroke="#D4760A" stroke-width="0.7" stroke-linejoin="miter" />
+                            <polygon points="60,48 74,64 46,64" fill="none" stroke="#D4760A" stroke-width="0.6" stroke-linejoin="miter" />
+
+                            <!-- Downward-pointing triangles (Shakti - outer to inner) -->
+                            <polygon points="60,108 16,32 104,32" fill="none" stroke="#D4760A" stroke-width="1" stroke-linejoin="miter" />
+                            <polygon points="60,102 21,36 99,36" fill="none" stroke="#D4760A" stroke-width="0.8" stroke-linejoin="miter" />
+                            <polygon points="60,96 26,40 94,40" fill="none" stroke="#D4760A" stroke-width="0.8" stroke-linejoin="miter" />
+                            <polygon points="60,90 31,44 89,44" fill="none" stroke="#D4760A" stroke-width="0.8" stroke-linejoin="miter" />
+                            <polygon points="60,84 36,48 84,48" fill="none" stroke="#D4760A" stroke-width="0.7" stroke-linejoin="miter" />
+                            <polygon points="60,78 41,52 79,52" fill="none" stroke="#D4760A" stroke-width="0.7" stroke-linejoin="miter" />
+                            <polygon points="60,72 46,56 74,56" fill="none" stroke="#D4760A" stroke-width="0.6" stroke-linejoin="miter" />
+
+                            <!-- Bindu (central dot) -->
+                            <circle cx="60" cy="60" r="2" fill="#D4760A" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- App Name -->
+                <div class="brand-container static-view">
+                    <h2 class="app-name">
+                        <span class="dharma">Dharma</span><span class="path">Path</span>
+                    </h2>
+                </div>
+            </div>
+
+            <!-- Home Indicator Bar (iOS) -->
+            <div class="home-indicator"></div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- STATE 2: IN-APP DATA LOADER (Animated)     -->
+        <!-- ========================================== -->
+        <div class="screen-state in-app-loader-state" id="in-app-loader">
+            <!-- Sacred geometric background watermark -->
+            <div class="sacred-bg"></div>
+
+            <!-- Soft golden pulse background glow -->
+            <div class="pulse-glow"></div>
+
+            <!-- iOS Status Bar -->
+            <header class="status-bar">
+                <span class="time" id="status-time-loader">09:41</span>
+                <div class="status-icons">
+                    <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="2" y="16" width="3" height="5" rx="0.5" />
+                        <rect x="7" y="12" width="3" height="9" rx="0.5" />
+                        <rect x="12" y="8" width="3" height="13" rx="0.5" />
+                        <rect x="17" y="4" width="3" height="17" rx="0.5" />
+                    </svg>
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round">
+                        <path
+                            d="M12 20h.01M8.5 16.5a5 5 0 0 1 7 0M5.5 13.5a9 9 0 0 1 13 0M2.5 10.5a13 13 0 0 1 19 0" />
+                    </svg>
+                    <div class="battery">
+                        <div class="battery-level"></div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="splash-content">
+                <!-- Premium App Icon wrapper -->
+                <div class="app-icon-wrapper animated-view">
+                    <div class="app-icon">
+                        <!-- Sacred Shatkona Mandala - Concentric nested triangles -->
+                        <svg class="shatkona" viewBox="0 0 120 120" width="100%" height="100%">
+                            <!-- Upward-pointing triangles (Shiva - outer to inner) -->
+                            <polygon points="60,12 104,88 16,88" fill="none" stroke="#D4760A" stroke-width="1" stroke-linejoin="miter" />
+                            <polygon points="60,18 99,84 21,84" fill="none" stroke="#D4760A" stroke-width="0.8" stroke-linejoin="miter" />
+                            <polygon points="60,24 94,80 26,80" fill="none" stroke="#D4760A" stroke-width="0.8" stroke-linejoin="miter" />
+                            <polygon points="60,30 89,76 31,76" fill="none" stroke="#D4760A" stroke-width="0.8" stroke-linejoin="miter" />
+                            <polygon points="60,36 84,72 36,72" fill="none" stroke="#D4760A" stroke-width="0.7" stroke-linejoin="miter" />
+                            <polygon points="60,42 79,68 41,68" fill="none" stroke="#D4760A" stroke-width="0.7" stroke-linejoin="miter" />
+                            <polygon points="60,48 74,64 46,64" fill="none" stroke="#D4760A" stroke-width="0.6" stroke-linejoin="miter" />
+
+                            <!-- Downward-pointing triangles (Shakti - outer to inner) -->
+                            <polygon points="60,108 16,32 104,32" fill="none" stroke="#D4760A" stroke-width="1" stroke-linejoin="miter" />
+                            <polygon points="60,102 21,36 99,36" fill="none" stroke="#D4760A" stroke-width="0.8" stroke-linejoin="miter" />
+                            <polygon points="60,96 26,40 94,40" fill="none" stroke="#D4760A" stroke-width="0.8" stroke-linejoin="miter" />
+                            <polygon points="60,90 31,44 89,44" fill="none" stroke="#D4760A" stroke-width="0.8" stroke-linejoin="miter" />
+                            <polygon points="60,84 36,48 84,48" fill="none" stroke="#D4760A" stroke-width="0.7" stroke-linejoin="miter" />
+                            <polygon points="60,78 41,52 79,52" fill="none" stroke="#D4760A" stroke-width="0.7" stroke-linejoin="miter" />
+                            <polygon points="60,72 46,56 74,56" fill="none" stroke="#D4760A" stroke-width="0.6" stroke-linejoin="miter" />
+
+                            <!-- Bindu (central dot) -->
+                            <circle cx="60" cy="60" r="2" fill="#D4760A" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- App Name -->
+                <div class="brand-container animated-view">
+                    <h2 class="app-name">
+                        <span class="dharma">Dharma</span><span class="path">Path</span>
+                    </h2>
+                </div>
+
+                <!-- Premium Loading Indicator -->
+                <div class="loader-feedback-container">
+                    <!-- Elegant Spinning Golden Ring -->
+                    <div class="premium-spinner"></div>
+                    <span class="loader-status-text">Loading...</span>
+                </div>
+            </div>
+
+            <!-- Home Indicator Bar (iOS) -->
+            <div class="home-indicator"></div>
+        </div>
+
+    </div>
+
+    <!-- Link External Script -->
+    <script src="splash.js"></script>
+</body>
+
+</html>
