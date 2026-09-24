@@ -27,10 +27,14 @@ export const PathDetailScreen: React.FC = () => {
     console.log(`STUB: Exploring sub-item: ${itemId}`);
   };
 
+  const handleBackToAllPaths = () => {
+    router.push('/(tabs)/learning');
+  };
+
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       {/* Back button */}
-      <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
+      <TouchableOpacity style={styles.backBtn} onPress={handleBackToAllPaths}>
         <Text style={styles.backBtnText}>◀  BACK TO ALL PATHS</Text>
       </TouchableOpacity>
 

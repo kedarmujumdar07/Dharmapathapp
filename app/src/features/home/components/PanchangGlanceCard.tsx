@@ -4,7 +4,11 @@ import { HardShadowCard } from './HardShadowCard';
 import { HomeColors } from '../constants/homeTheme';
 import { getDailyPanchang, DEFAULT_LOCATION } from '@/features/panchang/engine/panchang-service';
 
-export const PanchangGlanceCard: React.FC = () => {
+interface PanchangGlanceCardProps {
+  onViewFullCalendar?: () => void;
+}
+
+export const PanchangGlanceCard: React.FC<PanchangGlanceCardProps> = ({ onViewFullCalendar }) => {
   const panchang = useMemo(() => getDailyPanchang(new Date(), DEFAULT_LOCATION), []);
 
   const formattedDate = useMemo(() => {
@@ -69,6 +73,7 @@ export const PanchangGlanceCard: React.FC = () => {
         style={styles.darkBtn}
         accessibilityLabel="View full calendar and Choghadiya"
         accessibilityRole="button"
+        onPress={onViewFullCalendar}
       >
         <Text style={styles.darkBtnText}>VIEW FULL CALENDAR & CHOGHADIYA</Text>
       </TouchableOpacity>

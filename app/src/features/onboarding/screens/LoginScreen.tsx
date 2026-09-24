@@ -18,7 +18,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import Svg, { Path } from 'react-native-svg';
+import Svg, { Path, Defs, Pattern, Circle } from 'react-native-svg';
 import { useFonts } from 'expo-font';
 import { Caveat_700Bold } from '@expo-google-fonts/caveat';
 import { Baloo2_700Bold, Baloo2_800ExtraBold } from '@expo-google-fonts/baloo-2';
@@ -122,11 +122,11 @@ function DottedOverlay() {
   return (
     <View style={StyleSheet.absoluteFill} pointerEvents="none">
       <Svg width="100%" height="100%">
-        <defs>
-          <pattern id="dotPattern" width="14" height="14" patternUnits="userSpaceOnUse">
-            <circle cx="2" cy="2" r="1.5" fill="rgba(193, 88, 75, 0.25)" />
-          </pattern>
-        </defs>
+        <Defs>
+          <Pattern id="dotPattern" width="14" height="14" patternUnits="userSpaceOnUse">
+            <Circle cx="2" cy="2" r="1.5" fill="rgba(193, 88, 75, 0.25)" />
+          </Pattern>
+        </Defs>
         <Path d="M 0 0 H 2000 V 2000 H 0 Z" fill="url(#dotPattern)" />
       </Svg>
     </View>

@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { ScrollView, StyleSheet, View, Modal, Text, TouchableOpacity } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProfileStatsCard } from '../components/ProfileStatsCard';
 import { DharmaLeagueCard } from '@/features/home/components/DharmaLeagueCard';
 import { BadgesGrid } from '../components/BadgesGrid';
@@ -8,10 +9,13 @@ import { ProfileActionButton } from '../components/ProfileActionButton';
 import { useUserProgress } from '@/features/home/state/useUserProgress';
 import { useDailyContent } from '@/features/home/state/useDailyContent';
 import { HomeColors } from '@/features/home/constants/homeTheme';
+import { usePreferences } from '@/features/onboarding/context/PreferencesContext';
 
 export const ProfileScreen: React.FC = () => {
+  const insets = useSafeAreaInsets();
   const { progress } = useUserProgress();
   const { leagueInfo } = useDailyContent(progress);
+  const { resetPreferences } = usePreferences();
   const [logoutModalVisible, setLogoutModalVisible] = useState(false);
 
   const todayIndex = useMemo(() => {
@@ -29,11 +33,11 @@ export const ProfileScreen: React.FC = () => {
 
   const confirmLogout = () => {
     setLogoutModalVisible(false);
-    console.log('STUB: Logging user out');
+    resetPreferences();
   };
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <ScrollView style={styles.container} contentContainerStyle={[styles.content, { paddingTop: insets.top + 10 }]}>
       <ProfileStatsCard punyaPoints={progress.punyaPoints} dayStreak={progress.dayStreak} />
 
       {/* DHARMA LEAGUE SECTION */}

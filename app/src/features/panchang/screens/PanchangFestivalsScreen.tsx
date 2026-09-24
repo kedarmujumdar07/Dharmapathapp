@@ -13,6 +13,7 @@ import React, { useState, useMemo, useCallback } from 'react';
 import { View, StyleSheet, Modal, Pressable, Text, ActionSheetIOS, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
+import { useRouter } from 'expo-router';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useFonts, Caveat_700Bold } from '@expo-google-fonts/caveat';
@@ -40,6 +41,8 @@ import type { LocationInput } from '@/features/panchang/types/panchang.types';
 const LOCATIONS = PanchangStrings.locationOptions;
 
 export const PanchangFestivalsScreen: React.FC = () => {
+  const router = useRouter();
+
   // --- State ---
   const [activeTab, setActiveTab] = useState<PanchangTab>('festival');
   const [selectedLocation, setSelectedLocation] = useState<LocationOption>(LOCATIONS[0]);
@@ -67,9 +70,8 @@ export const PanchangFestivalsScreen: React.FC = () => {
 
   // --- Handlers ---
   const handleBackPress = useCallback(() => {
-    // In a real app: navigation.goBack()
-    // For now, this is a no-op placeholder — we never use alert().
-  }, []);
+    router.back();
+  }, [router]);
 
   const handleLocationPress = useCallback(() => {
     if (Platform.OS === 'ios') {

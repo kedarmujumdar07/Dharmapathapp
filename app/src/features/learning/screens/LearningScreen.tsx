@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { SubTabSwitcher } from '../components/SubTabSwitcher';
 import { MainPathCard } from '../components/MainPathCard';
@@ -11,6 +12,7 @@ import { HomeColors } from '@/features/home/constants/homeTheme';
 export const LearningScreen: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'paths' | 'shlokas'>('paths');
   const router = useRouter();
+  const insets = useSafeAreaInsets();
 
   const handlePathPress = (pathId: string) => {
     // Real navigation routing using Expo Router push
@@ -25,7 +27,7 @@ export const LearningScreen: React.FC = () => {
   };
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <ScrollView style={styles.container} contentContainerStyle={[styles.content, { paddingTop: insets.top + 14 }]}>
       <SubTabSwitcher activeTab={activeTab} onTabChange={setActiveTab} />
 
       {activeTab === 'paths' ? (

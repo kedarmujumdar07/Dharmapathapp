@@ -8,8 +8,8 @@ export default function HomeRoute() {
   // Adapt Expo Router's push to match the screen's expected navigation signature
   const navigationAdapter = {
     navigate: (screen: string, params?: object) => {
-      if (screen === 'learning' || screen === 'profile') {
-        router.push(`/(tabs)/${screen}`);
+      if (['learning', 'profile', 'panchang', 'scriptures'].includes(screen)) {
+        router.push(`/(tabs)/${screen}` as any);
       } else {
         router.push({ pathname: screen as any, params: params as any });
       }

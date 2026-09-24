@@ -42,23 +42,43 @@ import { ChoiceCard } from '../components/ChoiceCard';
 
 const mascot1 = require('@/assets/images/mascot.png');
 const mascot2 = require('@/assets/images/mascot2.png');
+const pathItihasa = require('@/assets/images/path_itihasa.jpg');
+const pathLeela = require('@/assets/images/path_leela.jpg');
+const pathUtsav = require('@/assets/images/path_utsav.png');
+const pathTirtha = require('@/assets/images/path_tirtha.png');
 
 const SLIDES = [
   {
-    key: 'gita',
-    title: 'Bhagavad Gita',
-    sub: '700 Verses of Timeless Wisdom',
-    desc: 'Explore Karma Yoga, Jnana Yoga, and Bhakti Yoga with word-by-word Sanskrit translations.',
-    tag: 'CORE PATH',
-    image: mascot1,
+    key: 'itihasa',
+    title: 'ITIHASA',
+    sub: 'इतिहास',
+    desc: 'The Great Epics, Ramayana and Mahabharata. Walk with Ram, stand with the Pandavas, hear the dharma of the battlefield.',
+    tag: 'EPICS',
+    image: pathItihasa,
   },
   {
-    key: 'epics',
-    title: 'Ramayana & Mahabharata',
-    sub: 'The Great Epics',
-    desc: 'Immerse in story arcs, character studies, and moral dilemmas across ancient India.',
-    tag: 'FEATURED',
-    image: mascot2,
+    key: 'leela',
+    title: 'LEELA',
+    sub: 'लीला',
+    desc: 'Divine Play, the stories of Krishna, Shiva, Devi and the Gods. Every story is a window into the infinite.',
+    tag: 'MYTHOLOGY',
+    image: pathLeela,
+  },
+  {
+    key: 'utsav',
+    title: 'UTSAV',
+    sub: 'उत्सव',
+    desc: 'Sacred Festivals, understand the cosmic significance of every celebration. Live by the rhythm of the sacred calendar.',
+    tag: 'FESTIVALS',
+    image: pathUtsav,
+  },
+  {
+    key: 'tirtha',
+    title: 'TIRTHA',
+    sub: 'तीर्थ',
+    desc: 'Sacred Pilgrimage, every temple, every river, every mountain has a story. Know the land that birthed civilization.',
+    tag: 'PILGRIMAGE',
+    image: pathTirtha,
   },
 ];
 
@@ -160,7 +180,11 @@ function PathSlide({ title, sub, desc, tag, image, isActive }: PathSlideProps) {
       ]}
     >
       <View style={styles.pathCard}>
-        <Image source={image} style={StyleSheet.absoluteFill} resizeMode="cover" />
+        <Image
+          source={image}
+          style={styles.pathImage}
+          resizeMode="cover"
+        />
         <LinearGradient
           colors={['transparent', 'rgba(20, 12, 8, 0.28)', 'rgba(20, 12, 8, 0.92)']}
           locations={[0, 0.58, 1]}
@@ -347,8 +371,8 @@ export function PreferencesScreen() {
     switch (currentStep) {
       case 0:
         return {
-          label: '01 IDENT // ENTRY POINT',
-          headline: 'What should we call you?',
+          label: 'GETTING STARTED · STEP 01',
+          headline: 'Welcome to DharmaPath. What should we call you?',
           sub: 'INPUT VALUE IN FIELD BELOW',
           tagSub: 'SYS.V1.0',
         };
@@ -407,7 +431,7 @@ export function PreferencesScreen() {
 
             <PathsSlideshow />
 
-            <View style={[styles.inputGroup, isFocused && styles.inputGroupFocused]}>
+            <View style={[styles.inputGroup, isFocused && styles.inputGroupFocused, styles.nameInputWrapper]}>
               <TextInput
                 value={name}
                 onChangeText={setName}
@@ -583,13 +607,9 @@ export function PreferencesScreen() {
         >
           {/* Header */}
           <View style={styles.header}>
-            {currentStep > 0 ? (
-              <Pressable onPress={handleBack} style={styles.backButton}>
-                <SymbolView name="arrow.left" tintColor="#1E293B" size={18} />
-              </Pressable>
-            ) : (
-              <View style={styles.backButtonPlaceholder} />
-            )}
+            <Pressable onPress={handleBack} style={styles.backButton}>
+              <Text style={styles.backButtonText}>←</Text>
+            </Pressable>
 
             <View style={styles.progressBarWrapper}>
               <Animated.View style={[styles.progressBar, animatedProgressStyle]} />
@@ -606,7 +626,11 @@ export function PreferencesScreen() {
                 <Text style={styles.mascotTag}>DHARMI™</Text>
                 <Animated.Image
                   source={currentStep === 1 ? mascot2 : mascot1}
-                  style={[styles.mascotImage, animatedMascotStyle]}
+                  style={[
+                    styles.mascotImage,
+                    animatedMascotStyle,
+                    currentStep === 0 && { width: 140, height: 140 },
+                  ]}
                 />
                 <Text style={styles.mascotTagSub}>{meta.tagSub}</Text>
               </View>
@@ -687,6 +711,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  backButtonText: {
+    fontSize: 22,
+    lineHeight: 22,
+    color: '#1E293B',
+    fontWeight: '700',
   },
   backButtonPlaceholder: {
     width: 36,
@@ -809,6 +839,9 @@ const styles = StyleSheet.create({
     borderColor: '#E2E8F0',
     borderRadius: 6,
     overflow: 'hidden',
+  },
+  nameInputWrapper: {
+    marginTop: 18,
   },
   inputGroupFocused: {
     borderColor: '#E2472F',
@@ -943,8 +976,9 @@ const styles = StyleSheet.create({
   slideshowContainer: {
     position: 'relative',
     width: '100%',
-    height: 230,
-    marginVertical: 12,
+    height: 320,
+    marginTop: 12,
+    marginBottom: 16,
     borderRadius: 28,
     overflow: 'hidden',
     ...Platform.select({
@@ -966,10 +1000,23 @@ const styles = StyleSheet.create({
     borderRadius: 28,
     overflow: 'hidden',
     backgroundColor: '#1E293B',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  pathImage: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
   },
   cardContent: {
+    position: 'relative',
+    zIndex: 1,
     height: '100%',
-    padding: 24,
+    width: '100%',
+    paddingHorizontal: 22,
+    paddingTop: 24,
+    paddingBottom: 16,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -979,7 +1026,7 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontFamily: 'SpaceGrotesk_700Bold',
-    fontSize: 20,
+    fontSize: 24,
     color: '#FFFFFF',
     textShadowColor: 'rgba(0, 0, 0, 0.5)',
     textShadowOffset: { width: 0, height: 2 },
@@ -987,14 +1034,14 @@ const styles = StyleSheet.create({
   },
   cardSub: {
     fontFamily: 'SpaceGrotesk_400Regular',
-    fontSize: 15,
+    fontSize: 18,
     marginTop: 2,
     color: 'rgba(255, 255, 255, 0.82)',
   },
   cardDesc: {
     fontFamily: 'SpaceGrotesk_500Medium',
-    fontSize: 12,
-    lineHeight: 18,
+    fontSize: 14,
+    lineHeight: 20,
     color: 'rgba(255, 255, 255, 0.92)',
     textShadowColor: 'rgba(0, 0, 0, 0.5)',
     textShadowOffset: { width: 0, height: 1 },
@@ -1012,7 +1059,7 @@ const styles = StyleSheet.create({
   },
   tagText: {
     fontFamily: 'JetBrainsMono_700Bold',
-    fontSize: 9,
+    fontSize: 11,
     color: '#FFFFFF',
     letterSpacing: 1,
   },

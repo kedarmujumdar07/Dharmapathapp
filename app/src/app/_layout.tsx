@@ -34,6 +34,20 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 SplashScreen.preventAutoHideAsync();
 
 function AppContent() {
+  const { isOnboarded, hasCompletedPreferences, isLoading } = usePreferences();
+
+  if (isLoading) {
+    return null; // Or a loading spinner
+  }
+
+  if (!isOnboarded) {
+    return <OnboardingScreen />;
+  }
+
+  if (!hasCompletedPreferences) {
+    return <PreferencesScreen />;
+  }
+
   return <Slot />;
 }
 
