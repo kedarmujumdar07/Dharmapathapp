@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { HeroLessonCard } from '../components/HeroLessonCard';
 import { PanchangGlanceCard } from '../components/PanchangGlanceCard';
 import { ContinueLessonCard } from '../components/ContinueLessonCard';
@@ -16,6 +17,7 @@ interface HomeScreenProps {
 }
 
 export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
+  const insets = useSafeAreaInsets();
   const { progress, completeLesson } = useUserProgress();
   const { featuredLesson, continueLesson, dailyShloka, recentLearnings } = useDailyContent(progress);
 
@@ -43,8 +45,12 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     }
   };
 
+  const handleViewFullCalendar = () => {
+    navigation.navigate('panchang');
+  };
+
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <ScrollView style={styles.container} contentContainerStyle={[styles.content, { paddingTop: insets.top + 10 }]}>
       {/* Section Header */}
       <View style={styles.sectionHeader}>
         <View style={styles.sectionLine} />
@@ -59,7 +65,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         <Text style={styles.sectionTitle}>TODAY'S PANCHANG & MUHURAT</Text>
         <View style={styles.sectionLine} />
       </View>
-      <PanchangGlanceCard />
+      <PanchangGlanceCard onViewFullCalendar={handleViewFullCalendar} />
 
       {/* Section Header */}
       {continueLesson && (

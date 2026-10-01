@@ -35,6 +35,18 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="panchang"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="scriptures"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
         name="profile"
         options={{
           title: 'PROFILE',
