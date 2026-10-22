@@ -1,9 +1,11 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
-import { HardShadowCard } from './HardShadowCard';
-import { HomeColors } from '../constants/homeTheme';
+import { DT, SHADOW } from '../constants/homeTheme';
 import type { LessonData } from '@/features/home/types/lesson.types';
+
+const CONTINUE_IMAGE = require('@/../assets/images/path_leela.jpg');
 
 interface ContinueLessonCardProps {
   lesson: LessonData | null;
@@ -16,130 +18,132 @@ export const ContinueLessonCard: React.FC<ContinueLessonCardProps> = ({
   progressPercent,
   onResume,
 }) => {
-  // If no lesson is in progress, hide the card (graceful handling)
   if (!lesson) return null;
 
   return (
-    <HardShadowCard style={styles.outerWrapper} cardStyle={styles.card}>
-      <View style={styles.bannerContainer}>
-        {/* Placeholder gradient banner instead of missing image */}
-        <LinearGradient
-          colors={['#2A2A2A', HomeColors.darkCard]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={styles.bannerPlaceholder}
+    <View style={[SHADOW.md, styles.wrapper]}>
+      <View style={styles.card}>
+        {/* Image background */}
+        <Image
+          source={CONTINUE_IMAGE}
+          style={styles.image}
+          contentFit="cover"
+          transition={300}
         />
-        <View style={styles.darkOverlay} />
-        
-        <View style={styles.badgeContainer}>
-          <View style={styles.inProgressBadge}>
-            <Text style={styles.badgeText}>IN PROGRESS</Text>
+        <LinearGradient
+          colors={['rgba(13,10,7,0.3)', 'rgba(13,10,7,0.88)']}
+          style={StyleSheet.absoluteFill}
+        />
+
+        {/* Content */}
+        <View style={styles.content}>
+          <View style={styles.badge}>
+            <Text style={styles.badgeText}>▶  IN PROGRESS</Text>
+          </View>
+
+          <Text style={styles.title}>{lesson.title}</Text>
+          <Text style={styles.subtitle}>{lesson.subtitle}</Text>
+
+          {/* Progress bar */}
+          <View style={styles.progressTrack}>
+            <View style={[styles.progressFill, { width: `${progressPercent}%` as any }]} />
+          </View>
+
+          <View style={styles.footer}>
+            <Text style={styles.progressLabel}>{progressPercent}% complete</Text>
+            <TouchableOpacity
+              style={styles.resumeBtn}
+              onPress={onResume}
+              accessibilityLabel={`Resume lesson: ${lesson.title}`}
+              accessibilityRole="button"
+              activeOpacity={0.85}
+            >
+              <Text style={styles.resumeText}>RESUME</Text>
+            </TouchableOpacity>
           </View>
         </View>
-
-        <View style={styles.textContainer}>
-          <Text style={styles.lessonTitle}>{lesson.title}</Text>
-          <Text style={styles.lessonSubtitle}>{lesson.subtitle}</Text>
-        </View>
       </View>
-
-      <View style={styles.bottomBar}>
-        <Text style={styles.progressText}>PROGRESS: {progressPercent}%</Text>
-        <TouchableOpacity
-          style={styles.resumeButton}
-          onPress={onResume}
-          accessibilityLabel={`Resume lesson: ${lesson.title}`}
-          accessibilityRole="button"
-        >
-          <Text style={styles.resumeText}>▶ RESUME</Text>
-        </TouchableOpacity>
-      </View>
-    </HardShadowCard>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  outerWrapper: {
-    marginBottom: 16,
-    marginHorizontal: 2,
+  wrapper: {
+    borderRadius: 20,
+    marginBottom: 14,
   },
   card: {
-    backgroundColor: HomeColors.darkCard,
-    borderWidth: 2.5,
-    borderColor: HomeColors.borderDark,
+    height: 180,
+    borderRadius: 20,
     overflow: 'hidden',
+    backgroundColor: DT.surface,
+    justifyContent: 'flex-end',
   },
-  bannerContainer: {
-    height: 150,
-    position: 'relative',
-    justifyContent: 'space-between',
-    padding: 10,
+  image: {
+    ...StyleSheet.absoluteFillObject,
   },
-  bannerPlaceholder: {
-    ...StyleSheet.absoluteFill,
+  content: {
+    padding: 14,
   },
-  darkOverlay: {
-    ...StyleSheet.absoluteFill,
-    backgroundColor: 'rgba(0,0,0,0.4)',
-  },
-  badgeContainer: {
-    flexDirection: 'row',
-    zIndex: 2,
-  },
-  inProgressBadge: {
-    backgroundColor: HomeColors.saffronPrimary,
-    borderWidth: 1.5,
-    borderColor: HomeColors.borderDark,
-    borderRadius: 8,
-    paddingHorizontal: 6,
-    paddingVertical: 2,
+  badge: {
+    alignSelf: 'flex-start',
+    backgroundColor: 'rgba(255,111,0,0.25)',
+    borderWidth: 1,
+    borderColor: DT.saffron,
+    borderRadius: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    marginBottom: 8,
   },
   badgeText: {
-    color: '#FFFFFF',
-    fontSize: 9,
-    fontFamily: 'Baloo2_800ExtraBold',
-  },
-  textContainer: {
-    zIndex: 2,
-  },
-  lessonTitle: {
-    fontFamily: 'Baloo2_700Bold',
-    fontSize: 16,
-    color: '#FFFFFF',
-    marginBottom: 2,
-  },
-  lessonSubtitle: {
-    fontFamily: 'Nunito_700Bold',
-    fontSize: 9,
-    color: HomeColors.goldPrimary,
+    fontFamily: 'SpaceGrotesk_600SemiBold',
+    fontSize: 10,
+    color: DT.saffron,
     letterSpacing: 0.8,
   },
-  bottomBar: {
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    backgroundColor: '#262220',
+  title: {
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontSize: 17,
+    color: DT.textPrimary,
+    marginBottom: 2,
+  },
+  subtitle: {
+    fontFamily: 'SpaceGrotesk_400Regular',
+    fontSize: 12,
+    color: DT.textSecondary,
+    marginBottom: 10,
+  },
+  progressTrack: {
+    height: 4,
+    backgroundColor: 'rgba(255,255,255,0.12)',
+    borderRadius: 2,
+    overflow: 'hidden',
+    marginBottom: 8,
+  },
+  progressFill: {
+    height: '100%',
+    backgroundColor: DT.gold,
+    borderRadius: 2,
+  },
+  footer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderTopWidth: 1.5,
-    borderColor: '#38322E',
   },
-  progressText: {
-    fontFamily: 'Nunito_700Bold',
-    fontSize: 10,
-    color: '#BBBBBB',
+  progressLabel: {
+    fontFamily: 'SpaceGrotesk_400Regular',
+    fontSize: 11,
+    color: DT.textMuted,
   },
-  resumeButton: {
-    backgroundColor: HomeColors.goldPrimary,
-    borderWidth: 1.5,
-    borderColor: HomeColors.borderDark,
+  resumeBtn: {
+    backgroundColor: DT.saffron,
     borderRadius: 10,
-    paddingHorizontal: 12,
+    paddingHorizontal: 14,
     paddingVertical: 5,
   },
   resumeText: {
     fontFamily: 'Baloo2_800ExtraBold',
     fontSize: 11,
-    color: HomeColors.textMain,
+    color: '#FFFFFF',
   },
 });

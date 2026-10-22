@@ -1,19 +1,20 @@
 /**
- * HardShadowCard — Neobrutalist solid hard-shadow wrapper.
+ * DharmaCard — Modern soft-shadow card wrapper.
  *
- * Recreates the CSS `box-shadow: 0 4px 0 #231F20` effect using a solid
- * View offset 4px down + 4px right behind the card content.
- * React Native's elevation/shadowOffset produce blurred shadows — this does not.
+ * Replaces the neobrutalist hard-border HardShadowCard with depth achieved
+ * via iOS shadowColor/shadowRadius and Android elevation.
+ * Props interface is kept identical so all existing usages continue to work.
  */
 
 import React from 'react';
 import { View, StyleSheet, ViewStyle } from 'react-native';
-import { HomeColors, HARD_SHADOW_OFFSET } from '../constants/homeTheme';
+import { DT, SHADOW } from '../constants/homeTheme';
 
 interface HardShadowCardProps {
   children: React.ReactNode;
   style?: ViewStyle;
   cardStyle?: ViewStyle;
+  /** @deprecated shadow color override — ignored in new design system */
   shadowColor?: string;
   borderRadius?: number;
 }
@@ -22,30 +23,29 @@ export const HardShadowCard: React.FC<HardShadowCardProps> = ({
   children,
   style,
   cardStyle,
-  shadowColor = HomeColors.borderDark,
-  borderRadius = 22,
+  borderRadius = 20,
 }) => (
-  <View style={[styles.wrapper, style]}>
-    {/* Solid shadow layer — positioned behind via zIndex */}
+  <View
+    style={[
+      SHADOW.md,
+      { borderRadius },
+      style,
+    ]}
+  >
     <View
       style={[
-        StyleSheet.absoluteFill,
         {
-          backgroundColor: shadowColor,
           borderRadius,
-          top: HARD_SHADOW_OFFSET,
-          left: HARD_SHADOW_OFFSET,
-          zIndex: 0,
+          overflow: 'hidden',
+          backgroundColor: DT.surface,
         },
+        cardStyle,
       ]}
-    />
-    {/* Foreground card */}
-    <View style={[{ borderRadius, zIndex: 1 }, cardStyle]}>{children}</View>
+    >
+      {children}
+    </View>
   </View>
 );
 
-const styles = StyleSheet.create({
-  wrapper: {
-    position: 'relative',
-  },
-});
+const styles = StyleSheet.create({});
+

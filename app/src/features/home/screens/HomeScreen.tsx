@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { HeroLessonCard } from '../components/HeroLessonCard';
@@ -6,9 +6,10 @@ import { PanchangGlanceCard } from '../components/PanchangGlanceCard';
 import { ContinueLessonCard } from '../components/ContinueLessonCard';
 import { ReviseShlokaCard } from '../components/ReviseShlokaCard';
 import { RecentLearningsChecklist } from '../components/RecentLearningsChecklist';
+import { DharmaLeagueCard } from '../components/DharmaLeagueCard';
 import { useUserProgress } from '../state/useUserProgress';
 import { useDailyContent } from '../state/useDailyContent';
-import { HomeColors } from '../constants/homeTheme';
+import { DT } from '../constants/homeTheme';
 
 interface HomeScreenProps {
   navigation: {
@@ -23,8 +24,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
   const handleBeginFeatured = () => {
     if (featuredLesson) {
-      // Simulate completing a lesson for real state verification
-      // Tapping this completes it, awards points and logs in console (STUB)
       console.log(`STUB: Starting lesson: ${featuredLesson.title}`);
       completeLesson(featuredLesson.id, featuredLesson.pointsAwarded);
     }
@@ -40,7 +39,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const handleReviseShloka = () => {
     if (dailyShloka) {
       console.log(`STUB: Revising shloka: BG ${dailyShloka.chapter}.${dailyShloka.verse}`);
-      // Award minor revision reward
       completeLesson(`revise_${dailyShloka.id}_${new Date().toDateString()}`, 10);
     }
   };
@@ -50,85 +48,139 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   };
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={[styles.content, { paddingTop: insets.top + 10 }]}>
-      {/* Section Header */}
-      <View style={styles.sectionHeader}>
-        <View style={styles.sectionLine} />
-        <Text style={styles.sectionTitle}>TODAY'S FEATURED LESSON</Text>
-        <View style={styles.sectionLine} />
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={[styles.content, { paddingTop: insets.top + 8 }]}
+      showsVerticalScrollIndicator={false}
+    >
+      {/* ── Greeting Header ── */}
+      <View style={styles.header}>
+        <View>
+          <Text style={styles.greeting}>Namaste 🙏</Text>
+          <Text style={styles.greetingSub}>Continue your dharmic journey</Text>
+        </View>
+        <View style={styles.streakBadge}>
+          <Text style={styles.streakEmoji}>🔥</Text>
+          <Text style={styles.streakText}>{progress.dayStreak}d</Text>
+        </View>
       </View>
+
+      {/* ── Today's Lesson — Hero ── */}
       <HeroLessonCard lesson={featuredLesson} onBeginLesson={handleBeginFeatured} />
 
-      {/* Section Header */}
-      <View style={styles.sectionHeader}>
-        <View style={styles.sectionLine} />
-        <Text style={styles.sectionTitle}>TODAY'S PANCHANG & MUHURAT</Text>
-        <View style={styles.sectionLine} />
-      </View>
+      {/* ── Panchang Quick Glance ── */}
       <PanchangGlanceCard onViewFullCalendar={handleViewFullCalendar} />
 
-      {/* Section Header */}
+      {/* ── Continue Lesson (conditional) ── */}
       {continueLesson && (
-        <>
-          <View style={styles.sectionHeader}>
-            <View style={styles.sectionLine} />
-            <Text style={styles.sectionTitle}>CONTINUE LESSON</Text>
-            <View style={styles.sectionLine} />
-          </View>
-          <ContinueLessonCard
-            lesson={continueLesson}
-            progressPercent={65} // Placeholder progress state
-            onResume={handleResumeContinue}
-          />
-        </>
+        <ContinueLessonCard
+          lesson={continueLesson}
+          progressPercent={65}
+          onResume={handleResumeContinue}
+        />
       )}
 
-      {/* Section Header */}
-      <View style={styles.sectionHeader}>
-        <View style={styles.sectionLine} />
-        <Text style={styles.sectionTitle}>REVISE SHLOKA</Text>
-        <View style={styles.sectionLine} />
-      </View>
+      {/* ── Daily Shloka ── */}
+      <SectionLabel title="DAILY SHLOKA" />
       <ReviseShlokaCard shloka={dailyShloka} onRevise={handleReviseShloka} />
 
-      {/* Section Header */}
-      <View style={styles.sectionHeader}>
-        <View style={styles.sectionLine} />
-        <Text style={styles.sectionTitle}>RECENT LEARNINGS CHECKLIST</Text>
-        <View style={styles.sectionLine} />
-      </View>
+      {/* ── Dharma League ── */}
+      <SectionLabel title="YOUR LEAGUE" />
+      <DharmaLeagueCard
+        leagueInfo={{
+          tier: 'Bronze',
+          progressPercent: 62,
+          rank: 14,
+          totalScholars: 30,
+          daysToPromotion: 5,
+        }}
+      />
+
+      {/* ── Recent Learnings ── */}
+      <SectionLabel title="RECENT LEARNINGS" />
       <RecentLearningsChecklist items={recentLearnings} />
     </ScrollView>
   );
 };
 
+// ─── Small section label helper ──────────────────────────────────────────────
+
+const SectionLabel: React.FC<{ title: string }> = ({ title }) => (
+  <View style={labelStyles.row}>
+    <Text style={labelStyles.text}>{title}</Text>
+    <View style={labelStyles.line} />
+  </View>
+);
+
+const labelStyles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    marginBottom: 10,
+    marginTop: 6,
+  },
+  text: {
+    fontFamily: 'SpaceGrotesk_600SemiBold',
+    fontSize: 11,
+    letterSpacing: 1.5,
+    color: DT.saffron,
+  },
+  line: {
+    flex: 1,
+    height: 1,
+    backgroundColor: DT.divider,
+  },
+});
+
+// ─── Screen styles ────────────────────────────────────────────────────────────
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: HomeColors.bgSandalwood,
+    backgroundColor: DT.bg,
   },
   content: {
-    paddingHorizontal: 14,
-    paddingTop: 10,
-    paddingBottom: 24,
+    paddingHorizontal: 16,
+    paddingBottom: 32,
   },
-  sectionHeader: {
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  greeting: {
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontSize: 24,
+    color: DT.textPrimary,
+    lineHeight: 30,
+  },
+  greetingSub: {
+    fontFamily: 'SpaceGrotesk_400Regular',
+    fontSize: 13,
+    color: DT.textSecondary,
+    marginTop: 1,
+  },
+  streakBadge: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    marginVertical: 14,
+    backgroundColor: DT.surfaceRaised,
+    borderWidth: 1,
+    borderColor: DT.saffron,
+    borderRadius: 20,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    gap: 4,
   },
-  sectionLine: {
-    flex: 1,
-    height: 2,
-    backgroundColor: HomeColors.sectionLine,
+  streakEmoji: {
+    fontSize: 16,
   },
-  sectionTitle: {
+  streakText: {
     fontFamily: 'Baloo2_800ExtraBold',
-    fontSize: 12,
-    letterSpacing: 1.2,
-    color: HomeColors.saffronDark,
+    fontSize: 14,
+    color: DT.saffron,
   },
 });
+
 export default HomeScreen;

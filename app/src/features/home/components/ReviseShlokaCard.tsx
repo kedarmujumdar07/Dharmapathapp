@@ -1,8 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { HardShadowCard } from './HardShadowCard';
-import { HomeColors } from '../constants/homeTheme';
+import { DT, SHADOW } from '../constants/homeTheme';
 import type { ShlokaItem } from '@/features/scriptures/types/scripture.types';
 
 interface ReviseShlokaCardProps {
@@ -13,112 +12,112 @@ interface ReviseShlokaCardProps {
 export const ReviseShlokaCard: React.FC<ReviseShlokaCardProps> = ({ shloka, onRevise }) => {
   if (!shloka) return null;
 
-  // Extract English translation safely
   const englishTranslation = shloka.translations.find((t) => t.language === 'en')?.text || '';
 
   return (
-    <HardShadowCard style={styles.outerWrapper} cardStyle={styles.card}>
-      <LinearGradient
-        colors={['#FFF8EC', '#FFF3E0']}
-        style={styles.container}
-      >
+    <View style={[SHADOW.md, styles.wrapper]}>
+      <View style={styles.card}>
+        {/* Header */}
         <View style={styles.header}>
-          <View style={styles.revisionTag}>
-            <Text style={styles.tagText}>DAILY SHLOKA REVISION</Text>
-          </View>
-          <Text style={styles.label}>
-            BG {shloka.chapter}.{shloka.verse}
+          <Text style={styles.refText}>
+            Bhagavad Gita {shloka.chapter}.{shloka.verse}
           </Text>
+          <View style={styles.tag}>
+            <Text style={styles.tagText}>REVISION</Text>
+          </View>
         </View>
 
+        {/* Sanskrit */}
         <View style={styles.sanskritBox}>
           <Text style={styles.sanskritText}>{shloka.sanskrit_text}</Text>
         </View>
 
-        <Text style={styles.meaningText}>
+        {/* Translation */}
+        <Text style={styles.translationText} numberOfLines={3}>
           "{englishTranslation}"
         </Text>
 
+        {/* CTA */}
         <TouchableOpacity
           style={styles.ctaButton}
           onPress={onRevise}
-          accessibilityLabel="Recite and revise now"
+          accessibilityLabel="Recite and revise this shloka"
           accessibilityRole="button"
+          activeOpacity={0.85}
         >
-          <Text style={styles.ctaText}>🔊  RECITE & REVISE NOW</Text>
+          <Text style={styles.ctaText}>🔊  RECITE & REVISE</Text>
         </TouchableOpacity>
-      </LinearGradient>
-    </HardShadowCard>
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  outerWrapper: {
-    marginBottom: 16,
-    marginHorizontal: 2,
+  wrapper: {
+    borderRadius: 20,
+    marginBottom: 14,
   },
   card: {
-    borderWidth: 2.5,
-    borderColor: HomeColors.borderDark,
-    borderRadius: 22,
+    borderRadius: 20,
+    backgroundColor: DT.surface,
+    padding: 16,
     overflow: 'hidden',
-  },
-  container: {
-    padding: 14,
+    borderWidth: 1,
+    borderColor: DT.border,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 12,
   },
-  revisionTag: {
-    backgroundColor: HomeColors.goldLight,
-    borderWidth: 1.5,
-    borderColor: HomeColors.borderDark,
-    borderRadius: 8,
-    paddingHorizontal: 8,
-    paddingVertical: 2,
+  refText: {
+    fontFamily: 'SpaceGrotesk_600SemiBold',
+    fontSize: 12,
+    color: DT.textSecondary,
+  },
+  tag: {
+    backgroundColor: DT.saffronGlow,
+    borderRadius: 20,
+    paddingHorizontal: 9,
+    paddingVertical: 3,
+    borderWidth: 1,
+    borderColor: DT.saffron,
   },
   tagText: {
-    fontFamily: 'Baloo2_800ExtraBold',
+    fontFamily: 'SpaceGrotesk_600SemiBold',
     fontSize: 10,
-    color: HomeColors.saffronDark,
-  },
-  label: {
-    fontFamily: 'Baloo2_800ExtraBold',
-    fontSize: 10,
-    color: HomeColors.saffronDark,
+    color: DT.saffron,
+    letterSpacing: 0.8,
   },
   sanskritBox: {
-    backgroundColor: '#FFFFFF',
-    borderWidth: 1.5,
-    borderColor: '#EFE7DA',
+    backgroundColor: DT.surfaceRaised,
     borderRadius: 12,
-    padding: 12,
-    marginBottom: 10,
+    padding: 14,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: DT.divider,
   },
   sanskritText: {
     fontFamily: 'Baloo2_700Bold',
-    fontSize: 14,
-    color: HomeColors.crimsonDark,
+    fontSize: 15,
+    color: DT.gold,
     textAlign: 'center',
-    lineHeight: 22,
+    lineHeight: 24,
   },
-  meaningText: {
-    fontFamily: 'Nunito_600SemiBold',
-    fontSize: 11,
-    color: HomeColors.textMuted,
-    marginBottom: 12,
+  translationText: {
+    fontFamily: 'SpaceGrotesk_400Regular',
+    fontSize: 13,
+    color: DT.textSecondary,
+    marginBottom: 14,
     textAlign: 'center',
-    lineHeight: 16,
+    lineHeight: 20,
+    fontStyle: 'italic',
   },
   ctaButton: {
-    backgroundColor: HomeColors.saffronPrimary,
-    borderWidth: 2.5,
-    borderColor: HomeColors.borderDark,
+    backgroundColor: DT.saffron,
     borderRadius: 14,
-    paddingVertical: 12,
+    paddingVertical: 13,
     alignItems: 'center',
     justifyContent: 'center',
   },

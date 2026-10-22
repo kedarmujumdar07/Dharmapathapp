@@ -1,8 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { HardShadowCard } from './HardShadowCard';
-import { HomeColors } from '../constants/homeTheme';
+import { DT, SHADOW } from '../constants/homeTheme';
 import type { LeagueInfo } from '@/features/home/types/progress.types';
 
 interface DharmaLeagueCardProps {
@@ -11,89 +10,124 @@ interface DharmaLeagueCardProps {
 
 export const DharmaLeagueCard: React.FC<DharmaLeagueCardProps> = ({ leagueInfo }) => {
   return (
-    <HardShadowCard style={styles.outerWrapper} cardStyle={styles.card}>
+    <View style={[SHADOW.saffron, styles.wrapper]}>
       <LinearGradient
-        colors={[HomeColors.saffronPrimary, HomeColors.saffronDark]}
-        style={styles.container}
+        colors={['#1A0E05', DT.surfaceRaised]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={styles.card}
       >
+        {/* Saffron accent stripe */}
+        <View style={styles.accentStripe} />
+
         <View style={styles.header}>
-          <Text style={styles.title}>🛡️ {leagueInfo.tier} SADHAKA DIVISION</Text>
-          <Text style={styles.badgeText}>TOP 5%</Text>
+          <View>
+            <Text style={styles.tierLabel}>🛡️  {leagueInfo.tier.toUpperCase()} LEAGUE</Text>
+            <Text style={styles.divisionText}>SADHAKA DIVISION</Text>
+          </View>
+          <View style={styles.rankBadge}>
+            <Text style={styles.rankNum}>#{leagueInfo.rank}</Text>
+            <Text style={styles.rankSub}>of {leagueInfo.totalScholars}</Text>
+          </View>
         </View>
 
-        <View style={styles.progressBarBg}>
-          <LinearGradient
-            colors={[HomeColors.goldLight, HomeColors.goldPrimary]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={[styles.progressFill, { width: `${leagueInfo.progressPercent}%` }]}
-          />
+        {/* Progress bar */}
+        <View style={styles.progressTrack}>
+          <View style={[styles.progressFill, { width: `${leagueInfo.progressPercent}%` as any }]} />
         </View>
 
         <View style={styles.footer}>
-          <Text style={styles.footerText}>
-            RANK {leagueInfo.rank} OF {leagueInfo.totalScholars} SCHOLARS
-          </Text>
-          <Text style={styles.footerText}>
-            PROMOTION IN {leagueInfo.daysToPromotion} DAYS
-          </Text>
+          <Text style={styles.footerText}>TOP 5% THIS WEEK</Text>
+          <Text style={styles.footerText}>PROMOTION IN {leagueInfo.daysToPromotion}d</Text>
         </View>
       </LinearGradient>
-    </HardShadowCard>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  outerWrapper: {
-    marginBottom: 16,
-    marginHorizontal: 2,
+  wrapper: {
+    borderRadius: 20,
+    marginBottom: 14,
   },
   card: {
-    borderWidth: 2.5,
-    borderColor: HomeColors.borderDark,
-    borderRadius: 22,
+    borderRadius: 20,
+    padding: 16,
     overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: DT.border,
   },
-  container: {
-    padding: 14,
+  accentStripe: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    bottom: 0,
+    width: 3,
+    backgroundColor: DT.saffron,
+    borderTopLeftRadius: 20,
+    borderBottomLeftRadius: 20,
   },
   header: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 10,
+    alignItems: 'flex-start',
+    marginBottom: 14,
+    paddingLeft: 8,
   },
-  title: {
+  tierLabel: {
     fontFamily: 'Baloo2_800ExtraBold',
-    fontSize: 14,
-    color: '#FFFFFF',
+    fontSize: 15,
+    color: DT.saffron,
+    marginBottom: 2,
   },
-  badgeText: {
-    fontFamily: 'Nunito_800ExtraBold',
+  divisionText: {
+    fontFamily: 'SpaceGrotesk_400Regular',
     fontSize: 11,
-    color: '#FFF8E1',
+    color: DT.textMuted,
+    letterSpacing: 0.8,
   },
-  progressBarBg: {
-    height: 10,
-    backgroundColor: 'rgba(0, 0, 0, 0.25)',
-    borderRadius: 5,
-    overflow: 'hidden',
-    marginBottom: 6,
+  rankBadge: {
+    alignItems: 'center',
+    backgroundColor: DT.glass,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
+    borderColor: DT.glassBorder,
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+  },
+  rankNum: {
+    fontFamily: 'Baloo2_800ExtraBold',
+    fontSize: 18,
+    color: DT.gold,
+    lineHeight: 22,
+  },
+  rankSub: {
+    fontFamily: 'SpaceGrotesk_400Regular',
+    fontSize: 10,
+    color: DT.textMuted,
+  },
+  progressTrack: {
+    height: 6,
+    backgroundColor: 'rgba(255,255,255,0.08)',
+    borderRadius: 3,
+    overflow: 'hidden',
+    marginBottom: 10,
+    marginLeft: 8,
   },
   progressFill: {
     height: '100%',
-    borderRadius: 5,
+    backgroundColor: DT.gold,
+    borderRadius: 3,
   },
   footer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    paddingLeft: 8,
   },
   footerText: {
-    fontFamily: 'Nunito_700Bold',
+    fontFamily: 'SpaceGrotesk_400Regular',
     fontSize: 10,
-    color: '#FFF8E1',
+    color: DT.textMuted,
+    letterSpacing: 0.5,
   },
 });

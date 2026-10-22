@@ -1,6 +1,23 @@
 import { Tabs } from 'expo-router';
-import { Text } from 'react-native';
-import { HomeColors } from '@/features/home/constants/homeTheme';
+import { Ionicons } from '@expo/vector-icons';
+import { DT } from '@/features/home/constants/homeTheme';
+
+type IoniconsName = React.ComponentProps<typeof Ionicons>['name'];
+
+interface TabIconProps {
+  name: IoniconsName;
+  focused: boolean;
+}
+
+function TabIcon({ name, focused }: TabIconProps) {
+  return (
+    <Ionicons
+      name={name}
+      size={22}
+      color={focused ? DT.saffron : DT.textMuted}
+    />
+  );
+}
 
 export default function TabLayout() {
   return (
@@ -8,30 +25,38 @@ export default function TabLayout() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: HomeColors.bgSandalwood,
-          borderTopWidth: 2,
-          borderTopColor: '#EAE0D0',
+          backgroundColor: DT.surface,
+          borderTopWidth: 1,
+          borderTopColor: DT.border,
+          height: 60,
+          paddingBottom: 8,
+          paddingTop: 6,
         },
-        tabBarActiveTintColor: HomeColors.crimsonAccent,
-        tabBarInactiveTintColor: HomeColors.textMuted,
+        tabBarActiveTintColor: DT.saffron,
+        tabBarInactiveTintColor: DT.textMuted,
         tabBarLabelStyle: {
-          fontFamily: 'SpaceGrotesk_700Bold',
+          fontFamily: 'SpaceGrotesk_600SemiBold',
           fontSize: 10,
+          letterSpacing: 0.5,
         },
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'HOME',
-          tabBarIcon: () => <Text style={{ fontSize: 18 }}>🏠</Text>,
+          title: 'Home',
+          tabBarIcon: ({ focused }) => (
+            <TabIcon name={focused ? 'home' : 'home-outline'} focused={focused} />
+          ),
         }}
       />
       <Tabs.Screen
         name="learning"
         options={{
-          title: 'LEARNING',
-          tabBarIcon: () => <Text style={{ fontSize: 18 }}>📖</Text>,
+          title: 'Learn',
+          tabBarIcon: ({ focused }) => (
+            <TabIcon name={focused ? 'book' : 'book-outline'} focused={focused} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -49,8 +74,10 @@ export default function TabLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'PROFILE',
-          tabBarIcon: () => <Text style={{ fontSize: 18 }}>👤</Text>,
+          title: 'Profile',
+          tabBarIcon: ({ focused }) => (
+            <TabIcon name={focused ? 'person' : 'person-outline'} focused={focused} />
+          ),
         }}
       />
     </Tabs>

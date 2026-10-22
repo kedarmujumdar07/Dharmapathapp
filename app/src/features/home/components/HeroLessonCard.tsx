@@ -1,9 +1,12 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
-import { HardShadowCard } from './HardShadowCard';
-import { HomeColors } from '../constants/homeTheme';
+import { DT, SHADOW } from '../constants/homeTheme';
 import type { LessonData } from '@/features/home/types/lesson.types';
+
+// Default hero background — the path image from assets
+const HERO_IMAGE = require('@/../assets/images/path_itihasa.jpg');
 
 interface HeroLessonCardProps {
   lesson: LessonData | null;
@@ -13,132 +16,128 @@ interface HeroLessonCardProps {
 export const HeroLessonCard: React.FC<HeroLessonCardProps> = ({ lesson, onBeginLesson }) => {
   if (!lesson) {
     return (
-      <HardShadowCard style={styles.outerWrapper} cardStyle={styles.card}>
-        <View style={styles.emptyState}>
-          <Text style={styles.emptyText}>🙏 All lessons completed for today!</Text>
-          <Text style={styles.emptySubText}>Check back tomorrow for new content.</Text>
-        </View>
-      </HardShadowCard>
+      <View style={[styles.card, styles.emptyCard]}>
+        <Text style={styles.emptyText}>🙏 All lessons completed for today!</Text>
+        <Text style={styles.emptySubText}>Check back tomorrow for new content.</Text>
+      </View>
     );
   }
 
   return (
-    <HardShadowCard style={styles.outerWrapper} cardStyle={styles.card}>
-      {/* Banner area with gradient placeholder */}
-      <View style={styles.bannerContainer}>
-        <LinearGradient
-          colors={[HomeColors.saffronPrimary, HomeColors.saffronDark]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={styles.banner}
+    <View style={[SHADOW.saffron, styles.wrapper]}>
+      <View style={styles.card}>
+        {/* Full-bleed image */}
+        <Image
+          source={HERO_IMAGE}
+          style={styles.image}
+          contentFit="cover"
+          transition={300}
         />
-        {/* Category chip */}
-        <View style={styles.categoryChip} accessibilityLabel="Lesson category">
-          <Text style={styles.categoryChipText}>{lesson.categoryLabel}</Text>
-        </View>
-        {/* Reward chip */}
-        <View style={styles.rewardChip} accessibilityLabel={`Rewards ${lesson.pointsAwarded} points`}>
-          <Text style={styles.rewardChipText}>+{lesson.pointsAwarded} PTS</Text>
-        </View>
-      </View>
 
-      {/* Content area */}
-      <View style={styles.contentArea}>
-        <Text style={styles.lessonTitle}>{lesson.title}</Text>
-        <Text style={styles.lessonSubtitle}>{lesson.subtitle}</Text>
-        <TouchableOpacity
-          style={styles.ctaButton}
-          onPress={onBeginLesson}
-          accessibilityLabel="Begin today's daily lesson"
-          accessibilityRole="button"
-        >
-          <Text style={styles.ctaText}>▶  BEGIN DAILY LESSON</Text>
-        </TouchableOpacity>
+        {/* Dark gradient overlay from bottom */}
+        <LinearGradient
+          colors={['transparent', 'rgba(13,10,7,0.55)', 'rgba(13,10,7,0.92)']}
+          locations={[0, 0.45, 1]}
+          style={StyleSheet.absoluteFill}
+        />
+
+        {/* Top chips */}
+        <View style={styles.topRow}>
+          <View style={styles.categoryChip}>
+            <Text style={styles.categoryChipText}>{lesson.categoryLabel}</Text>
+          </View>
+          <View style={styles.rewardChip}>
+            <Text style={styles.rewardChipText}>+{lesson.pointsAwarded} PTS</Text>
+          </View>
+        </View>
+
+        {/* Bottom content */}
+        <View style={styles.bottomContent}>
+          <Text style={styles.lessonTitle}>{lesson.title}</Text>
+          <Text style={styles.lessonSubtitle}>{lesson.subtitle}</Text>
+
+          <TouchableOpacity
+            style={styles.ctaButton}
+            onPress={onBeginLesson}
+            accessibilityLabel="Begin today's daily lesson"
+            accessibilityRole="button"
+            activeOpacity={0.85}
+          >
+            <Text style={styles.ctaText}>▶  BEGIN DAILY LESSON</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </HardShadowCard>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  outerWrapper: {
-    marginBottom: 16,
-    marginHorizontal: 2,
+  wrapper: {
+    borderRadius: 24,
+    marginBottom: 14,
   },
   card: {
-    backgroundColor: HomeColors.cardBg,
-    borderWidth: 2.5,
-    borderColor: HomeColors.borderDark,
+    height: 260,
+    borderRadius: 24,
     overflow: 'hidden',
+    backgroundColor: DT.surface,
+    justifyContent: 'space-between',
   },
-  bannerContainer: {
-    height: 160,
-    position: 'relative',
+  image: {
+    ...StyleSheet.absoluteFillObject,
   },
-  banner: {
-    ...StyleSheet.absoluteFill,
+  topRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    padding: 14,
   },
   categoryChip: {
-    position: 'absolute',
-    top: 10,
-    left: 10,
-    backgroundColor: '#FFFFFF',
-    borderWidth: 2,
-    borderColor: HomeColors.borderDark,
-    borderRadius: 10,
+    backgroundColor: 'rgba(13,10,7,0.55)',
+    borderWidth: 1,
+    borderColor: DT.glassBorder,
+    borderRadius: 20,
     paddingHorizontal: 10,
-    paddingVertical: 3,
+    paddingVertical: 4,
   },
   categoryChipText: {
-    fontSize: 10,
-    fontFamily: 'Baloo2_800ExtraBold',
-    color: HomeColors.textMain,
+    fontFamily: 'SpaceGrotesk_600SemiBold',
+    fontSize: 11,
+    color: DT.textPrimary,
     letterSpacing: 0.8,
   },
   rewardChip: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-    backgroundColor: HomeColors.goldPrimary,
-    borderWidth: 2,
-    borderColor: HomeColors.borderDark,
-    borderRadius: 10,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
+    backgroundColor: DT.saffron,
+    borderRadius: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
   },
   rewardChipText: {
-    fontSize: 11,
     fontFamily: 'Baloo2_800ExtraBold',
-    color: HomeColors.textMain,
+    fontSize: 11,
+    color: '#FFFFFF',
   },
-  contentArea: {
+  bottomContent: {
     padding: 16,
-    backgroundColor: HomeColors.sunburstBg,
-    alignItems: 'center',
+    paddingBottom: 18,
   },
   lessonTitle: {
     fontFamily: 'Baloo2_800ExtraBold',
-    fontSize: 18,
-    color: HomeColors.crimsonDark,
-    textAlign: 'center',
-    lineHeight: 24,
+    fontSize: 22,
+    color: DT.textPrimary,
+    lineHeight: 28,
     marginBottom: 4,
   },
   lessonSubtitle: {
-    fontFamily: 'Nunito_700Bold',
-    fontSize: 10,
-    color: HomeColors.textMuted,
-    letterSpacing: 0.8,
-    textTransform: 'uppercase',
+    fontFamily: 'SpaceGrotesk_400Regular',
+    fontSize: 13,
+    color: DT.textSecondary,
     marginBottom: 14,
-    textAlign: 'center',
   },
   ctaButton: {
-    width: '100%',
-    backgroundColor: HomeColors.saffronPrimary,
-    borderWidth: 2.5,
-    borderColor: HomeColors.borderDark,
+    backgroundColor: DT.saffron,
     borderRadius: 14,
-    paddingVertical: 12,
+    paddingVertical: 13,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -148,21 +147,23 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     letterSpacing: 0.8,
   },
-  emptyState: {
-    padding: 24,
+  emptyCard: {
+    height: 120,
     alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
   },
   emptyText: {
     fontFamily: 'Baloo2_700Bold',
     fontSize: 16,
-    color: HomeColors.textMain,
+    color: DT.textPrimary,
     marginBottom: 6,
     textAlign: 'center',
   },
   emptySubText: {
-    fontFamily: 'Nunito_400Regular',
+    fontFamily: 'SpaceGrotesk_400Regular',
     fontSize: 13,
-    color: HomeColors.textMuted,
+    color: DT.textMuted,
     textAlign: 'center',
   },
 });

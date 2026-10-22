@@ -7,7 +7,7 @@ import { MainPathCard } from '../components/MainPathCard';
 import { ScriptureCard } from '../components/ScriptureCard';
 import { PATHS_DATA } from '@/features/home/data/pathsData';
 import { SCRIPTURES_DATA } from '@/features/home/data/scripturesData';
-import { HomeColors } from '@/features/home/constants/homeTheme';
+import { DT } from '@/features/home/constants/homeTheme';
 
 export const LearningScreen: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'paths' | 'shlokas'>('paths');
@@ -58,7 +58,7 @@ export const LearningScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: HomeColors.bgSandalwood,
+    backgroundColor: DT.bg,
   },
   content: {
     paddingHorizontal: 14,
