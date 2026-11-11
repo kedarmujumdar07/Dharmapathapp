@@ -1,3 +1,4 @@
+import { describe, it, expect } from '@jest/globals';
 import { getUnitAccent, withAlpha, PATH_ACCENT_PALETTE } from '../pathTheme';
 
 describe('pathTheme', () => {

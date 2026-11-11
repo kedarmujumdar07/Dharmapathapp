@@ -1,3 +1,4 @@
+import { describe, it, expect } from '@jest/globals';
 import { syntheticCurriculum } from '../content/syntheticCurriculum';
 import { buildPathLayout } from '../layout/buildPathLayout';
 

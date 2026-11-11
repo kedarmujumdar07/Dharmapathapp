@@ -1,3 +1,4 @@
+import { describe, it, expect } from '@jest/globals';
 import { buildPathLayout } from '../layout/buildPathLayout';
 import { getUnitAccent, PATH_ACCENT_PALETTE } from '../pathTheme';
 import type { Path } from '../types/path.types';
