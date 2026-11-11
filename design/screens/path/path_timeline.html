@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DharmaPath — Path Timeline Design Review</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=JetBrains+Mono:wght@400;600&family=Nunito:wght@600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-cream: #F3F0E7;
+      --line-teal: #788C81;
+      --line-progress: #2B443B;
+      --ink: #1A1914;
+      --ink-muted: #6E6A60;
+      --ink-subtle: #9E9A90;
+      --white: #FFFFFF;
+      --unit-red: #C32826;
+      --unit-ochre: #D97706;
+      --unit-teal: #0D9488;
+      --unit-indigo: #4338CA;
+      --unit-plum: #831843;
+      --unit-green: #15803D;
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-display-bold: 'Baloo 2', sans-serif;
+      --font-sans: 'Space Grotesk', sans-serif;
+      --font-sans-alt: 'Nunito', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #18191D;
+      color: #E6E4DF;
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px 48px;
+    }
+
+    /* Top control panel */
+    .toolbar {
+      width: 100%;
+      max-width: 1080px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      background: #23252C;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-badge {
+      font-family: var(--font-display-bold);
+      font-size: 15px;
+      color: #FFB347;
+      background: rgba(255, 179, 71, 0.12);
+      padding: 4px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 179, 71, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .toolbar-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #FFFFFF;
+      letter-spacing: -0.2px;
+    }
+
+    .toolbar-right {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-control {
+      background: #2E323D;
+      color: #E6E4DF;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-control:hover {
+      background: #3B404E;
+      color: #FFFFFF;
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .btn-control.active {
+      background: #FF6F00;
+      color: #FFFFFF;
+      border-color: #FF8F00;
+    }
+
+    .select-dropdown {
+      background: #2E323D;
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-family: inherit;
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Main comparison container */
+    .review-stage {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 36px;
+      width: 100%;
+      max-width: 1080px;
+    }
+
+    .stage-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .stage-label {
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: #9E9A90;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Mobile phone mock */
+    .phone-wrapper {
+      position: relative;
+      width: 390px;
+      height: 844px;
+      background: #000000;
+      border-radius: 46px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7),
+                  inset 0 0 0 3px #33363F,
+                  inset 0 0 0 6px #16181D;
+      padding: 12px;
+      overflow: hidden;
+      transition: width 0.25s ease;
+    }
+
+    .phone-screen {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-cream);
+      border-radius: 36px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      scrollbar-width: none;
+    }
+
+    .phone-screen::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Dynamic Island notch */
+    .notch {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 38px;
+      background: var(--bg-cream);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 50;
+      border-bottom: 1px solid rgba(26, 25, 20, 0.05);
+    }
+
+    .island {
+      width: 100px;
+      height: 22px;
+      background: #000000;
+      border-radius: 20px;
+    }
+
+    /* Timeline Screen Top Bar */
+    .screen-header {
+      position: sticky;
+      top: 38px;
+      background: var(--bg-cream);
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 18px;
+      border-bottom: 1px solid rgba(26, 25, 20, 0.08);
+    }
+
+    .back-btn {
+      background: #FFFFFF;
+      border: 1.5px solid var(--ink);
+      border-radius: 8px;
+      padding: 4px 10px;
+      font-family: var(--font-display-bold);
+      font-size: 10px;
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    .path-title {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Timeline Canvas & Rows */
+    .timeline-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 60px;
+    }
+
+    .timeline-row {
+      position: relative;
+      width: 100%;
+    }
+
+    .timeline-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    /* Unit Header Row */
+    .unit-header-content {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .unit-small-caps {
+      font-family: var(--font-display-bold);
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .unit-title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+
+    .unit-counter {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--ink-muted);
+    }
+
+    /* Node Circle Button */
+    .node-circle {
+      position: absolute;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.25s ease;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .node-circle:hover {
+      transform: scale(1.05);
+    }
+
+    .node-circle:active {
+      transform: scale(0.93);
+    }
+
+    /* Pulsing ring for current node */
+    .pulse-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 2px solid;
+      pointer-events: none;
+      animation: pulseAnimation 1.8s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
+    }
+
+    @keyframes pulseAnimation {
+      0% {
+        transform: scale(1);
+        opacity: 0.65;
+      }
+      50% {
+        transform: scale(1.22);
+        opacity: 0.15;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 0.65;
+      }
+    }
+
+    /* Shake animation for locked node */
+    @keyframes lockedShake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
+
+    .shake-animation {
+      animation: lockedShake 0.4s ease-in-out;
+    }
+
+    /* Node Text Block */
+    .node-text-block {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      cursor: pointer;
+      z-index: 10;
+      user-select: none;
+    }
+
+    .node-index {
+      font-family: var(--font-display-bold);
+      font-size: 22px;
+      line-height: 26px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .node-title {
+      font-family: var(--font-display);
+      font-size: 15px;
+      line-height: 19px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .node-summary {
+      font-family: var(--font-sans-alt);
+      font-size: 12.5px;
+      line-height: 17px;
+      font-weight: 600;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .node-meta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      line-height: 15px;
+      margin-top: 2px;
+    }
+
+    .locked-hint {
+      margin-top: 4px;
+      padding: 3px 8px;
+      background: #FFEAEA;
+      border: 1px solid #FFA5A5;
+      border-radius: 6px;
+      color: #B71C1C;
+      font-size: 10.5px;
+      font-weight: 700;
+      font-family: var(--font-sans-alt);
+      display: inline-block;
+      width: fit-content;
+    }
+
+    /* End-cap Row */
+    .endcap-text-block {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .endcap-label {
+      font-family: var(--font-display-bold);
+      font-size: 12px;
+      letter-spacing: 1px;
+      color: var(--ink);
+    }
+
+    .endcap-desc {
+      font-family: var(--font-sans-alt);
+      font-size: 12px;
+      line-height: 16px;
+      color: var(--ink-muted);
+    }
+
+    /* Floating Jump to Current Pill */
+    .jump-pill {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--ink);
+      color: var(--white);
+      padding: 9px 18px;
+      border-radius: 24px;
+      font-family: var(--font-display-bold);
+      font-size: 11.5px;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+      cursor: pointer;
+      z-index: 60;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .jump-pill:hover {
+      transform: translateX(-50%) scale(1.05);
+      background: #000;
+    }
+
+    /* Traveler Silhouette */
+    .traveler-marker {
+      position: absolute;
+      pointer-events: none;
+      z-index: 25;
+      transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    /* Reference Image Frame */
+    .ref-image-frame {
+      width: 390px;
+      height: 844px;
+      border-radius: 46px;
+      border: 3px solid #33363F;
+      overflow: hidden;
+      background: #000000;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ref-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: var(--bg-cream);
+    }
+
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: #111;
+      color: #FFF;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s ease;
+      z-index: 1000;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Toolbar -->
+  <header class="toolbar">
+    <div class="toolbar-left">
+      <div class="brand-badge">⚡ DharmaPath</div>
+      <div class="toolbar-title">Path Timeline Screen Review</div>
+    </div>
+
+    <div class="toolbar-right">
+      <label style="font-size: 11px; color: #8C92A4; text-transform: uppercase;">Curriculum:</label>
+      <select id="pathSelector" class="select-dropdown" onchange="switchPath(this.value)">
+        <option value="itihasa">1. Itihasa Path (2 Units)</option>
+        <option value="leela">2. Leela Path (2 Units)</option>
+        <option value="extensible">3. Extensible Demo (4 Units • 10 Lessons)</option>
+        <option value="fixture">4. High-Volume Fixture (12 Units • 120 Lessons)</option>
+      </select>
+
+      <label style="font-size: 11px; color: #8C92A4; text-transform: uppercase;">Width:</label>
+      <select id="widthSelector" class="select-dropdown" onchange="changeWidth(this.value)">
+        <option value="390">iPhone 14 (390dp)</option>
+        <option value="412">Pixel 7 (412dp)</option>
+        <option value="320">Compact (320dp)</option>
+      </select>
+
+      <button class="btn-control" onclick="advanceLesson()">▶ Complete Next Lesson</button>
+      <button class="btn-control" onclick="resetProgress()">↺ Reset</button>
+      <button class="btn-control" id="refToggleBtn" onclick="toggleReference()">👁 Toggle Original Design</button>
+    </div>
+  </header>
+
+  <!-- Interactive Comparison Stage -->
+  <main class="review-stage">
+    <!-- Live Rendered Screen -->
+    <div class="stage-card">
+      <div class="stage-label">Interactive Path Timeline (Rendered from Engine)</div>
+      <div class="phone-wrapper" id="phoneWrapper">
+        <div class="phone-screen" id="phoneScreen">
+          <!-- Dynamic Island Notch -->
+          <div class="notch">
+            <div class="island"></div>
+          </div>
+
+          <!-- Header -->
+          <div class="screen-header">
+            <button class="back-btn" onclick="showToast('Navigating back to Learning tab')">◀ BACK</button>
+            <div class="path-title" id="screenTitle">1. ITIHASA PATH</div>
+          </div>
+
+          <!-- Timeline content container -->
+          <div class="timeline-container" id="timelineContainer"></div>
+
+          <!-- Jump to Current Pill -->
+          <div class="jump-pill" id="jumpPill" style="display: none;" onclick="jumpToCurrent()">
+            ↓ Jump to current
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Original Reference Mockup Image -->
+    <div class="stage-card" id="refStage">
+      <div class="stage-label">Reference Design Image (reference.jpg)</div>
+      <div class="ref-image-frame">
+        <img src="reference.jpg" alt="Design Reference" class="ref-img">
+      </div>
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // Palettes & Configurations
+    const PALETTE = ['#C32826', '#D97706', '#0D9488', '#4338CA', '#831843', '#15803D'];
+    const CONFIG = {
+      maxContentWidth: 480,
+      marginX: 24,
+      lineWidth: 3,
+      lineGap: 9,
+      baseDiameterRatio: 0.27,
+      baseDiameterMin: 92,
+      baseDiameterMax: 132,
+      kindFactors: { lesson: 1.0, practice: 0.72, milestone: 1.15 },
+      textGutter: 16,
+      bandPadY: 14,
+      headerHeight: 132,
+      cornerRadius: 24,
+      endCapHeight: 160,
+      endDotRadius: 6,
+      jitterPercent: 0.04,
+      estimatedTextHeight: 142
+    };
+
+    // Preloaded paths data
+    const DATASETS = {
+      itihasa: {
+        path: {
+          id: 'itihasa',
+          title: '1. ITIHASA PATH',
+          units: [
+            { id: 'u1', title: 'RAMAYANA', subtitle: 'The Epic of Righteousness', lessonIds: ['l1', 'l2'] },
+            { id: 'u2', title: 'MAHABHARATA', subtitle: 'The Field of Dharma', lessonIds: ['l3'] }
+          ]
+        },
+        lessons: {
+          l1: { id: 'l1', title: "RAMA'S VOW & THE FOREST JOURNEY", summary: 'Rama accepts exile with steady grace, honouring Dasharatha’s word.', kind: 'lesson', minutes: 5, questionCount: 4 },
+          l2: { id: 'l2', title: 'LAKSHMANA REKHA & SURRENDER', summary: 'Devotion and boundary: the test of protection in the deep Dandaka forest.', kind: 'practice', minutes: 4, questionCount: 3 },
+          l3: { id: 'l3', title: 'SANKHYA YOGA: ACTION WITHOUT ATTACHMENT', summary: 'Krishna teaches Arjuna the timeless secret of selfless action.', kind: 'milestone', minutes: 7, questionCount: 5 }
+        }
+      },
+      leela: {
+        path: {
+          id: 'leela',
+          title: '2. LEELA PATH',
+          units: [
+            { id: 'u1', title: 'KRISHNA LEELA', subtitle: 'Divine Play & Pastimes', lessonIds: ['l1'] },
+            { id: 'u2', title: 'SHIVA LEELA', subtitle: 'Cosmic Compassion', lessonIds: ['l2'] }
+          ]
+        },
+        lessons: {
+          l1: { id: 'l1', title: 'THE KALIA SERPENT & DIVINE PLAY', summary: 'Krishna subdues the venomous serpent Kalia to cleanse the Yamuna.', kind: 'practice', minutes: 4, questionCount: 3 },
+          l2: { id: 'l2', title: 'NEELKANTH: THE BLUE-THROATED ONE', summary: 'Shiva consumes the Halahala poison to preserve creation from ruin.', kind: 'lesson', minutes: 6, questionCount: 4 }
+        }
+      },
+      extensible: {
+        path: {
+          id: 'extensible',
+          title: '3. EXTENSIBLE DEMO (4 UNITS)',
+          units: [
+            { id: 'u1', title: 'RAMAYANA', subtitle: 'Duty and Righteousness', lessonIds: ['e1'] },
+            { id: 'u2', title: 'MAHABHARATA', subtitle: 'Wisdom of the Gita', lessonIds: ['e2'] },
+            { id: 'u3', title: 'DEEP MEDITATION & SADHANA', subtitle: '7 Advanced Practice Steps', lessonIds: ['e3_1', 'e3_2', 'e3_3', 'e3_4', 'e3_5', 'e3_6', 'e3_7'] },
+            { id: 'u4', title: 'MOKSHA INTEGRATION', subtitle: 'Ultimate Self-Realisation', lessonIds: ['e4_1'] }
+          ]
+        },
+        lessons: {
+          e1: { id: 'e1', title: 'THE FOUNDATION OF DHARMA', summary: 'Understanding cosmic balance and individual purpose in daily life.', kind: 'lesson', minutes: 5, questionCount: 4 },
+          e2: { id: 'e2', title: 'SANKHYA YOGA DISCOURSE', summary: 'Krishna imparts the essence of detachment and eternal Self.', kind: 'milestone', minutes: 7, questionCount: 5 },
+          e3_1: { id: 'e3_1', title: 'PRANAYAMA: BREATH CONTROL', summary: 'Purifying the nadis through rhythmic breath retention.', kind: 'practice', minutes: 4, questionCount: 3 },
+          e3_2: { id: 'e3_2', title: 'PRATYAHARA: SENSORY STILLNESS', summary: 'Withdrawing senses inwards to still the fluctuations of mind.', kind: 'lesson', minutes: 5, questionCount: 4 },
+          e3_3: { id: 'e3_3', title: 'DHARANA: ONE-POINTED FOCUS', summary: 'Anchoring consciousness upon sacred symbol and mantra.', kind: 'practice', minutes: 4, questionCount: 3 },
+          e3_4: { id: 'e3_4', title: 'DHYANA: UNBROKEN CONTEMPLATION', summary: 'Flowing uninterruptedly like oil poured from vessel to vessel.', kind: 'lesson', minutes: 6, questionCount: 5 },
+          e3_5: { id: 'e3_5', title: 'SAMADHI: TRANSCENDENTAL UNION', summary: 'The dissolver of ego-identity into boundless awareness.', kind: 'milestone', minutes: 8, questionCount: 6 },
+          e3_6: { id: 'e3_6', title: 'INTEGRATING WITNESS CONSCIOUSNESS', summary: 'Observing phenomena without reactivity or aversion.', kind: 'lesson', minutes: 5, questionCount: 4 },
+          e3_7: { id: 'e3_7', title: 'THE RADIANCE OF ATMAN', summary: 'Abiding permanently in the supreme light of consciousness.', kind: 'milestone', minutes: 7, questionCount: 5 },
+          e4_1: { id: 'e4_1', title: 'LIVING AS A JIVANMUKTA', summary: 'Liberated in life: walking the world with boundless compassion.', kind: 'milestone', minutes: 10, questionCount: 8 }
+        }
+      },
+      fixture: null // generated dynamically on demand
+    };
+
+    function generateSyntheticFixture(unitCount, lessonsPerUnit) {
+      const units = [];
+      const lessons = {};
+      let globalIdx = 0;
+      for (let u = 0; u < unitCount; u++) {
+        const uId = `fix_u_${u+1}`;
+        const lessonIds = [];
+        for (let l = 0; l < lessonsPerUnit; l++) {
+          globalIdx++;
+          const lId = `fix_l_${u+1}_${l+1}`;
+          lessonIds.push(lId);
+          const kind = globalIdx % 5 === 3 ? 'practice' : globalIdx % 5 === 0 ? 'milestone' : 'lesson';
+          lessons[lId] = {
+            id: lId,
+            title: `SACRED DISCOURSE ${globalIdx}`,
+            summary: `Contemplation of core tenets and timeless insight for step ${globalIdx}.`,
+            kind,
+            minutes: 4 + (globalIdx % 5),
+            questionCount: 4 + (globalIdx % 6)
+          };
+        }
+        units.push({
+          id: uId,
+          title: `CHAPTER ${u+1}: PATH OF WISDOM`,
+          subtitle: `Foundational practices (${lessonsPerUnit} lessons)`,
+          lessonIds
+        });
+      }
+      return { path: { id: 'fixture', title: '12x10 GRAND PATH FIXTURE', units }, lessons };
+    }
+
+    DATASETS.fixture = generateSyntheticFixture(12, 10);
+
+    // State
+    let currentPathKey = 'itihasa';
+    let currentWidth = 390;
+    let completedLessonIds = new Set();
+    let currentLayout = null;
+
+    function deterministicJitter(id) {
+      let hash = 0;
+      for (let i = 0; i < id.length; i++) {
+        hash = (hash * 31 + id.charCodeAt(i)) | 0;
+      }
+      return ((Math.abs(hash) % 1000) / 500) - 1;
+    }
+
+    function buildLayout(path, lessons, width) {
+      const contentWidth = Math.min(width, CONFIG.maxContentWidth);
+      const contentOffsetX = (width - contentWidth) / 2;
+      const xL = contentOffsetX + CONFIG.marginX;
+      const xR = contentOffsetX + contentWidth - CONFIG.marginX;
+
+      const baseDiameter = Math.max(
+        CONFIG.baseDiameterMin,
+        Math.min(CONFIG.baseDiameterMax, CONFIG.baseDiameterRatio * contentWidth)
+      );
+
+      const rows = [];
+      let currentOffset = 0;
+      let cumulativeLength = 0;
+      let globalIndex = 0;
+      let prevNodeCx = null;
+      let prevNodeExt = null;
+
+      const allLessonIds = path.units.flatMap(u => u.lessonIds);
+      const totalLessonsCount = allLessonIds.length;
+
+      for (let u = 0; u < path.units.length; u++) {
+        const unit = path.units[u];
+        const unitLessonCount = unit.lessonIds.length;
+        if (unitLessonCount === 0) continue;
+
+        const nextLessonId = unit.lessonIds[0];
+        const nextLesson = lessons[nextLessonId];
+        const nextKind = nextLesson?.kind || 'lesson';
+        const nextFactor = CONFIG.kindFactors[nextKind] ?? 1.0;
+        const nextR = (baseDiameter * nextFactor) / 2 + CONFIG.lineGap;
+        const nextSide = globalIndex % 2 === 0 ? 'left' : 'right';
+        const nextJitterVal = deterministicJitter(nextLessonId) * CONFIG.jitterPercent * (xR - xL);
+        const nextCx = nextSide === 'left' ? xL + nextR + Math.max(0, nextJitterVal) : xR - nextR - Math.max(0, -nextJitterVal);
+        const nextExt = nextSide === 'left' ? nextCx - nextR : nextCx + nextR;
+
+        // 1. Unit Header Row
+        const headerHeight = CONFIG.headerHeight;
+        let headerSvgPath = '';
+        let headerAnalyticLength = 0;
+        let headerStartPoint = { x: nextExt, y: 0 };
+        let headerEndPoint = { x: nextExt, y: headerHeight };
+
+        if (u === 0 || prevNodeCx === null) {
+          headerSvgPath = `M ${nextExt} 0 L ${nextExt} ${headerHeight}`;
+          headerAnalyticLength = headerHeight;
+        } else {
+          const cr = Math.min(CONFIG.cornerRadius, Math.abs(nextExt - prevNodeCx) / 2);
+          headerStartPoint = { x: prevNodeCx, y: 0 };
+          if (nextExt < prevNodeCx) {
+            headerSvgPath = `M ${prevNodeCx} 0 L ${nextExt + cr} 0 A ${cr} ${cr} 0 0 0 ${nextExt} ${cr} L ${nextExt} ${headerHeight}`;
+          } else {
+            headerSvgPath = `M ${prevNodeCx} 0 L ${nextExt - cr} 0 A ${cr} ${cr} 0 0 1 ${nextExt} ${cr} L ${nextExt} ${headerHeight}`;
+          }
+          headerAnalyticLength = Math.abs(nextExt - prevNodeCx) - cr + (cr * Math.PI) / 2 + (headerHeight - cr);
+        }
+
+        const isTailOnLeft = nextExt <= (xL + xR) / 2;
+        const headerTextBox = isTailOnLeft
+          ? { x: nextExt + 28, y: (headerHeight - 80) / 2, width: xR - (nextExt + 28), height: 80 }
+          : { x: xL, y: (headerHeight - 80) / 2, width: nextExt - 28 - xL, height: 80 };
+
+        rows.push({
+          type: 'unit-header',
+          unitId: unit.id,
+          unitIndex: u,
+          title: unit.title,
+          subtitle: unit.subtitle,
+          totalLessons: unitLessonCount,
+          offset: currentOffset,
+          height: headerHeight,
+          svgPathD: headerSvgPath,
+          analyticLength: headerAnalyticLength,
+          cumulativeLengthStart: cumulativeLength,
+          startPoint: headerStartPoint,
+          endPoint: headerEndPoint,
+          textBox: headerTextBox
+        });
+
+        currentOffset += headerHeight;
+        cumulativeLength += headerAnalyticLength;
+
+        // 2. Nodes in unit
+        for (let l = 0; l < unitLessonCount; l++) {
+          const lessonId = unit.lessonIds[l];
+          const lesson = lessons[lessonId];
+          const kind = lesson?.kind || 'lesson';
+          const factor = CONFIG.kindFactors[kind] ?? 1.0;
+          const diameter = baseDiameter * factor;
+          const r = diameter / 2;
+          const R = r + CONFIG.lineGap;
+          const bandHeight = Math.max(2 * R, CONFIG.estimatedTextHeight + 2 * CONFIG.bandPadY);
+          const side = globalIndex % 2 === 0 ? 'left' : 'right';
+          const jitterVal = deterministicJitter(lessonId) * CONFIG.jitterPercent * (xR - xL);
+
+          const cx = side === 'left' ? xL + R + Math.max(0, jitterVal) : xR - R - Math.max(0, -jitterVal);
+          const cy = bandHeight / 2;
+          const xExt = side === 'left' ? cx - R : cx + R;
+
+          const isFirstInUnit = l === 0;
+          const isLastInPath = globalIndex === totalLessonsCount - 1;
+
+          let nodeSvgPath = '';
+          let nodeAnalyticLength = 0;
+          let startPoint = { x: 0, y: 0 };
+          let endPoint = { x: 0, y: bandHeight };
+          let travelerAnchor = { x: 0, y: 0 };
+          let progressMarkerLength = 0;
+          const vertStraight = bandHeight - 2 * R;
+
+          if (isFirstInUnit && !isLastInPath) {
+            startPoint = { x: xExt, y: 0 };
+            endPoint = { x: cx, y: bandHeight };
+            const sweep = side === 'left' ? 0 : 1;
+            nodeSvgPath = `M ${xExt} 0 L ${xExt} ${bandHeight - R} A ${R} ${R} 0 0 ${sweep} ${cx} ${bandHeight}`;
+            nodeAnalyticLength = bandHeight - R + (R * Math.PI) / 2;
+            travelerAnchor = { x: xExt + (side === 'left' ? 32 : -32), y: Math.max(30, bandHeight * 0.35) };
+            progressMarkerLength = bandHeight * 0.35;
+          } else if (!isFirstInUnit && !isLastInPath) {
+            const prevCx = prevNodeCx ?? (side === 'left' ? xR - R : xL + R);
+            startPoint = { x: prevCx, y: 0 };
+            endPoint = { x: cx, y: bandHeight };
+            const sweep = side === 'left' ? 0 : 1;
+            if (vertStraight > 0.01) {
+              nodeSvgPath = `M ${prevCx} 0 L ${cx} 0 A ${R} ${R} 0 0 ${sweep} ${xExt} ${R} L ${xExt} ${bandHeight - R} A ${R} ${R} 0 0 ${sweep} ${cx} ${bandHeight}`;
+            } else {
+              nodeSvgPath = `M ${prevCx} 0 L ${cx} 0 A ${R} ${R} 0 0 ${sweep} ${cx} ${bandHeight}`;
+            }
+            nodeAnalyticLength = Math.abs(cx - prevCx) + R * Math.PI + Math.max(0, vertStraight);
+            travelerAnchor = { x: (prevCx + cx) / 2, y: 0 };
+            progressMarkerLength = Math.abs(cx - prevCx) / 2;
+          } else if (!isFirstInUnit && isLastInPath) {
+            const prevCx = prevNodeCx ?? (side === 'left' ? xR - R : xL + R);
+            startPoint = { x: prevCx, y: 0 };
+            endPoint = { x: xExt, y: bandHeight };
+            const sweep = side === 'left' ? 0 : 1;
+            nodeSvgPath = `M ${prevCx} 0 L ${cx} 0 A ${R} ${R} 0 0 ${sweep} ${xExt} ${R} L ${xExt} ${bandHeight}`;
+            nodeAnalyticLength = Math.abs(cx - prevCx) + (R * Math.PI) / 2 + (bandHeight - R);
+            travelerAnchor = { x: (prevCx + cx) / 2, y: 0 };
+            progressMarkerLength = Math.abs(cx - prevCx) / 2;
+          } else {
+            startPoint = { x: xExt, y: 0 };
+            endPoint = { x: xExt, y: bandHeight };
+            nodeSvgPath = `M ${xExt} 0 L ${xExt} ${bandHeight}`;
+            nodeAnalyticLength = bandHeight;
+            travelerAnchor = { x: xExt + (side === 'left' ? 32 : -32), y: bandHeight / 2 };
+            progressMarkerLength = bandHeight / 2;
+          }
+
+          const textBoxWidth = side === 'left' ? xR - (cx + r + CONFIG.textGutter) : cx - r - CONFIG.textGutter - xL;
+          const textBoxX = side === 'left' ? cx + r + CONFIG.textGutter : xL;
+          const textBoxY = Math.max(CONFIG.bandPadY, (bandHeight - CONFIG.estimatedTextHeight) / 2);
+
+          rows.push({
+            type: 'node',
+            globalIndex,
+            lessonId,
+            unitId: unit.id,
+            unitIndex: u,
+            side,
+            circle: { cx, cy, r },
+            R,
+            offset: currentOffset,
+            height: bandHeight,
+            svgPathD: nodeSvgPath,
+            analyticLength: nodeAnalyticLength,
+            cumulativeLengthStart: cumulativeLength,
+            startPoint,
+            endPoint,
+            textBox: { x: textBoxX, y: textBoxY, width: Math.max(120, textBoxWidth), height: CONFIG.estimatedTextHeight },
+            travelerAnchor,
+            progressMarkerLength
+          });
+
+          currentOffset += bandHeight;
+          cumulativeLength += nodeAnalyticLength;
+          prevNodeCx = cx;
+          prevNodeExt = xExt;
+          globalIndex++;
+        }
+      }
+
+      // 3. End-cap
+      const endCapHeight = CONFIG.endCapHeight;
+      const lastExt = prevNodeExt ?? xL;
+      const dotY = 56;
+      const isLastOnLeft = lastExt <= (xL + xR) / 2;
+
+      rows.push({
+        type: 'end-cap',
+        offset: currentOffset,
+        height: endCapHeight,
+        svgPathD: `M ${lastExt} 0 L ${lastExt} ${dotY}`,
+        analyticLength: dotY,
+        cumulativeLengthStart: cumulativeLength,
+        startPoint: { x: lastExt, y: 0 },
+        endPoint: { x: lastExt, y: dotY },
+        dot: { cx: lastExt, cy: dotY, r: CONFIG.endDotRadius },
+        textBox: isLastOnLeft
+          ? { x: lastExt + 32, y: dotY - 20, width: xR - (lastExt + 32), height: 60 }
+          : { x: xL, y: dotY - 20, width: lastExt - 32 - xL, height: 60 }
+      });
+
+      currentOffset += endCapHeight;
+      cumulativeLength += dotY;
+
+      return { rows, totalHeight: currentOffset, totalLength: cumulativeLength };
+    }
+
+    function computeNodeStates(units, completedIds) {
+      const res = {};
+      let currentAssigned = false;
+      let unitUnlocked = true;
+
+      for (let u = 0; u < units.length; u++) {
+        const unit = units[u];
+        let allCompleted = true;
+        for (let l = 0; l < unit.lessonIds.length; l++) {
+          const lId = unit.lessonIds[l];
+          if (completedIds.has(lId)) {
+            res[lId] = 'completed';
+          } else {
+            allCompleted = false;
+            if (unitUnlocked && !currentAssigned) {
+              res[lId] = 'current';
+              currentAssigned = true;
+            } else {
+              res[lId] = 'locked';
+            }
+          }
+        }
+        unitUnlocked = unitUnlocked && allCompleted;
+      }
+      return res;
+    }
+
+    function renderScreen() {
+      const data = DATASETS[currentPathKey];
+      document.getElementById('screenTitle').innerText = data.path.title;
+
+      currentLayout = buildLayout(data.path, data.lessons, currentWidth);
+      const nodeStates = computeNodeStates(data.path.units, completedLessonIds);
+
+      // Check current node index
+      const currentNodeRow = currentLayout.rows.find(r => r.type === 'node' && nodeStates[r.lessonId] === 'current');
+      const isPathComplete = !currentNodeRow && currentLayout.rows.some(r => r.type === 'node' && nodeStates[r.lessonId] === 'completed');
+
+      let progressDist = 0;
+      if (isPathComplete) {
+        progressDist = currentLayout.totalLength;
+      } else if (currentNodeRow) {
+        progressDist = currentNodeRow.cumulativeLengthStart + currentNodeRow.progressMarkerLength;
+      }
+
+      const container = document.getElementById('timelineContainer');
+      container.style.height = `${currentLayout.totalHeight}px`;
+      container.innerHTML = '';
+
+      currentLayout.rows.forEach(row => {
+        const rowEl = document.createElement('div');
+        rowEl.className = 'timeline-row';
+        rowEl.id = `row_${row.lessonId || row.unitId || 'end'}`;
+        rowEl.style.height = `${row.height}px`;
+
+        const accent = PALETTE[(row.unitIndex || 0) % PALETTE.length];
+
+        // Draw SVG Line
+        const progressInRow = Math.max(0, Math.min(row.analyticLength, progressDist - row.cumulativeLengthStart));
+        const svgEl = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svgEl.setAttribute('class', 'timeline-svg');
+        svgEl.setAttribute('viewBox', `0 0 ${currentWidth} ${row.height}`);
+
+        const basePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        basePath.setAttribute('d', row.svgPathD);
+        basePath.setAttribute('stroke', '#788C81');
+        basePath.setAttribute('stroke-width', '3');
+        basePath.setAttribute('stroke-linecap', 'round');
+        basePath.setAttribute('stroke-linejoin', 'round');
+        basePath.setAttribute('fill', 'none');
+        svgEl.appendChild(basePath);
+
+        if (progressInRow > 0.05) {
+          const progPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          progPath.setAttribute('d', row.svgPathD);
+          progPath.setAttribute('stroke', '#2B443B');
+          progPath.setAttribute('stroke-width', '3');
+          progPath.setAttribute('stroke-linecap', 'round');
+          progPath.setAttribute('stroke-linejoin', 'round');
+          progPath.setAttribute('fill', 'none');
+          progPath.setAttribute('stroke-dasharray', `${progressInRow}, ${row.analyticLength + 40}`);
+          progPath.setAttribute('stroke-dashoffset', '0');
+          svgEl.appendChild(progPath);
+        }
+
+        rowEl.appendChild(svgEl);
+
+        // Content per row type
+        if (row.type === 'unit-header') {
+          const headerBox = document.createElement('div');
+          headerBox.className = 'unit-header-content';
+          headerBox.style.left = `${row.textBox.x}px`;
+          headerBox.style.top = `${row.textBox.y}px`;
+          headerBox.style.width = `${row.textBox.width}px`;
+
+          const unitLessons = data.path.units[row.unitIndex].lessonIds;
+          const completedInUnit = unitLessons.filter(id => completedLessonIds.has(id)).length;
+
+          headerBox.innerHTML = `
+            <div class="unit-small-caps" style="color: ${accent}">UNIT ${row.unitIndex + 1}</div>
+            <div class="unit-title">${row.title}</div>
+            <div class="unit-counter">${completedInUnit}/${row.totalLessons} lessons completed</div>
+          `;
+          rowEl.appendChild(headerBox);
+        } else if (row.type === 'end-cap') {
+          // Terminal Dot
+          const dotSvg = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+          dotSvg.setAttribute('cx', row.dot.cx);
+          dotSvg.setAttribute('cy', row.dot.cy);
+          dotSvg.setAttribute('r', row.dot.r);
+          dotSvg.setAttribute('fill', isPathComplete ? '#2B443B' : '#788C81');
+          svgEl.appendChild(dotSvg);
+
+          const endBox = document.createElement('div');
+          endBox.className = 'endcap-text-block';
+          endBox.style.left = `${row.textBox.x}px`;
+          endBox.style.top = `${row.textBox.y}px`;
+          endBox.style.width = `${row.textBox.width}px`;
+
+          endBox.innerHTML = `
+            <div class="endcap-label">${isPathComplete ? 'PATH COMPLETED' : 'MORE TO COME'}</div>
+            <div class="endcap-desc">${isPathComplete ? 'Congratulations! You have walked the entire path of wisdom.' : 'New units and lessons are coming soon.'}</div>
+          `;
+          rowEl.appendChild(endBox);
+        } else if (row.type === 'node') {
+          const lesson = data.lessons[row.lessonId];
+          const state = nodeStates[row.lessonId];
+          const diameter = row.circle.r * 2;
+          const isCurrent = state === 'current';
+          const isLocked = state === 'locked';
+          const isCompleted = state === 'completed';
+
+          // Circle Button
+          const circleBtn = document.createElement('div');
+          circleBtn.className = 'node-circle';
+          circleBtn.style.left = `${row.circle.cx - row.circle.r}px`;
+          circleBtn.style.top = `${row.circle.cy - row.circle.r}px`;
+          circleBtn.style.width = `${diameter}px`;
+          circleBtn.style.height = `${diameter}px`;
+          circleBtn.style.backgroundColor = isLocked ? hexToRgba(accent, 0.18) : accent;
+
+          // Pulse ring for current
+          if (isCurrent) {
+            const ring = document.createElement('div');
+            ring.className = 'pulse-ring';
+            ring.style.width = `${diameter + 18}px`;
+            ring.style.height = `${diameter + 18}px`;
+            ring.style.left = `${row.circle.cx - row.circle.r - 9}px`;
+            ring.style.top = `${row.circle.cy - row.circle.r - 9}px`;
+            ring.style.borderColor = accent;
+            rowEl.appendChild(ring);
+          }
+
+          // Icon
+          if (isCompleted) {
+            circleBtn.innerHTML = `
+              <svg width="${diameter * 0.36}" height="${diameter * 0.36}" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            `;
+          } else if (isCurrent) {
+            circleBtn.innerHTML = `
+              <svg width="${diameter * 0.34}" height="${diameter * 0.34}" viewBox="0 0 24 24" fill="#FFFFFF">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            `;
+          } else if (isLocked) {
+            circleBtn.innerHTML = `
+              <svg width="${diameter * 0.34}" height="${diameter * 0.34}" viewBox="0 0 24 24" fill="#8A867E">
+                <rect x="5" y="11" width="14" height="10" rx="2.5"></rect>
+                <path d="M 8 11 L 8 7 C 8 4.8 9.8 3 12 3 C 14.2 3 16 4.8 16 7 L 16 11" stroke="#8A867E" stroke-width="2.4" stroke-linecap="round" fill="none"></path>
+              </svg>
+            `;
+          }
+
+          circleBtn.onclick = () => handleNodeClick(row, lesson, state);
+          rowEl.appendChild(circleBtn);
+
+          // Text Block
+          const textBox = document.createElement('div');
+          textBox.className = 'node-text-block';
+          textBox.style.left = `${row.textBox.x}px`;
+          textBox.style.top = `${row.textBox.y}px`;
+          textBox.style.width = `${row.textBox.width}px`;
+
+          const displayIdx = row.globalIndex + 1 < 10 ? `0${row.globalIndex + 1}` : `${row.globalIndex + 1}`;
+          const titleColor = isLocked ? '#8A867E' : '#1A1914';
+          const summaryColor = isLocked ? '#8A867E' : '#6E6A60';
+          const metaColor = isLocked ? '#8A867E' : '#9E9A90';
+
+          const kindTag = lesson.kind === 'practice' ? ' · Practice' : lesson.kind === 'milestone' ? ' · Milestone' : '';
+
+          textBox.innerHTML = `
+            <div class="node-index" style="color: ${titleColor}">${displayIdx}</div>
+            <div class="node-title" style="color: ${titleColor}">${lesson.title}</div>
+            <div class="node-summary" style="color: ${summaryColor}">${lesson.summary}</div>
+            <div class="node-meta" style="color: ${metaColor}">${lesson.minutes} min · ${lesson.questionCount} questions${kindTag}</div>
+            <div id="hint_${row.lessonId}" style="display: none;" class="locked-hint"></div>
+          `;
+
+          textBox.onclick = () => handleNodeClick(row, lesson, state);
+          rowEl.appendChild(textBox);
+
+          // Traveler silhouette
+          if (isCurrent && row.travelerAnchor) {
+            const traveler = document.createElement('div');
+            traveler.className = 'traveler-marker';
+            traveler.style.left = `${row.travelerAnchor.x - 48}px`;
+            traveler.style.top = `${row.travelerAnchor.y - 36}px`;
+
+            traveler.innerHTML = `
+              <svg width="72" height="48" viewBox="0 0 72 48" style="overflow: visible;">
+                <polygon points="48,36 6,46 5,44 47,35" fill="rgba(26, 25, 20, 0.28)"></polygon>
+                <path d="M 47.5 12 A 2.2 2.2 0 1 0 47.5 7.6 A 2.2 2.2 0 1 0 47.5 12 Z" fill="#1A1914"></path>
+                <path d="M 46.5 12.5 C 45.8 13.5 45.5 15.5 45.5 18 L 45 25 L 43.5 35.5 L 45.2 35.8 L 47 26.5 L 48.5 35.2 L 50.2 35 L 48.2 24.5 L 48.5 18 C 48.5 15.5 48 13.5 47.5 12.5 Z" fill="#1A1914"></path>
+                <path d="M 46 16 L 43.5 22 L 44.5 22.5 L 47 17 Z" fill="#1A1914"></path>
+              </svg>
+            `;
+            rowEl.appendChild(traveler);
+          }
+        }
+
+        container.appendChild(rowEl);
+      });
+    }
+
+    function hexToRgba(hex, alpha) {
+      const c = hex.replace('#', '');
+      const r = parseInt(c.substring(0, 2), 16);
+      const g = parseInt(c.substring(2, 4), 16);
+      const b = parseInt(c.substring(4, 6), 16);
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+
+    function handleNodeClick(row, lesson, state) {
+      if (state === 'locked') {
+        const rowEl = document.getElementById(`row_${row.lessonId}`);
+        rowEl.classList.remove('shake-animation');
+        void rowEl.offsetWidth; // trigger reflow
+        rowEl.classList.add('shake-animation');
+
+        const hintEl = document.getElementById(`hint_${row.lessonId}`);
+        hintEl.style.display = 'inline-block';
+        hintEl.innerText = `🔒 Finish previous lessons first`;
+        showToast(`Lesson is locked: Complete previous step first`);
+      } else {
+        showToast(`Opening: ${lesson.title} (${state.toUpperCase()})`);
+      }
+    }
+
+    function advanceLesson() {
+      const data = DATASETS[currentPathKey];
+      const allLessonIds = data.path.units.flatMap(u => u.lessonIds);
+      const nextUncompleted = allLessonIds.find(id => !completedLessonIds.has(id));
+
+      if (nextUncompleted) {
+        completedLessonIds.add(nextUncompleted);
+        renderScreen();
+        showToast(`Completed: ${data.lessons[nextUncompleted].title}`);
+      } else {
+        showToast(`All lessons already completed!`);
+      }
+    }
+
+    function resetProgress() {
+      completedLessonIds.clear();
+      renderScreen();
+      showToast('Progress reset to start');
+    }
+
+    function switchPath(key) {
+      currentPathKey = key;
+      completedLessonIds.clear();
+      renderScreen();
+      showToast(`Loaded ${key.toUpperCase()}`);
+    }
+
+    function changeWidth(w) {
+      currentWidth = parseInt(w);
+      document.getElementById('phoneWrapper').style.width = `${currentWidth}px`;
+      renderScreen();
+    }
+
+    function toggleReference() {
+      const ref = document.getElementById('refStage');
+      const btn = document.getElementById('refToggleBtn');
+      if (ref.style.display === 'none') {
+        ref.style.display = 'flex';
+        btn.classList.add('active');
+      } else {
+        ref.style.display = 'none';
+        btn.classList.remove('active');
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    function jumpToCurrent() {
+      const currentEl = document.querySelector('.pulse-ring');
+      if (currentEl) {
+        currentEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    // Scroll listener for Jump Pill
+    const screenEl = document.getElementById('phoneScreen');
+    screenEl.addEventListener('scroll', () => {
+      const pulseRing = document.querySelector('.pulse-ring');
+      const pill = document.getElementById('jumpPill');
+      if (!pulseRing) {
+        pill.style.display = 'none';
+        return;
+      }
+      const rect = pulseRing.getBoundingClientRect();
+      const screenRect = screenEl.getBoundingClientRect();
+      const isVisible = rect.top >= screenRect.top && rect.bottom <= screenRect.bottom;
+      pill.style.display = isVisible ? 'none' : 'flex';
+    });
+
+    // Initial render
+    renderScreen();
+  </script>
+</body>
+</html>
