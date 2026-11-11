@@ -29,6 +29,7 @@ import { getDailyPanchang } from '@/features/panchang/engine/panchang-service';
 import { festivalCarouselData } from '@/features/festivals/data/festivalData';
 import type { PanchangTab, FestivalCardData, LocationOption } from '@/features/panchang/types/panchang-screen.types';
 import type { LocationInput } from '@/features/panchang/types/panchang.types';
+import { routes } from '@/shared/navigation/routes';
 
 const LOCATIONS = PanchangStrings.locationOptions;
 
@@ -117,10 +118,7 @@ export const PanchangFestivalsScreen: React.FC = () => {
       diwali: 'lesson_diwali_lakshmi',
     };
     const targetLessonId = festivalLessonMap[festival.source?.id || ''] || 'lesson_diwali_lakshmi';
-    router.push({
-      pathname: '/learning/lesson-runner',
-      params: { lessonId: targetLessonId },
-    });
+    router.push(routes.lessonRunner(targetLessonId));
   }, [closeSheet, router]);
 
   const handleTabChange = useCallback((tab: PanchangTab) => {

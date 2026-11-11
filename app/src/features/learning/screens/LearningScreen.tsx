@@ -15,6 +15,7 @@ import { SCRIPTURES_DATA } from '@/features/home/data/scripturesData';
 import { getAllScriptures } from '@/features/scriptures/services/scripture-service';
 import type { ShlokaItem } from '@/features/scriptures/types/scripture.types';
 import { HomeColors } from '@/features/home/constants/homeTheme';
+import { routes } from '@/shared/navigation/routes';
 
 export const LearningScreen: React.FC = () => {
   const [activeTab, setActiveTab] = useState<LearningTabType>('paths');
@@ -27,10 +28,7 @@ export const LearningScreen: React.FC = () => {
   const [selectedScripture, setSelectedScripture] = useState<ShlokaItem | null>(null);
 
   const handlePathPress = (pathId: string) => {
-    router.push({
-      pathname: '/learning/path-detail',
-      params: { pathId },
-    });
+    router.push(routes.pathDetail(pathId));
   };
 
   const handleScripturePress = (scriptureId: string) => {
@@ -49,26 +47,15 @@ export const LearningScreen: React.FC = () => {
   };
 
   const handleStartReview = () => {
-    // Start revision with the earliest scheduled review or default to first lesson
-    const firstReview = learnerState.reviews[0];
-    router.push({
-      pathname: '/learning/lesson-runner',
-      params: { lessonId: firstReview ? 'lesson_ramayana_ayodhya_12' : 'lesson_ramayana_ayodhya_12' },
-    });
+    router.push(routes.lessonRunner('lesson_ramayana_ayodhya_12'));
   };
 
   const handleQuickDrill = () => {
-    router.push({
-      pathname: '/learning/lesson-runner',
-      params: { lessonId: 'lesson_krishna_leela_kalia' },
-    });
+    router.push(routes.lessonRunner('lesson_krishna_leela_kalia'));
   };
 
   const handleWeakConceptsDrill = () => {
-    router.push({
-      pathname: '/learning/lesson-runner',
-      params: { lessonId: 'lesson_gita_sankhya_yoga' },
-    });
+    router.push(routes.lessonRunner('lesson_gita_sankhya_yoga'));
   };
 
   return (
