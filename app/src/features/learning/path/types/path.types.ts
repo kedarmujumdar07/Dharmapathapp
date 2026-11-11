@@ -2,6 +2,8 @@ import type { LessonData, LessonKind } from '@/features/home/types/lesson.types'
 
 export type { LessonKind };
 
+export type NodeState = 'completed' | 'current' | 'locked';
+
 export interface Unit {
   id: string;
   title: string;

@@ -1,7 +1,6 @@
 import type { Path } from '../types/path.types';
 import type { LessonData } from '@/features/home/types/lesson.types';
 import type {
-  PathLayoutConfig,
   PathLayoutResult,
   TimelineRow,
   NodeRowData,
@@ -9,7 +8,7 @@ import type {
   EndCapRowData,
   NodeSide,
 } from '../types/layout.types';
-import { PATH_LAYOUT_CONFIG } from './pathLayoutConfig';
+import { PATH_LAYOUT_CONFIG, type PathLayoutConfig } from './pathLayoutConfig';
 
 /**
  * Deterministic hash to generate a pseudo-random jitter between -1 and 1
