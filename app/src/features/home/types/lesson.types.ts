@@ -19,6 +19,8 @@ export interface PathData {
   subItems: PathSubItem[];
 }
 
+export type LessonKind = 'lesson' | 'practice' | 'milestone';
+
 export interface LessonData {
   id: string;
   pathId: PathId;
@@ -33,6 +35,15 @@ export interface LessonData {
   /** Exactly one lesson should have isFeatured=true; becomes today's lesson */
   isFeatured: boolean;
   contentPreview: string;
+
+  /** Optional short 1-2 line summary for timeline / cards */
+  summary?: string;
+  /** Lesson kind factor for timeline circle sizing: lesson (1.0), practice (0.72), milestone (1.15) */
+  kind?: LessonKind;
+  /** Estimated duration in minutes */
+  minutes?: number;
+  /** Number of quiz / interactive questions */
+  questionCount?: number;
 }
 
 export interface ScriptureItem {
